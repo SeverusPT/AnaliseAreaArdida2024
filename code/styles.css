@@ -1,0 +1,15 @@
+/* Set Arial font for the whole HTML document */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Set Arial font for ggplot2 outputs (if using images) */
+  g text {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Set Arial font for flextable */
+  .ftitle, .ftext, .ftable, .fthead, .ftbody {
+    font-family: Arial, sans-serif;
+  }
+  

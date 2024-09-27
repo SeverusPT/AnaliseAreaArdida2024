@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+/data
+/temp
+AnaliseIncendios_2024-v1.pdf
+/code/_old
+/code/AnaliseIncendios_2024-v1_cache
+*.rds
+*.markdown
+*.rmarkdown
+/code/AAA2024-Linux_DOS-commands.md
+/code/fogos2024.zip
