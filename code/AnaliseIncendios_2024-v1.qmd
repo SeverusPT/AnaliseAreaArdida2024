@@ -14,19 +14,18 @@ author:
         address: Campus de Vairão
         city: Vila do Conde
 format:
-  pdf:
-    tbl-cap: Quadro
-    toc: true
-    toc-depth: 4
-    toc-title: "Índice"
-    mainfont: Arial
-    monofont: Arial
-    header-includes:
-      - \usepackage{fontspec}
-      - \setmainfont{Arial}
-      - \setsansfont{Arial}
-      - \setmonofont{Arial}
   html:
+    encoding: UTF-8
+    theme:
+      light: flatly
+      dark: darkly
+    other-links:
+      - text: SeverusPT
+        href: https://severus.pt
+    code-links:
+      - text: Repositório de código
+        icon: file-code
+        href: https://github.com/SeverusPT/AnaliseAreaArdida2024
     tbl-cap: Quadro
     toc: true
     toc-depth: 4
@@ -61,9 +60,12 @@ OUTPUT_FORMAT <- 'html'
 USE_TEST_DATA <- FALSE
 
 USE_COSC2024_CACHE <- TRUE
+
 VERBOSE_ON_COSC24 <- FALSE
 
 USE_BA_INTERSECT_CACHE <- TRUE
+
+BIG_FIRE_THRESH <- 1000
 
 ```
 
@@ -82,7 +84,7 @@ dos perímetros de área ardida fornecidos pelo Sistema Europeu Copernicus/EFFIS
 
 As fontes de dados podem estar sujeitas a variações temporais e espaciais, imprecisões ou inexatidões 
 de ordem diversa assim como a erros inerentes aos processos de recolha e processamento de informação 
-completamente alheias aos autores.     
+completamente alheios aos autores.     
 
 Os autores deste relatório não assumem qualquer responsabilidade por decisões ou ações tomadas 
 com base nos dados, análises ou conclusões aqui apresentadas sem a devida consideração das limitações
@@ -135,8 +137,10 @@ avaliação e previsão de severidade de incêndio em Portugal continental"*.
 
 ## 1. Material e métodos
 
-## 1.1. Fontes de dados espaciais/geográficos
+          
+### 1.1. Fontes de dados espaciais/geográficos      
 
+         
 Para as análises realizadas neste relatório foram usados os seguintes conjuntos 
 de dados:
 
@@ -148,11 +152,11 @@ de dados:
 
 -   **Carta Administrativa Oficial de Portugal - CAOP2023 (Continente)**: [link geral](https://snig.dgterritorio.gov.pt/rndg/srv/por/catalog.search#/metadata/198497815bf647ecaa990c34c42e932e) \| [link dados](https://geo2.dgterritorio.gov.pt/caop/CAOP_Continente_2023-shp.zip)
 
--  **Rede Nacional de Áreas Protegidas (RNAP)**: [link geral](https://geocatalogo.icnf.pt/catalogo.html) \| [link dados](https://si.icnf.pt/shp/rnap)
+-  **Rede Nacional de Áreas Protegidas (RNAP)**[^1]: [link geral](https://geocatalogo.icnf.pt/catalogo.html) \| [link dados](https://si.icnf.pt/shp/rnap)
 
 -   **Zonas de Proteção Especial da Diretiva Aves (ZPE) - RN2000**: [link geral](https://geocatalogo.icnf.pt/catalogo.html) \| [link dados](https://si.icnf.pt/shp/zpe)
 
--   **Zonas Especiais de Conservação / Sítios da Diretiva Habitats (ZEC/SIC) - RN2000**: [link geral](https://geocatalogo.icnf.pt/catalogo.html) \| [link dados](https://si.icnf.pt/shp/sic)
+-   **Sítios da Diretiva Habitats (SIC) - RN2000**: [link geral](https://geocatalogo.icnf.pt/catalogo.html) \| [link dados](https://si.icnf.pt/shp/sic)
 
 -  **Estradas e vias de trânsito - OpenStreetMaps PT**: [link geral](https://download.geofabrik.de/europe/portugal.html) | [link dados](https://download.geofabrik.de/europe/portugal.html)
 
@@ -165,14 +169,20 @@ de dados:
 
 - **Dados Censos 2021 - BGRI**: [Link geral](https://mapas.ine.pt/download/index2021.phtml) | [link dados](https://mapas.ine.pt/download/filesGPG/2021/BGRI21_CONT.zip)
 
-## 1.2. Métodos
+[^1]: Este conjunto de dados foi atualizado (27/09/2024) com a área correspondente à Paisagem Protegida Regional 
+da Serra da Aboboreira (PPRSA).
 
+       
+### 1.2. Métodos      
+       
 
 Para a quantificação da área ardida, foram realizadas análises espaciais recorrendo 
 a ferramentas de **Sistemas de Informação Geográfica (SIG)**. Estas análises foram 
 desenvolvidas na plataforma de computação **RStudio** utilizando a linguagem **R**, 
 permitindo assim integrar, manipular, visualizar e processar grandes volumes de dados 
-geoespaciais. As ferramentas empregadas para este fim incluíram uma combinação de bibliotecas especializadas no tratamento de dados vetoriais e raster, assim como para a geração de gráficos e tabelas.
+geoespaciais. As ferramentas empregadas para este fim incluíram uma combinação de bibliotecas 
+especializadas no tratamento de dados vetoriais e raster, assim como para a geração de gráficos 
+e tabelas.
 
 Para o **geoprocessamento e análise de dados vetoriais**, foi utilizado o pacote 
 **sf**, que facilitou o manuseio e a análise de dados espaciais em formato vetorial. 
@@ -217,7 +227,8 @@ library(flextable)
 library(ggspatial)
 library(tidyterra)
 library(patchwork)
-
+library(rnaturalearth)
+library(rnaturalearthdata)
 
 theme_set(theme_bw(base_family = "Arial"))
 theme_set(theme_minimal(base_family = "Arial"))
@@ -335,16 +346,16 @@ if(!USE_BA_INTERSECT_CACHE){
   ## -------------------------------------------------------------------------- ##
   
   
-  rnap <- read_sf("../data/vector/rnap/rnap.shp") %>% 
+  rnap <- read_sf("../data/vector/rnap/rnap_v2.shp") %>% 
     st_transform(crs="EPSG:32629") %>% 
-    mutate(area_ap = as.numeric(st_area(.) / 10000))
+    mutate(area_ap = as.numeric(st_area(.) / 10000)) %>% 
+    mutate(nome_ap = iconv(nome_ap, to = "ISO-8859-1", from = "UTF-8"))
   
   ba_rnap_ <- st_intersection(rnap, effis_sp_2024_utm) %>% 
     mutate(ba_ha = as.numeric(st_area(.) / 10000)) %>% 
-    mutate(id = as.character(id)) 
+    mutate(id = as.character(id))
   
   ba_rnap <- ba_rnap_ %>%
-    #mutate(ba_ha = as.numeric(st_area(.) / 10000)) %>%
     st_drop_geometry() %>%
     group_by(nome_ap) %>%
     summarize(ba_total_ha = sum(ba_ha)) %>%
@@ -517,7 +528,7 @@ if(!USE_BA_INTERSECT_CACHE){
 
   
   ## -------------------------------------------------------------------------- ##
-  ## MS Buildings footprint ----
+  ## INE BGRI population census data ----
   ## -------------------------------------------------------------------------- ##
   
   
@@ -698,7 +709,7 @@ wf_area_cats <- data.frame(cats=categories, area_ht = effis_data_2024$area_ht) %
 
 
 
-**Síntese geral**
+### Síntese geral
 
 
 À data de `{r} format(Sys.Date(), "%d/%m/%Y")` a área ardida no ano de 2024, de acordo com os dados do Sistema Copernicus/EFFIS (*European Forest Fire Information System*) é igual a **`{r} scales::comma(round(as.numeric(yr_2024_total[1,1]),1))` hectares**. De acordo com esta informação, no mês de setembro arderam **`{r} scales::comma(round(as.numeric(yr_2024_month_totals[9,2]),1))` hectares** dos quais **`{r} scales::comma(round(as.numeric(after_15sept_total[1,1]),1))` hectares** ocorreram após o dia 15 de setembro de 2024  (inclusive; ou seja, correspondente `{r} round(perc_15sept*100,1)`% do total anual).
@@ -715,15 +726,16 @@ em *Sítios de Interesse Comunitário da Rede Natura 2000*, e **`{r} scales::com
 também em contexto da *Rede Natura 2000*.
 
 Em termos de afetação potencial dos cursos de água e, considerando uma estratificação pela hierarquia 
-de Strahler [^1], foram quantificados os seguintes impactos em termos de comprimento total por tipo de rio (Strahler 1 a 6):       
+de Strahler [^2], foram quantificados os seguintes impactos em termos de comprimento total por tipo de rio (Strahler 1 a 6):       
 `{r} ba_hydro_summary %>% pull(markdown_entry) %>% paste(collapse = "\n")`.
 
 De acordo com dados do INE, e considerando as subsecções estatísticas constantes da Base Geográfica 
 de Referenciação de Informação (BGRI) para os Censos de 2021, um total de **`{r} scales::comma(sum(ba_bgri$N_INDIVIDUOS))` habitantes** 
-foram potencialmente afetados pelos incêndios de 2024 (i.e., como indivíduos residentes à data de 2021 dentro 
-ou nas imediações dos perímetros ardidos, com níveis muito diferenciados de impacto e que os dados a que 
-tivemos acesso não permitem estimar). Segundo este conjunto de dados também, um total de **`{r} scales::comma(sum(ba_bgri$N_ALOJAMENTOS_TOTAL))` alojamentos** poderão ter sido impactados (com graus de 
-afetação muito diferenciados e que os dados não permitem caracterizar) estando localizados dentro 
+foram potencialmente afetados pelos incêndios de 2024, como residentes dentro 
+ou nas imediações dos perímetros ardidos, com níveis muito diferenciados de impacto direto ou indireto 
+e que os dados a que tivemos acesso não permitem estimar. Segundo este conjunto de dados também, um total de 
+**`{r} scales::comma(sum(ba_bgri$N_ALOJAMENTOS_TOTAL))` alojamentos** poderão ter sido impactados (com graus 
+de afetação muito diferenciados e que os dados não permitem caracterizar) estando localizados dentro 
 ou nas imediações dos perímetros ardidos.
 
 De acordo com o conjunto de dados aberto de edíficos *MS Buildings Footprint*, que mistura todas as 
@@ -736,13 +748,71 @@ Segundo o conjunto de dados aberto OSM -- OpenStreetMap -- sobre vias de trânsi
 agregando todas as tipologias existentes nesta base de dados (e.g., auto-estradas, estradas nacionais, 
 municipais, caminhos, trilhos), foram potencialmente afetados **`{r} scales::comma(round(sum(ba_osm_roads$road_len_km),2))` Km de vias**.     
 
+
+```{r ba-effis-map-wf-location}
+#| echo: false
+#| warning: false
+#| error: false
+#| message: false
+#| fig-height: 10
+#| fig-width: 8
+
+
+portugal_mainland <- read_sf("../data/vector/CAOP_Continente_2023/PT_caop2020_bounds_WGS84.shp")
+
+breaks <- c(0, 1E-6, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 30000)
+
+reds <- colorRampPalette(c("#FFFFFF", "#A31212"))(length(breaks) - 1)
+
+
+effis_sp_2024$ba_class <- cut(
+  effis_sp_2024$area_ht,
+  breaks = breaks,
+  include.lowest = TRUE,
+  right = TRUE,  # ] means right-closed intervals for most classes
+  labels = c("0","]0, 50[", "]50, 100]", "]100, 200]", 
+             "]200, 500]", "]500, 1000]",
+             "]1000, 2000]", "]2000, 5000]", 
+             "]5000, 10000]", "]10000, 30000]"))
+
+# pt_bbox <- c(-9.6, 35, -5, 42.3)
+# 
+# hillshade_map <- get_stadiamap(bbox = pt_bbox, 
+#                                zoom = 7, 
+#                                maptype = "stamen_terrain_background") %>% 
+#   as.raster()
+
+ggplot() +
+
+  # annotation_raster(hillshade_map, xmin = pt_bbox[1], xmax = pt_bbox[3], 
+  #                   ymin = pt_bbox[2], ymax = pt_bbox[4]) +
+  
+  geom_sf(data = portugal_mainland, fill = NA, color = "darkgrey",
+          fill="grey",alpha=0.5, size = 0.5) +
+
+  geom_sf(data = effis_sp_2024, 
+          mapping = aes(fill = ba_class), 
+          color="black") +
+  
+  scale_fill_manual(
+    values = reds,
+    name = "Área ardida (ha)") +
+  labs(title = "Áreas ardidas em Portugal continental 2024",
+       caption = paste0(
+         "Dados: Copernicus/EFFIS - European Forest Fire Information System (data: ",
+       format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves")) +
+  theme_minimal() +
+  theme(legend.position = "right", text = element_text(size = 13))
+```
+
+
 A distribuição das ocorrências de incêndio por dimensão da área ardida é mostrada na tabela 
 abaixo. Nesta são apresentadas a frequência absoluta e relativa (%) para o ano de 2024. 
 Para efeito de análise mais detalhada, foram separadas as ocorrências na base de dados 
 do EFFIS a partir de 15 de setembro. Neste caso é mostrada a frequência aboluta e 
 relativa (tendo como denominador as ocorrências em cada categoria de dimensão da área ardida).
 
-[^1]: A ordem de Strahler classifica rios com base na hierarquia dos seus afluentes: rios 
+[^2]: A ordem de Strahler classifica rios com base na hierarquia dos seus afluentes: rios 
 de nível 1 não possuem afluentes, dois rios de nível 1 formam um de nível 2, dois de nível 2 formam 
 um de nível 3, e assim sucessivamente até ao nível 6. Neste sistema os diferentes níveis refletem a 
 complexidade da rede fluvial; rios de nível 1 são pequenos cursos de água sem afluentes, e à medida 
@@ -761,7 +831,7 @@ kable(wf_counts,
       format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
       longtable = TRUE,
       caption = "Número de incêndios por dimensão da área ardida",
-      col.names = c("Classe","Nr. ocorrências", "Percentagem 2024", "Nr. ocorrências após 15 set", "Percentagem classe")) %>%
+      col.names = c("Classe","Nr. ocorrências", "Percentagem 2024", "Nr. ocorrências após 15 set", "Percentagem classe após 15 set")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
                 latex_options = "repeat_header")
 
@@ -773,29 +843,8 @@ kable(wf_counts,
 #| warning: false
 #| error: false
 #| fig-height: 6
-#| fig-width: 7
+#| fig-width: 8
 #| message: false
-
-
-# # Define the breaks for the wildfire size classes
-# breaks_ <- c(10, 100, 250, 500, 1000, 2500, 5000, 10000, Inf)
-# 
-# # Labels for each size class
-# labels_ <- c("0-10 ha", "10-100 ha", "100-250 ha", 
-#             "250-500 ha", "500-1000 ha", 
-#             "1000-2500 ha", "2500-5000 ha",
-#             "5000-10000 ha", ">10000 ha")
-# # Plot the histogram with custom bins
-# ggplot(effis_data_2024, aes(x = area_ht)) +
-#   geom_histogram(breaks = breaks_, 
-#                  fill = "lightblue", 
-#                  color = "black", 
-#                  closed = "left") +
-#   scale_x_continuous(breaks = breaks_, labels = labels_) +
-#   labs(title = "Histograma da dimensão dos incêndios (2024)",
-#        x = "Classe de área (ha)", 
-#        y = "Frequência") +
-#   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 hist_plot <- ggplot(data.frame(cats=categories), aes(x = cats)) +
@@ -826,7 +875,7 @@ plot(hist_plot + line_plot)
 #| warning: false
 #| error: false
 #| fig-height: 6
-#| fig-width: 7
+#| fig-width: 8
 #| message: false
 
 g_annual_totals <- ggplot(annual_totals, aes(x = year, y = ba_total_yr)) +
@@ -839,7 +888,7 @@ g_annual_totals <- ggplot(annual_totals, aes(x = year, y = ba_total_yr)) +
   theme(text=element_text(size=13),
         axis.text.x = element_text(angle = 90, vjust = 0.5)) +
   labs(title = "Área ardida em Portugal continental 2001 - 2024",
-       caption = paste0("Dados: Copernicus/EFFIS - European Forest Fire Information System (data: ",format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves"))
+       caption = paste0("Dados: Copernicus/EFFIS - European Forest Fire Information System \n(data: ",format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves"))
 
 
 plot(g_annual_totals)
@@ -851,7 +900,7 @@ plot(g_annual_totals)
 #| warning: false
 #| error: false
 #| fig-height: 5
-#| fig-width: 7
+#| fig-width: 8
 #| message: false
 
 g_2024_monthly_totals <- ggplot(yr_2024_month_totals,aes(x = month_name, y = ba_total_month)) +
@@ -864,7 +913,7 @@ g_2024_monthly_totals <- ggplot(yr_2024_month_totals,aes(x = month_name, y = ba_
   theme(text=element_text(size=13),
         axis.text.x = element_text(angle = 90, vjust = 0.5)) +
   labs(title = "Área ardida por mês em Portugal continental \nno ano de 2024",
-       caption = paste0("Dados: Copernicus/EFFIS - European Forest Fire Information System (data: ",format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves"))
+       caption = paste0("Dados: Copernicus/EFFIS - European Forest Fire Information System \n(data: ",format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves"))
 
 
 plot(g_2024_monthly_totals)
@@ -1038,9 +1087,6 @@ ba_cos24_pt$label <- factor(ba_cos24_pt$label, levels = ba_cos24_pt$label)
 #| message: false
 #| cache: true
 
-# ba_effis_cos18 <- st_intersection(cos_2018, effis_sp_2024_utm) %>%
-#   mutate(ba_ha = as.numeric(st_area(.) / 10000)) %>%
-#   st_drop_geometry()
 
 ba_summ_cos18 <- ba_effis_cos18 %>%
   group_by(COS18n4_L) %>%
@@ -1052,9 +1098,6 @@ ba_summ_cos18 <- ba_effis_cos18 %>%
 ba_summ_cos18$COS18n4_L <- factor(ba_summ_cos18$COS18n4_L,
                                   levels = ba_summ_cos18$COS18n4_L)
 
-  # left_join(effis_sp_2024_utm, by = "id") %>%
-  # mutate(ba_perc = (ba_total_ha / area_ht)*100)
-  #
 
 ```
 
@@ -1083,7 +1126,7 @@ kable(ba_cos24_pt %>% filter(label != "NA"),
 #| error: false
 #| message: false
 #| fig-height: 8
-#| fig-width: 7
+#| fig-width: 8
 
 g_annual_totals_cosc24 <- ggplot(ba_cos24_pt %>% filter(label != "NA"),
                                  aes(x = label, y = area_ha)) +
@@ -1096,7 +1139,7 @@ g_annual_totals_cosc24 <- ggplot(ba_cos24_pt %>% filter(label != "NA"),
   theme(text=element_text(size=13),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   labs(title = "Área ardida em 2024 por uso/coberto do solo (COSc 2024)",
-       caption = paste0("Dados: Copernicus/EFFIS - European Forest Fire Information System (data: ",format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves"))
+       caption = paste0("Dados: Copernicus/EFFIS - European Forest Fire Information System \n(data: ",format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves"))
 
 
 plot(g_annual_totals_cosc24)
@@ -1132,7 +1175,7 @@ kable(ba_summ_cos18 %>% filter(ba_perc >= 1),
 #| error: false
 #| message: false
 #| fig-height: 8
-#| fig-width: 7
+#| fig-width: 8
 
 g_annual_totals_cos18 <- ggplot(ba_summ_cos18 %>% filter(ba_perc >= 1),
                                  aes(x = COS18n4_L, y = ba_total_ha)) +
@@ -1146,7 +1189,7 @@ g_annual_totals_cos18 <- ggplot(ba_summ_cos18 %>% filter(ba_perc >= 1),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   labs(title = "Área ardida em 2024 por uso/coberto do solo (COS 2018)",
        subtitle = expression("(classes de uso/coberto com" >= 1~"% área ardida)"),
-       caption = paste0("Dados: Copernicus/EFFIS - European Forest Fire Information System (data: ",format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves"))
+       caption = paste0("Dados: Copernicus/EFFIS - European Forest Fire Information System \n(data: ",format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves"))
 
 
 plot(g_annual_totals_cos18)
@@ -1159,27 +1202,6 @@ plot(g_annual_totals_cos18)
 
 Nesta secção do relatório, será realizada uma análise detalhada das áreas ardidas no ano de 2024, com enfoque nos municípios de Portugal continental. O objetivo desta análise é avaliar a distribuição das áreas afetadas pelos incêndios, proporcionando uma visão objetiva sobre a extensão dos danos em cada município.
 
-```{r ba-2024-municipalities}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
-#| cache: true
-
-
-# ba_mun_2024 <- st_intersection(conc, effis_sp_2024_utm) %>%
-#   mutate(ba_ha = as.numeric(st_area(.) / 10000)) %>%
-#   st_drop_geometry() %>%
-#   group_by(Municipio) %>%
-#   summarize(ba_total_ha = sum(ba_ha)) %>%
-#   arrange(desc(ba_total_ha)) %>%
-#   left_join(conc_areas, by = "Municipio") %>%
-#   mutate(ba_perc = (ba_total_ha / conc_area_ha)*100)
-
-
-
-
-```
 
 ```{r ba-2024-municipalities-table}
 #| echo: false
@@ -1199,13 +1221,14 @@ kable(ba_mun_2024 %>% select(-conc_area_ha) %>% filter(ba_total_ha > 50),
 
 ```
 
+
 ```{r ba-2024-municipalities-map}
 #| echo: false
 #| warning: false
 #| error: false
 #| message: false
 #| fig-height: 10
-#| fig-width: 7
+#| fig-width: 8
 
 
 ba_conc <- conc %>% left_join(ba_mun_2024, by="Municipio")
@@ -1234,7 +1257,7 @@ ggplot(data = ba_conc) +
     name = "Área ardida (ha)") +
   labs(title = "Área ardida por município (2024)",
        caption = paste0(
-         "Dados: Copernicus/EFFIS - European Forest Fire Information System (data: ",
+         "Dados: Copernicus/EFFIS - European Forest Fire Information System \n(data: ",
        format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves")) +
   theme_minimal() +
   theme(legend.position = "right", text = element_text(size = 13))
@@ -1249,7 +1272,7 @@ ggplot(data = ba_conc) +
 #| error: false
 #| message: false
 #| fig-height: 10
-#| fig-width: 7
+#| fig-width: 8
 
 
 #ba_conc <- conc %>% left_join(ba_mun_2024, by="Municipio")
@@ -1278,7 +1301,7 @@ ggplot(data = ba_conc) +
     name = "% área ardida") +
   labs(title = "% Município ardido (2024)",
        caption = paste0(
-         "Dados: Copernicus/EFFIS - European Forest Fire Information System (data: ",
+         "Dados: Copernicus/EFFIS - European Forest Fire Information System \n(data: ",
        format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves")) +
   theme_minimal() +
   theme(legend.position = "right", text = element_text(size = 13))
@@ -1308,18 +1331,6 @@ Esta análise visa avaliar os impactos dos incêndios nas áreas de maior relev�
 #| message: false
 #| cache: true
 
-# 
-# ba_rnap <- st_intersection(rnap, effis_sp_2024_utm) %>%
-#   mutate(ba_ha = as.numeric(st_area(.) / 10000)) %>%
-#   st_drop_geometry() %>%
-#   group_by(nome_ap) %>%
-#   summarize(ba_total_ha = sum(ba_ha)) %>%
-#   arrange(desc(ba_total_ha)) %>%
-#   left_join(rnap %>%
-#               select(nome_ap, sigla, classifica, area_ap) %>%
-#               st_drop_geometry(), by="nome_ap") %>%
-#   mutate(ba_perc = (ba_total_ha / area_ap)*100)
-
 
 ba_rnap$nome_ap <- replace_strings(ba_rnap$nome_ap)
 
@@ -1345,17 +1356,6 @@ kable(ba_rnap %>% select(sigla, nome_ap, ba_total_ha, ba_perc),
 #| error: false
 #| message: false
 #| cache: true
-
-# ba_rn2k_sic <- st_intersection(sic, effis_sp_2024_utm) %>%
-#   mutate(ba_ha = as.numeric(st_area(.) / 10000)) %>%
-#   st_drop_geometry() %>%
-#   group_by(site_code, site_name) %>%
-#   summarize(ba_total_ha = sum(ba_ha)) %>%
-#   arrange(desc(ba_total_ha)) %>%
-#   left_join(sic %>%
-#               select(site_code, area_sic) %>%
-#               st_drop_geometry(), by="site_code") %>%
-#   mutate(ba_perc = (ba_total_ha / area_sic)*100)
 
 
 ba_rn2k_sic$site_name <- replace_strings(ba_rn2k_sic$site_name)
@@ -1384,18 +1384,6 @@ kable(ba_rn2k_sic %>% select(site_code, site_name, ba_total_ha, ba_perc),
 #| cache: true
 
 
-# ba_rn2k_zpe <- st_intersection(zpe, effis_sp_2024_utm) %>%
-#   mutate(ba_ha = as.numeric(st_area(.) / 10000)) %>%
-#   st_drop_geometry() %>%
-#   group_by(site_code, site_name) %>%
-#   summarize(ba_total_ha = sum(ba_ha)) %>%
-#   arrange(desc(ba_total_ha)) %>%
-#   left_join(zpe %>%
-#               select(site_code, area_zpe) %>%
-#               st_drop_geometry(), by="site_code") %>%
-#   mutate(ba_perc = (ba_total_ha / area_zpe)*100)
-
-
 ba_rn2k_zpe$site_name <- replace_strings(ba_rn2k_zpe$site_name)
 
 
@@ -1410,11 +1398,8 @@ kable(ba_rn2k_zpe %>% select(site_code, site_name, ba_total_ha, ba_perc),
 
 ```
 
+
 \newpage
-
-## 5. Análise de grandes áreas ardidas
-
-Neste secção procedeu-se à caracterização das grandes áreas ardidas com **dimensão superior a 1000 hectares**, analisando a distribuição dos usos / coberto do solo em cada uma dessas áreas. Esta análise visa identificar a tipologia dos espaços afetados, distinguindo entre diferentes categorias de uso, como florestas, matos, áreas agrícolas, áreas agroflorestais e espaços urbanos.
 
 
 ```{r ba-cosc24-big-wildfires-analysis}
@@ -1425,7 +1410,7 @@ Neste secção procedeu-se à caracterização das grandes áreas ardidas com **
 
 ba_effis_bigfires <-
   effis_data_2024 %>%
-  filter(area_ht >= 1000)
+  filter(area_ht >= BIG_FIRE_THRESH)
 
 ba_cosc24_bigfires <-
 ba_cosc24_freqs_wide %>%
@@ -1457,12 +1442,192 @@ colnames(ba_cosc24_bigfires_percs) <- colnames_df$label
 ba_cosc24_bigfires <- ba_effis_bigfires %>%
   left_join(ba_cosc24_bigfires, by=c("id"="fid"))
 
+ba_cosc24_bigfires <- ba_cosc24_bigfires %>% 
+  arrange(fire_dt, COMMUNE)
+
 # Burned %'s in big wildfires
 ba_cosc24_bigfires_percs <- ba_effis_bigfires %>%
   left_join(ba_cosc24_bigfires_percs, by=c("id"="fid"))
 
 
 ```
+
+
+## 5. Análise de grandes áreas ardidas
+
+
+### Síntese geral
+
+
+Neste secção procedeu-se à caracterização das grandes áreas ardidas com **dimensão superior a `{r} scales::comma(BIG_FIRE_THRESH)` hectares**, analisando a distribuição dos usos / coberto do solo em cada uma dessas áreas. Esta análise visa identificar a tipologia dos espaços afetados, distinguindo entre diferentes categorias de uso, como florestas, matos, áreas agrícolas, áreas agroflorestais e espaços urbanos.
+
+No total à data de `{r} format(Sys.Date(), "%d/%m/%Y")` foram encontrados **`{r} nrow(ba_effis_bigfires)`** ocorrências com dimensão superior a `{r} scales::comma(BIG_FIRE_THRESH)` hectares, totalizando **`{r} scales::comma(sum(ba_effis_bigfires$area_ht))` hectares** da área ardida em 2024 o que representa **`{r} round((sum(ba_effis_bigfires$area_ht) / sum(effis_data_2024$area_ht))*100,1)`%** do total anual.    
+
+A lista de grande incêndios é evidenciada na tabela a seguir por localidade e município(s) envolvido(s):    
+    
+    
+
+```{r bigfires-list-municipalities-table}
+#| warning: false
+#| message: false
+#| error: false
+#| echo: false
+
+
+bf_municips <-
+ba_mun_2024_ %>% 
+  st_drop_geometry() %>% 
+  filter(id %in% ba_effis_bigfires$id) %>% 
+  group_by(id,Municipio) %>%
+  summarise(ba_municip = sum(ba_ha)) %>% 
+  arrange(id, desc(ba_municip)) %>% 
+  group_by(id) %>% 
+  summarise(bf_municip_in = paste(Municipio, collapse=", "))
+
+bf_list_locs <-
+ba_effis_bigfires %>% 
+  mutate(perc_bf = (area_ht / as.numeric(yr_2024_total[1,1]))*100) %>% 
+  left_join(bf_municips, by="id") %>% 
+  arrange(fire_dt, COMMUNE) %>% 
+  select(fire_dt, week, COMMUNE,bf_municip_in, area_ht, perc_bf)  
+    
+
+kable(bf_list_locs,
+      digits = 1,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Lista de grandes áreas ardidas no ano de 2024",
+      col.names = c("Data",
+                    "Semana", 
+                    "Localidade", 
+                    "Municípios",
+                    "Área ardida (ha)",
+                    "% do total anual")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+
+```
+
+A distribuição destes incêndios por classe de uso/ocupação do solo é mostrada nas tabelas seguintes 
+considerando os dois conjuntos de dados de referência COS conjuntural 2024 e a COS 2018:
+
+```{r bigfires-cosc2024-table}
+#| warning: false
+#| message: false
+#| error: false
+#| echo: false
+
+
+bf_cos24_summ <- 
+ba_cosc24_bigfires %>% 
+  select(Matos:`Zonas húmidas`) %>% 
+  select(-`NA`, -`Água`) %>% 
+  summarise(across(everything(),sum)) %>% 
+  pivot_longer(Matos:`Zonas húmidas`) %>% 
+  `colnames<-`(c("Classe_COSc2024","Area_ha")) %>% 
+  arrange(desc(Area_ha)) %>% 
+  mutate(Percentagem = (Area_ha/ sum(Area_ha))*100)
+
+bf_cos24_summ$Classe_COSc2024 <- factor(bf_cos24_summ$Classe_COSc2024 ,
+                                  levels = bf_cos24_summ$Classe_COSc2024)
+
+kable(bf_cos24_summ,
+      digits = 1,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Tipos de uso/coberto do solo ardidos nos grandes incêndios de 2024 segundo a COS conjuntural 2024 (pré-verão)",
+      col.names = c("Classe de uso/coberto do solo COSc 2024",
+                    "Área (hectares)", 
+                    "% Área")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+```
+```{r bigfires-cosc24-pt-barplot}
+#| echo: false
+#| warning: false
+#| error: false
+#| message: false
+#| fig-height: 8
+#| fig-width: 8
+
+bf_cosc24 <- ggplot(bf_cos24_summ,
+                    aes(x = Classe_COSc2024, y = Area_ha)) +
+  geom_bar(stat = "identity", fill = "dark red") +
+  xlab("Classe de uso/coberto do solo") +
+  ylab("Área ardida (hectares)") +
+  scale_y_continuous(labels = scales::comma,
+                     breaks = seq(0, 60000, 10000)) +
+  theme_bw() +
+  theme(text=element_text(size=13),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(title = paste("Área ardida nos grandes incêndios de 2024 (>",BIG_FIRE_THRESH,"ha)\npor uso/coberto do solo (COSc 2024)"),
+       caption = paste0("Dados: Copernicus/EFFIS - European Forest Fire Information System \ndata: ",format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves"))
+
+
+plot(bf_cosc24)
+
+```
+
+
+
+```{r bigfires-cosc2018-table}
+#| warning: false
+#| message: false
+#| error: false
+#| echo: false
+
+bf_cos2018_summ <- ba_effis_cos18 %>%
+    filter(id %in% ba_effis_bigfires$id) %>% 
+    group_by(COS18n4_L) %>%
+    summarize(ba_tot = sum(ba_ha)) %>%
+    mutate(ba_perc = (ba_tot / sum(ba_tot))*100) %>%
+    arrange(desc(ba_tot))
+
+bf_cos2018_summ$COS18n4_L <- factor(bf_cos2018_summ$COS18n4_L ,
+                                  levels = bf_cos2018_summ$COS18n4_L)
+
+kable(bf_cos2018_summ,
+      digits = 1,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Tipos de uso/coberto do solo ardidos nos grandes incêndios de 2024 segundo a COS 2018",
+      col.names = c("Classe de uso/coberto do solo COS 2018",
+                    "Área (hectares)", 
+                    "% Área")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+
+```
+
+```{r bigfires-cos2018-pt-barplot}
+#| echo: false
+#| warning: false
+#| error: false
+#| message: false
+#| fig-height: 10
+#| fig-width: 8
+
+bf_cos18 <- ggplot(bf_cos2018_summ %>% filter(ba_perc > 0.5),
+                    aes(x = COS18n4_L, y = ba_tot)) +
+  geom_bar(stat = "identity", fill = "dark red") +
+  xlab("Classe de uso/coberto do solo") +
+  ylab("Área ardida (hectares)") +
+  scale_y_continuous(labels = scales::comma,
+                     breaks = seq(0, 60000, 10000)) +
+  theme_bw() +
+  theme(text=element_text(size=13),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(title = paste("Área ardida nos grandes incêndios de 2024 (>",BIG_FIRE_THRESH,"ha)\npor uso/coberto do solo (COS 2018)"),
+       caption = paste0("Nota: apenas as classes cuja percentagem é superior 0.5% são mostradas no gráfico \nDados: Copernicus/EFFIS - European Forest Fire Information System \n(data: ",
+                        format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves"))
+
+
+plot(bf_cos18)
+
+```
+
+
+
 
 ```{r big-fire-analysis-maps}
 #| warning: false
@@ -1749,7 +1914,7 @@ for(i in 1:(ifelse(USE_TEST_DATA,3,
   if(OUTPUT_FORMAT=="pdf")
     cat(paste0("\\subsection{5.",i,". ",municp_str_, "}\n\n"),sep="")
   if(OUTPUT_FORMAT=="html")
-    cat(paste0("\n\n## 5.",i,". ",municp_str_, "      \n\n<br>"),sep="")
+    cat(paste0("\n\n### 5.",i,". ",municp_str_, "      \n\n<br>"),sep="")
 
   
   suppressMessages(suppressWarnings(
