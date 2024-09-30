@@ -61,11 +61,13 @@ USE_TEST_DATA <- FALSE
 
 USE_COSC2024_CACHE <- TRUE
 
-VERBOSE_ON_COSC24 <- FALSE
+VERBOSE_ON_COSC24 <- TRUE
 
 USE_BA_INTERSECT_CACHE <- TRUE
 
 BIG_FIRE_THRESH <- 1000
+
+VERBOSE <- TRUE
 
 ```
 
@@ -369,6 +371,7 @@ if(!USE_BA_INTERSECT_CACHE){
   readr::write_rds(ba_rnap,"ba_rnap.rds")
   rm(rnap)
   
+  if(VERBOSE) cat("\n--> Finished processing RNAP data\n\n")
   
   ## -------------------------------------------------------------------------- ##
   ## RN2K SIC ----
@@ -399,7 +402,8 @@ if(!USE_BA_INTERSECT_CACHE){
   
   rm(sic)
   
-  
+    if(VERBOSE) cat("\n--> Finished processing SIC/RN2K data\n\n")
+
   ## -------------------------------------------------------------------------- ##
   ## RN2K ZPE ----
   ## -------------------------------------------------------------------------- ##
@@ -431,6 +435,8 @@ if(!USE_BA_INTERSECT_CACHE){
   
   rm(zpe)
   
+  if(VERBOSE) cat("\n--> Finished processing ZPE/RN2K data\n\n")
+
   
   ## -------------------------------------------------------------------------- ##
   ## Municipalities ----
@@ -455,7 +461,8 @@ if(!USE_BA_INTERSECT_CACHE){
     
   #rm(conc_areas)
   
-  
+  if(VERBOSE) cat("\n--> Finished processing municipalities data\n\n")
+
   ## -------------------------------------------------------------------------- ##
   ## COS 2018 ----
   ## -------------------------------------------------------------------------- ##
@@ -472,6 +479,8 @@ if(!USE_BA_INTERSECT_CACHE){
   
   rm(cos_2018)
   
+  if(VERBOSE) cat("\n--> Finished processing COS 2018 data\n\n")
+ 
   
   ## -------------------------------------------------------------------------- ##
   ## Open Street Maps road data ----
@@ -489,6 +498,8 @@ if(!USE_BA_INTERSECT_CACHE){
   readr::write_rds(ba_osm_roads, "ba_osm_roads.rds")
   
   rm(osm)
+
+  if(VERBOSE) cat("\n--> Finished processing OSM roads data\n\n")
   
   
   ## -------------------------------------------------------------------------- ##
@@ -508,6 +519,8 @@ if(!USE_BA_INTERSECT_CACHE){
   
   rm(hydro_net)
   
+  if(VERBOSE) cat("\n--> Finished processing river data\n\n")
+
   
   ## -------------------------------------------------------------------------- ##
   ## MS Buildings footprint ----
@@ -525,6 +538,8 @@ if(!USE_BA_INTERSECT_CACHE){
   readr::write_rds(ba_msb_buildings,"ba_msb_buildings.rds")
   
   rm(msb)
+
+  if(VERBOSE) cat("\n--> Finished processing MSBuildings data\n\n")
 
   
   ## -------------------------------------------------------------------------- ##
@@ -545,7 +560,8 @@ if(!USE_BA_INTERSECT_CACHE){
   
   rm(bgri)  
 
-  
+  if(VERBOSE) cat("\n--> Finished processing INE/BGRI data\n\n")
+
 }else{
   
   ba_rnap          <- read_rds("ba_rnap.rds")
@@ -760,6 +776,13 @@ municipais, caminhos, trilhos), foram potencialmente afetados **`{r} scales::com
 
 portugal_mainland <- read_sf("../data/vector/CAOP_Continente_2023/PT_caop2020_bounds_WGS84.shp")
 
+# hshade <- rast("../data/raster/DEM_SRTM/Hilshade_DEM_SRTM_WGS84GCS.tif")
+# names(hshade) <- "hshade"
+
+dem <- rast("../data/raster/DEM_SRTM/DEM_SRTM_WGS84GCS.tif")
+names(dem) <- "dem"
+
+
 breaks <- c(0, 1E-6, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 30000)
 
 reds <- colorRampPalette(c("#FFFFFF", "#A31212"))(length(breaks) - 1)
@@ -787,22 +810,33 @@ ggplot() +
   # annotation_raster(hillshade_map, xmin = pt_bbox[1], xmax = pt_bbox[3], 
   #                   ymin = pt_bbox[2], ymax = pt_bbox[4]) +
   
-  geom_sf(data = portugal_mainland, fill = NA, color = "darkgrey",
-          fill="grey",alpha=0.5, size = 0.5) +
+  #geom_spatraster(data = hshade, aes(fill=hshade)) + 
+  geom_spatraster(data = dem, aes(fill=dem), alpha=0.25) + 
+
+scale_fill_gradientn(
+    colors = c("darkgreen", "green", "yellow", "orange", "brown", "white"), # Topographic colors
+    values = scales::rescale(c(0, 200, 400, 600, 800, 1000, 2000)),  # Adjust values based on elevation ranges
+    name = "Altitude (m)",  # Legend name
+    na.value = "transparent"  # Handle missing values
+  ) +
+  
+  geom_sf(data = portugal_mainland, color = "darkgrey",
+          fill=NA, size = 0.5) +
 
   geom_sf(data = effis_sp_2024, 
-          mapping = aes(fill = ba_class), 
-          color="black") +
+          #mapping = aes(fill = ba_class), 
+          color="darkred",
+          fill=NA) +
   
-  scale_fill_manual(
-    values = reds,
-    name = "Área ardida (ha)") +
+  # scale_fill_manual(
+  #   values = reds,
+  #   name = "Área ardida (ha)") +
   labs(title = "Áreas ardidas em Portugal continental 2024",
        caption = paste0(
-         "Dados: Copernicus/EFFIS - European Forest Fire Information System (data: ",
+         "Dados: Copernicus/EFFIS - European Forest Fire Information System \n(data: ",
        format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves")) +
   theme_minimal() +
-  theme(legend.position = "right", text = element_text(size = 13))
+  theme(legend.position = "right", text = element_text(size = 13))  
 ```
 
 
@@ -899,7 +933,7 @@ plot(g_annual_totals)
 #| echo: false
 #| warning: false
 #| error: false
-#| fig-height: 5
+#| fig-height: 6
 #| fig-width: 8
 #| message: false
 
