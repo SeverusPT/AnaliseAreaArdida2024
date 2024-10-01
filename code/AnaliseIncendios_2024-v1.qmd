@@ -61,13 +61,13 @@ USE_TEST_DATA <- FALSE
 
 USE_COSC2024_CACHE <- TRUE
 
-VERBOSE_ON_COSC24 <- TRUE
+VERBOSE_ON_COSC24 <- FALSE
 
 USE_BA_INTERSECT_CACHE <- TRUE
 
 BIG_FIRE_THRESH <- 1000
 
-VERBOSE <- TRUE
+VERBOSE <- FALSE
 
 ```
 
@@ -78,8 +78,8 @@ VERBOSE <- TRUE
 ## Aviso / Disclaimer
 
 Esta análise é preliminar e reflete os dados a que os autores tiveram acesso à data de 
-criação deste documento. Esta análise não é definitiva e os valores poderão mudar assim que atualizações e modificações dos dados forem disponibilizadas (por razões diversas e fora do controlo 
-dos autores).      
+criação deste documento. Esta análise não é definitiva e os valores poderão mudar assim que atualizações 
+e modificações dos dados forem disponibilizadas (por razões diversas e fora do controlo dos autores).      
 
 Atualizações deste relatório serão disponibilizadas assim que modificações relevantes 
 dos perímetros de área ardida fornecidos pelo Sistema Europeu Copernicus/EFFIS forem disponibilizados.
@@ -95,7 +95,8 @@ mencionadas.
 O uso inadequado ou a interpretação incorreta dos resultados, especialmente sem um conhecimento
 profundo das incertezas associadas, é da inteira responsabilidade de quem os utiliza. 
 Recomenda-se que os resultados apresentados sejam sempre analisados ou interpretados com 
-cautela, e que, se necessário, sejam complementados por outras fontes de informação e validações adicionais.     
+cautela, e que, se necessário, sejam complementados por outras fontes de informação e validações 
+adicionais.     
 
 :::
 
@@ -114,8 +115,8 @@ para o formato horizontal para aceder ao índice de conteúdos (do lado direito 
 
 ## Código fonte das análises
 
-O código R utilizado em formato Quarto usado para produzir estas análises será disponibilizado no 
-endereço: [https://github.com/SeverusPT/AnaliseAreaArdida2024](https://github.com/SeverusPT/AnaliseAreaArdida2024)
+O código R utilizado para produzir estas análises está disponível no link:     
+[https://github.com/SeverusPT/AnaliseAreaArdida2024](https://github.com/SeverusPT/AnaliseAreaArdida2024)
 
 :::
 
@@ -171,8 +172,8 @@ de dados:
 
 - **Dados Censos 2021 - BGRI**: [Link geral](https://mapas.ine.pt/download/index2021.phtml) | [link dados](https://mapas.ine.pt/download/filesGPG/2021/BGRI21_CONT.zip)
 
-[^1]: Este conjunto de dados foi atualizado (27/09/2024) com a área correspondente à Paisagem Protegida Regional 
-da Serra da Aboboreira (PPRSA).
+[^1]: Este conjunto de dados foi atualizado (27/09/2024) com a área correspondente à 
+Paisagem Protegida Regional da Serra da Aboboreira (PPRSA).
 
        
 ### 1.2. Métodos      
@@ -827,7 +828,12 @@ scale_fill_gradientn(
           #mapping = aes(fill = ba_class), 
           color="darkred",
           fill=NA) +
-  
+  annotation_scale(
+        location = "br",     # Location of the scale bar ("bl" = bottom left)
+        width_hint = 0.25,    # Relative width of the scale bar (0.5 = 50% of plot width)
+        unit_category = "metric",  # Use metric units (meters)
+        height = unit(0.25, "cm"),  # Height of the scale bar
+        text_cex = 1) +
   # scale_fill_manual(
   #   values = reds,
   #   name = "Área ardida (ha)") +
@@ -865,7 +871,9 @@ kable(wf_counts,
       format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
       longtable = TRUE,
       caption = "Número de incêndios por dimensão da área ardida",
-      col.names = c("Classe","Nr. ocorrências", "Percentagem 2024", "Nr. ocorrências após 15 set", "Percentagem classe após 15 set")) %>%
+      col.names = c("Classe","Nr. ocorrências", "Percentagem 2024", 
+                    "Nr. ocorrências após 15 set", 
+                    "Percentagem classe após 15 set")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
                 latex_options = "repeat_header")
 
@@ -957,15 +965,23 @@ plot(g_2024_monthly_totals)
 
 ### 2.1. Área ardida por classe de uso/coberto do solo
 
-Tendo por base os dados de área ardida foi elaborada uma análise relativamente à distribuição dessa em função das categorias de uso/coberto do solo. Para esse efeito recorreu-se a duas bases de dados de referência para Portugal continental:
+Tendo por base os dados de área ardida foi elaborada uma análise relativamente à distribuição 
+dessa em função das categorias de uso/coberto do solo. Para esse efeito recorreu-se a duas bases 
+de dados de referência para Portugal continental:
 
--   **Carta de Ocupação do Solo Conjuntural** para o ano de 2024 (**COSc 2024**, período pré-verão; Fonte: DGT) e a,
+-   **Carta de Ocupação do Solo Conjuntural** para o ano de 2024 (**COSc 2024**, período pré-verão; 
+Fonte: DGT) e a,
 
 -   **Carta de Uso e Ocupação do Solo** (**COS 2018**; Fonte: DGT).
 
-No primeiro conjunto de dados -- COSc 2024 -- procurou-se a elevada atualidade desta base de dados para efeito da compreensão das categorias mais afetadas pelos incêndios. Enquanto que para a COS 2018 buscou-se uma complementaridade das fontes de informação, assim como maior resolução temática deste conjunto de dados (i.e., maior número de categorias e, portanto, maior grau de discriminação dos tipos de uso/coberto do solo).
+No primeiro conjunto de dados -- COSc 2024 -- procurou-se a elevada atualidade desta base de dados 
+para efeito da compreensão das categorias mais afetadas pelos incêndios. Enquanto que para a COS 2018 
+buscou-se uma complementaridade das fontes de informação, assim como maior resolução temática deste 
+conjunto de dados (i.e., maior número de categorias e, portanto, maior grau de discriminação dos tipos 
+de uso/coberto do solo).
 
-Os resultados desta análise são apresentados nas subsecções seguintes tendo por base cada um destes datasets de uso/ocupação do solo.
+Os resultados desta análise são apresentados nas subsecções seguintes tendo por base cada um destes 
+datasets de uso/ocupação do solo.
 
 ```{r ba-cosc2024-land-use-cover}
 #| echo: false
@@ -1293,6 +1309,13 @@ ggplot(data = ba_conc) +
        caption = paste0(
          "Dados: Copernicus/EFFIS - European Forest Fire Information System \n(data: ",
        format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves")) +
+  
+  annotation_scale(
+        location = "br",     # Location of the scale bar ("bl" = bottom left)
+        width_hint = 0.25,    # Relative width of the scale bar (0.5 = 50% of plot width)
+        unit_category = "metric",  # Use metric units (meters)
+        height = unit(0.25, "cm"),  # Height of the scale bar
+        text_cex = 1) +
   theme_minimal() +
   theme(legend.position = "right", text = element_text(size = 13))
 
@@ -1337,6 +1360,12 @@ ggplot(data = ba_conc) +
        caption = paste0(
          "Dados: Copernicus/EFFIS - European Forest Fire Information System \n(data: ",
        format(Sys.Date(), "%d/%m/%Y"),")\nAutor: J. Gonçalves")) +
+  annotation_scale(
+        location = "br",     # Location of the scale bar ("bl" = bottom left)
+        width_hint = 0.25,    # Relative width of the scale bar (0.5 = 50% of plot width)
+        unit_category = "metric",  # Use metric units (meters)
+        height = unit(0.25, "cm"),  # Height of the scale bar
+        text_cex = 1) +
   theme_minimal() +
   theme(legend.position = "right", text = element_text(size = 13))
 
@@ -1446,6 +1475,10 @@ ba_effis_bigfires <-
   effis_data_2024 %>%
   filter(area_ht >= BIG_FIRE_THRESH)
 
+ba_effis_bigfires_utm <-
+  effis_sp_2024_utm %>%
+  filter(area_ht >= BIG_FIRE_THRESH)
+
 ba_cosc24_bigfires <-
 ba_cosc24_freqs_wide %>%
   mutate(ba_tots_ha = rowSums(across(-fid))) %>%
@@ -1522,11 +1555,11 @@ bf_list_locs <-
 ba_effis_bigfires %>% 
   mutate(perc_bf = (area_ht / as.numeric(yr_2024_total[1,1]))*100) %>% 
   left_join(bf_municips, by="id") %>% 
-  arrange(fire_dt, COMMUNE) %>% 
-  select(fire_dt, week, COMMUNE,bf_municip_in, area_ht, perc_bf)  
+  arrange(fire_dt, COMMUNE) 
     
 
-kable(bf_list_locs,
+kable(bf_list_locs %>% 
+  select(fire_dt, week, COMMUNE,bf_municip_in, area_ht, perc_bf),
       digits = 1,
       format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
       longtable = TRUE,
@@ -1661,6 +1694,173 @@ plot(bf_cos18)
 ```
 
 
+## Severidade dos grandes incêndios de 2024
+
+::: {.callout-warning}
+
+## Aviso
+
+Estes são resultados preliminares e ainda incompletos para algumas áreas devido à 
+falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
+
+:::
+
+::: {.callout-note}
+
+## Acesso/descarregamento aos dados de severidade 
+
+Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte 
+link (com metadados): 
+[SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.zip)
+
+:::
+
+
+A severidade da área ardida foi calculada a partir de imagens do satélite ótico **Sentinel-2**
+utilizando o índice espectral *Normalized Burn Ratio (NBR)*, que mede a diferença da 
+reflectância da superfície terrestre entre as bandas do infravermelho próximo (NIR) 
+e do infravermelho médio (SWIR). 
+
+$NBR = \frac{NIR - SWIR}{NIR + SWIR}$
+
+O NBR é sensível a alterações na vegetação e no solo devidas ao fogo. Para avaliar a 
+severidade do fogo, comparou-se o NBR pré-fogo (NBR pré) com o NBR pós-fogo (NBR pós),
+utilizando o indicador Relativized Burn Ratio (RBR). Este indicador permite uma 
+quantificação mais robusta das mudanças no terreno, eliminando as variações relativas 
+entre os diferentes tipos de ecossistemas. A fórmula do RBR é dada por:
+
+$dNBR = NBR_{pré} - NBR_{pós}$
+
+$RBR = \frac{dNBR}{NBR_{pré} + 1.001}$
+
+Este cálculo foi aplicado em imagens de satélite antes e depois do fogo para produzir 
+mapas de severidade da área ardida.
+
+As classes de severidade para o indicador *NBR/RBR* foram obtidas através da análise 
+das distribuições para os anos 2018 - 2023 com base nos produtos gerados pelo projeto SeverusPT. A partição das classes foi obtida pelos percentis da distribuição de 20%, 40%... 
+a 80% para os valores de *NBR/RBR* superiores a zero:
+
+
+|    De      |    Para  |   Nível de severidade   |
+|------------|----------|-------------------------|
+|   [min]    |    0     | Não ardido              |
+|    0       |   1455   | Muito baixa             |
+|   1455     |   2750   | Baixa                   |
+|   2750     |   3801   | Média                   |
+|   3801     |   4900   | Elevada                 |
+|   4900     |   [max]  | Muito elevada           |
+
+
+```{r severity-table-areas-per-sev-class}
+#| warning: false
+#| message: false
+#| error: false
+#| echo: false
+
+
+sev_s2_rbr <- rast("../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.tif")
+
+
+sev_vals <- terra::extract(sev_s2_rbr, ba_effis_bigfires_utm) #%>% 
+  #filter(RBR > 0)
+
+
+# Define breaks and labels for the RBR classes
+breaks <- c(-Inf, 0, 1455, 2750, 3801, 4900, Inf)
+labels <- c("Não ardido/Sem dano", "Muito baixa", "Baixa", 
+            "Média", "Elevada", "Muito elevada")
+
+# Categorize RBR into the classes using cut()
+sev_vals$RBR_class <- cut(sev_vals$RBR, 
+                          breaks = breaks, 
+                          labels = labels, 
+                          right = FALSE)
+
+sev_abs_freq_ <- table(sev_vals$ID, sev_vals$RBR_class)*0.04
+
+sev_areas_estim <- sev_abs_freq_ %>% apply(1, sum)
+sev_areas_init <- ba_effis_bigfires_utm$area_ht
+
+area_to_estim <- sev_areas_estim - sev_areas_init
+area_to_estim[area_to_estim >= 0] <- 0
+area_to_estim[area_to_estim < 0 & area_to_estim >= -10] <- 0
+area_to_estim <- area_to_estim*-1
+
+
+sev_abs_freq <- as.data.frame.matrix(sev_abs_freq_[,-1]) %>% 
+  mutate(fid = as.character(ba_effis_bigfires_utm$id)) %>% 
+  mutate(area_to_estim = area_to_estim)
+
+sev_abs_freq <- sev_abs_freq %>% arrange(desc(`Elevada`+`Muito elevada`))
+
+sev_abs_freq <- sev_abs_freq %>% 
+  left_join(bf_list_locs, by=c("fid"="id"))
+
+
+
+kable(sev_abs_freq %>% 
+  select(fid, COMMUNE,bf_municip_in, `Muito baixa`:`Muito elevada`,area_to_estim),
+      digits = 0,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Severidade da área ardida nos grandes incêndios de 2024 (em hectares por classe de severidade usando o indicador NBR/RBR). A tabela foi ordenada de forma descendente com base na soma das classes de elevada e muito elevada severidade. A área por estimar deve-se a ausência de imagens de satélite, ou à presença de nuvens nas mesmas, à data desta análise.",
+      col.names = c("ID_EFFIS",
+                    "Localidade",
+                    "Municípios", 
+                    "Muito baixa (ha)", 
+                    "Baixa (ha)",
+                    "Média (ha)",
+                    "Elevada (ha)",
+                    "Muito elevada (ha)",
+                    "Área por estimar (ha)")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+
+```
+
+     
+Apresentam-se abaixo os resultados da distribuição da área ardida pelas classes 
+de severidade para o indicador *NBR / RBR*.     
+
+     
+```{r severity-table-percs-per-sev-class}}
+#| warning: false
+#| message: false
+#| error: false
+#| echo: false
+
+sev_rel_freq <- prop.table(sev_abs_freq %>%
+                             select(`Muito baixa`:`Muito elevada`,area_to_estim)  %>% 
+                             as.matrix, margin = 1)*100
+sev_rel_freq <- as.data.frame.matrix(sev_rel_freq)
+sev_rel_freq <- sev_rel_freq %>% 
+  mutate(fid = as.character(sev_abs_freq$fid)) %>% 
+  left_join(bf_list_locs, by=c("fid"="id"))
+
+
+sev_rel_freq <- sev_rel_freq %>% arrange(desc(`Elevada`+`Muito elevada`))
+
+
+kable(sev_rel_freq %>% 
+  select(fid, COMMUNE,bf_municip_in, `Muito baixa`:`Muito elevada`,area_to_estim),
+      digits = 2,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Severidade da área ardida nos grandes incêndios de 2024 (em % por classe de severidade usando o indicador NBR/RBR). A tabela foi ordenada de forma descendente com base na soma das classes de elevada e muito elevada severidade. A área por estimar deve-se a ausência de imagens de satélite, ou à presença de nuvens nas mesmas, à data desta análise.",
+      col.names = c("ID_EFFIS",
+                    "Localidade",
+                    "Municípios", 
+                    "% Muito baixa", 
+                    "% Baixa",
+                    "% Média",
+                    "% Elevada",
+                    "% Muito elevada",
+                    "% Área por estimar")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+
+
+```
 
 
 ```{r big-fire-analysis-maps}
@@ -1670,8 +1870,8 @@ plot(bf_cos18)
 #| echo: false
 #| results: asis
 #| output: asis
-#| fig-height: 7
-#| fig-width: 8
+#| fig-height: 8
+#| fig-width: 9
 
 
 land_cover_colors <- c(
@@ -1692,7 +1892,42 @@ land_cover_colors <- c(
   "Água"                     = "#362ecc"
 )
 
+sev_breaks <- c(-Inf, 0, 1455, 2750, 3801, 4900, Inf)
+sev_labels <- c("Não ardido", "Muito baixa", "Baixa", 
+            "Média", "Elevada", "Muito elevada")
 
+from_to_recl <- as.matrix(data.frame(
+  from = c(-Inf, 0, 1455, 2750, 3801, 4900),
+  to = c(0, 1455, 2750, 3801, 4900, Inf),
+  becomes = 0:5
+))
+
+# Reclassify the raster based on the breaks
+# rbr_classified <- classify(sev_s2_rbr, 
+#                            rcl = from_to_recl)
+# 
+# # Convert the reclassified raster to a factor (to represent categorical data)
+# rbr_classified <- as.factor(rbr_classified)
+
+# Assign labels to the classified raster
+#levels(rbr_classified) <- sev_labels
+
+cols <- c("#52BAE3","#FFA07A", "#FF6347", 
+          "#BF3D3D", "#8B0000", "#000000")
+
+# cols <- c("#52BAE3",#"#FFFFFF",
+#                "#EDB4B4",
+#                "#D46A6A",
+#                "#BF3D3D",
+#                "#911717",
+#                "#000000")
+# Define custom colors for each class
+sev_cols <- c("Não ardido"  = cols[1], 
+            "Muito baixa"   = cols[2], 
+            "Baixa"         = cols[3], 
+            "Média"         = cols[4], 
+            "Elevada"       = cols[5], 
+            "Muito elevada" = cols[6])
 
 
 for(i in 1:(ifelse(USE_TEST_DATA,3,
@@ -1701,7 +1936,7 @@ for(i in 1:(ifelse(USE_TEST_DATA,3,
 
   sink(tempfile())
 
-  # Active/targe big fire ID used for analysis
+  # Active/target big fire ID used for analysis
   bf_id <- ba_cosc24_bigfires$id[i]
   
   # ------------------------------------------------------------ #
@@ -1747,6 +1982,8 @@ for(i in 1:(ifelse(USE_TEST_DATA,3,
   big_fire_spatvec <- as(big_fire_sp, "SpatVector")
 
 
+  ## Crop COSc 2024 ----
+  
   bf_cosc24_crop <- mask(crop(cosc_2024, big_fire_spatvec),
                          big_fire_spatvec) %>%
     project("EPSG:4326", method = "near") %>%
@@ -1755,7 +1992,26 @@ for(i in 1:(ifelse(USE_TEST_DATA,3,
   levels(bf_cosc24_crop) <- data.frame(ID = as.integer(lucc_df$value),
                                        category = lucc_df$label)
 
+  ## Crop severity raster ----
+  
+  rbr_classified_crop <- mask(crop(sev_s2_rbr, big_fire_spatvec),
+                         big_fire_spatvec) %>%
+    project("EPSG:4326", method = "near")
+  
+  
+  rbr_classified_crop <- classify(rbr_classified_crop, 
+                           rcl = from_to_recl)
 
+  # Convert the reclassified raster to a factor (to represent categorical data)
+  #rbr_classified_crop <- as.factor(rbr_classified_crop)
+  suppressMessages(suppressWarnings(
+  levels(rbr_classified_crop) <- data.frame(ID = 0:5,
+                                            RBR = sev_labels)
+  ))
+# 
+#   levels(rbr_classified_crop) <- data.frame(ID = as.integer(lucc_df$value),
+#                                        category = lucc_df$label)
+  
   # ------------------------------------------------------------ #
   # Analysis for roads ----
   # ------------------------------------------------------------ #
@@ -1884,7 +2140,11 @@ for(i in 1:(ifelse(USE_TEST_DATA,3,
                            maptype = "alidade_smooth")
   ))
 
-  # Make the map
+  
+  # ------------------------------------------------------------------- ##
+  # Make the COSc 2024 map ----
+  # ------------------------------------------------------------------- ##
+
   gg_big_fire_map <- suppressMessages(
     suppressWarnings(
 
@@ -1937,6 +2197,72 @@ for(i in 1:(ifelse(USE_TEST_DATA,3,
 
     ))
 
+    bf_cosc24_crop <- mask(crop(cosc_2024, big_fire_spatvec),
+                         big_fire_spatvec) %>%
+    project("EPSG:4326", method = "near") %>%
+    as.factor
+  #names(bf_cosc24_crop) <- "cosc24"
+  levels(bf_cosc24_crop) <- data.frame(ID = as.integer(lucc_df$value),
+                                       category = lucc_df$label)
+
+  # ------------------------------------------------------------------- ##
+  # Make the severity map ----
+  # ------------------------------------------------------------------- ##
+
+  gg_big_fire_map_sev <- suppressMessages(
+    suppressWarnings(
+
+      ggmap(basemap) +
+        
+      geom_spatraster(data = rbr_classified_crop, 
+                        mapping = aes(fill = RBR)) +
+        
+    scale_fill_manual(values = sev_cols, name = "Severidade",
+                          na.value = "transparent") + 
+        
+  geom_sf(data = big_fire_sp,
+                fill = NA,
+                alpha = 0.3,
+                color = "#9E1414",
+                size = 1,
+                inherit.aes = FALSE) +
+
+        geom_sf(data = conc_wgs,
+                fill = NA,
+                alpha = 0.3,
+                color = "black",
+                size = 0.5,
+                inherit.aes = FALSE) +
+
+        geom_sf_label(data = conc_crop,
+                      mapping = aes(label = Municipio),
+                      size = 3,
+                      alpha = 0.6,
+                      color = "black",
+                      inherit.aes = FALSE) +
+
+        coord_sf(crs = st_crs(4326)) +
+
+        labs(title = "Severidade da área ardida (NBR/RBR)",
+             subtitle = municp_str) +
+        xlab(NA) +
+        ylab(NA) +
+
+      annotation_scale(
+        location = "br",     # Location of the scale bar ("bl" = bottom left)
+        width_hint = 0.25,    # Relative width of the scale bar (0.5 = 50% of plot width)
+        unit_category = "metric",  # Use metric units (meters)
+        height = unit(0.25, "cm"),  # Height of the scale bar
+        text_cex = 1) +
+
+        theme_minimal() +
+        theme(text = element_text(size=11),
+              axis.title.x = element_blank(),    # Remove x-axis title
+              axis.title.y = element_blank()    # Remove y-axis title
+              )
+
+    ))
+  
   sink()
 
   # ------------------------------------------------------------ #
@@ -1955,9 +2281,18 @@ for(i in 1:(ifelse(USE_TEST_DATA,3,
     plot(gg_big_fire_map)
   ))
   
+  
   cat("\n\n")
-  cat("<hr>")
   cat("\n\n")
+  
+  suppressMessages(suppressWarnings(
+    plot(gg_big_fire_map_sev)
+  ))
+  
+  
+  cat("\n\n")
+  cat("\n\n")
+  
   
   cat("- **Total área ardida** (Fonte: EFFIS):",
       scales::comma(round(big_fire_sp$area_ht[1],1))," hectares\n\n")
@@ -2030,6 +2365,39 @@ for(i in 1:(ifelse(USE_TEST_DATA,3,
 
   cat("\n\n")
 
+  
+  cat("\n\n**Área (hectares) e % ardida por classe de severidade (NBR/RBR, Sentinel-2)**\n\n")
+
+  suppressMessages(suppressWarnings(
+      sev_abs_freq %>% 
+      filter(fid == bf_id) %>% 
+      select(`Muito baixa`:`Muito elevada`,area_to_estim) %>%
+        mutate(across(1:6, round, digits = 1)) %>%
+    `colnames<-`(c("Muito baixa (ha)","Baixa (ha)","Média (ha)",
+                   "Elevada (ha)","Muito elevada (ha)","Por apurar (ha)")) %>%
+      #mutate(Classe_COS2018 = insert_line_break(Classe_COS2018, 35)) %>%
+    flextable() %>%
+    set_table_properties(width = 0.9, layout = "autofit") %>%
+    flextable_to_rmd()
+  ))
+
+    suppressMessages(suppressWarnings(
+      sev_rel_freq %>% 
+      filter(fid == bf_id) %>% 
+      select(`Muito baixa`:`Muito elevada`,area_to_estim) %>%
+        mutate(across(1:6, round, digits = 1)) %>%
+    `colnames<-`(c("% Muito baixa","% Baixa","% Média",
+                   "% Elevada","% Muito elevada", "% Por apurar")) %>%
+      #mutate(Classe_COS2018 = insert_line_break(Classe_COS2018, 35)) %>%
+    flextable() %>%
+    set_table_properties(width = 0.9, layout = "autofit") %>%
+    flextable_to_rmd()
+  ))
+
+  cat("\n\n")
+  
+
+  
   cat("\n\n**Afetação potencial de rios e ribeiros (fonte: EU-Hydro River Network Database)**\n\n")
 
   suppressMessages(suppressWarnings(
