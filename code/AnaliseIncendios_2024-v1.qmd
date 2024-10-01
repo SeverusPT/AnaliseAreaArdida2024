@@ -1,5 +1,10 @@
 ---
 title: "Análise da área ardida em Portugal continental no ano de 2024"
+execute:
+   echo: false
+   warning: false
+   error: false
+   message: false
 author: 
   - name: "João Gonçalves"
     orcid: 0000-0002-6615-0218
@@ -43,11 +48,8 @@ editor_options:
   chunk_output_type: inline
 ---
 
-```{r params}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: params
 
 
 DO_FASTERIZE_ON_EFFIS <- FALSE
@@ -73,79 +75,50 @@ VERBOSE <- FALSE
 
 \newpage
 
-
-::: {.callout-warning}
+::: callout-warning
 ## Aviso / Disclaimer
 
-Esta análise é preliminar e reflete os dados a que os autores tiveram acesso à data de 
-criação deste documento. Esta análise não é definitiva e os valores poderão mudar assim que atualizações 
-e modificações dos dados forem disponibilizadas (por razões diversas e fora do controlo dos autores).      
+Esta análise é preliminar e reflete os dados a que os autores tiveram acesso à data de criação deste documento. Esta análise não é definitiva e os valores poderão mudar assim que atualizações e modificações dos dados forem disponibilizadas (por razões diversas e fora do controlo dos autores).
 
-Atualizações deste relatório serão disponibilizadas assim que modificações relevantes 
-dos perímetros de área ardida fornecidos pelo Sistema Europeu Copernicus/EFFIS forem disponibilizados.
+Atualizações deste relatório serão disponibilizadas assim que modificações relevantes dos perímetros de área ardida fornecidos pelo Sistema Europeu Copernicus/EFFIS forem disponibilizados.
 
-As fontes de dados podem estar sujeitas a variações temporais e espaciais, imprecisões ou inexatidões 
-de ordem diversa assim como a erros inerentes aos processos de recolha e processamento de informação 
-completamente alheios aos autores.     
+As fontes de dados podem estar sujeitas a variações temporais e espaciais, imprecisões ou inexatidões de ordem diversa assim como a erros inerentes aos processos de recolha e processamento de informação completamente alheios aos autores.
 
-Os autores deste relatório não assumem qualquer responsabilidade por decisões ou ações tomadas 
-com base nos dados, análises ou conclusões aqui apresentadas sem a devida consideração das limitações
-mencionadas.      
+Os autores deste relatório não assumem qualquer responsabilidade por decisões ou ações tomadas com base nos dados, análises ou conclusões aqui apresentadas sem a devida consideração das limitações mencionadas.
 
-O uso inadequado ou a interpretação incorreta dos resultados, especialmente sem um conhecimento
-profundo das incertezas associadas, é da inteira responsabilidade de quem os utiliza. 
-Recomenda-se que os resultados apresentados sejam sempre analisados ou interpretados com 
-cautela, e que, se necessário, sejam complementados por outras fontes de informação e validações 
-adicionais.     
-
+O uso inadequado ou a interpretação incorreta dos resultados, especialmente sem um conhecimento profundo das incertezas associadas, é da inteira responsabilidade de quem os utiliza. Recomenda-se que os resultados apresentados sejam sempre analisados ou interpretados com cautela, e que, se necessário, sejam complementados por outras fontes de informação e validações adicionais.
 :::
 
-
-::: {.callout-note}
-
+::: callout-note
 ## Info
 
-Se está a ver este relatório em um smartphone ou tablet, experimente rodar o ecrã 
-para o formato horizontal para aceder ao índice de conteúdos (do lado direito do ecrã).
-
+Se está a ver este relatório em um smartphone ou tablet, experimente rodar o ecrã para o formato horizontal para aceder ao índice de conteúdos (do lado direito do ecrã).
 :::
 
-
-::: {.callout-note}
-
+::: callout-note
 ## Código fonte das análises
 
-O código R utilizado para produzir estas análises está disponível no link:     
-[https://github.com/SeverusPT/AnaliseAreaArdida2024](https://github.com/SeverusPT/AnaliseAreaArdida2024)
-
+O código R utilizado para produzir estas análises está disponível no link:\
+<https://github.com/SeverusPT/AnaliseAreaArdida2024>
 :::
 
-::: {.callout-note}
-
+::: callout-note
 ## Agradecimentos
 
-Este relatório foi financiado pela Fundação para a Ciência e a Tecnologia (FCT) no 
-âmbito do projeto **SeverusPT** --- *"Um serviço e produto de dados baseados na web para a 
-avaliação e previsão de severidade de incêndio em Portugal continental"*.     
+Este relatório foi financiado pela Fundação para a Ciência e a Tecnologia (FCT) no âmbito do projeto **SeverusPT** --- *"Um serviço e produto de dados baseados na web para a avaliação e previsão de severidade de incêndio em Portugal continental"*.
 
-- Website: [https://severus.pt/](https://severus.pt/)
-- DOI: [https://doi.org/10.54499/PCIF/RPG/0170/2019](https://doi.org/10.54499/PCIF/RPG/0170/2019)      
-- Referência FCT: **PCIF/RPG/0170/2019**
+-   Website: <https://severus.pt/>
+-   DOI: <https://doi.org/10.54499/PCIF/RPG/0170/2019>
+-   Referência FCT: **PCIF/RPG/0170/2019**
 :::
-
-
 
 \newpage
 
-
 ## 1. Material e métodos
 
-          
-### 1.1. Fontes de dados espaciais/geográficos      
+### 1.1. Fontes de dados espaciais/geográficos
 
-         
-Para as análises realizadas neste relatório foram usados os seguintes conjuntos 
-de dados:
+Para as análises realizadas neste relatório foram usados os seguintes conjuntos de dados:
 
 -   **Áreas ardidas do Sistema Europeu Copernicus EFFIS (European Forest Fire Information System)**: [link geral](https://forest-fire.emergency.copernicus.eu/applications/data-%20-services) \| [link dados](https://maps.effis.emergency.copernicus.eu/effis?service=WFS&request=getfeature&typename=ms:modis.ba.poly&version=1.1.0&outputformat=SHAPEZIP)
 
@@ -155,66 +128,36 @@ de dados:
 
 -   **Carta Administrativa Oficial de Portugal - CAOP2023 (Continente)**: [link geral](https://snig.dgterritorio.gov.pt/rndg/srv/por/catalog.search#/metadata/198497815bf647ecaa990c34c42e932e) \| [link dados](https://geo2.dgterritorio.gov.pt/caop/CAOP_Continente_2023-shp.zip)
 
--  **Rede Nacional de Áreas Protegidas (RNAP)**[^1]: [link geral](https://geocatalogo.icnf.pt/catalogo.html) \| [link dados](https://si.icnf.pt/shp/rnap)
+-   **Rede Nacional de Áreas Protegidas (RNAP)**[^1]: [link geral](https://geocatalogo.icnf.pt/catalogo.html) \| [link dados](https://si.icnf.pt/shp/rnap)
 
 -   **Zonas de Proteção Especial da Diretiva Aves (ZPE) - RN2000**: [link geral](https://geocatalogo.icnf.pt/catalogo.html) \| [link dados](https://si.icnf.pt/shp/zpe)
 
 -   **Sítios da Diretiva Habitats (SIC) - RN2000**: [link geral](https://geocatalogo.icnf.pt/catalogo.html) \| [link dados](https://si.icnf.pt/shp/sic)
 
--  **Estradas e vias de trânsito - OpenStreetMaps PT**: [link geral](https://download.geofabrik.de/europe/portugal.html) | [link dados](https://download.geofabrik.de/europe/portugal.html)
+-   **Estradas e vias de trânsito - OpenStreetMaps PT**: [link geral](https://download.geofabrik.de/europe/portugal.html) \| [link dados](https://download.geofabrik.de/europe/portugal.html)
 
-- **Global ML Building Footprints** (área/polígonos de edifícios): 
-[link geral-1](https://github.com/microsoft/GlobalMLBuildingFootprints) | 
-[link geral-2](https://gee-community-catalog.org/projects/msbuildings/) | 
-[link dados](https://code.earthengine.google.com/?scriptPath=users/sat-io/awesome-gee-catalog-examples:population-socioeconomics/GLOBAL-ML-BUILDINGS)
+-   **Global ML Building Footprints** (área/polígonos de edifícios): [link geral-1](https://github.com/microsoft/GlobalMLBuildingFootprints) \| [link geral-2](https://gee-community-catalog.org/projects/msbuildings/) \| [link dados](https://code.earthengine.google.com/?scriptPath=users/sat-io/awesome-gee-catalog-examples:population-socioeconomics/GLOBAL-ML-BUILDINGS)
 
-- **Rede Hidrográfica -- EU-Hydro River Network Database 2006-2012 (NUTS: PT1)**: [link geral](https://land.copernicus.eu/en/products/eu-hydro/eu-hydro-river-network-database) | [link dados](https://land.copernicus.eu/en/products/eu-hydro/eu-hydro-river-network-database#download)
+-   **Rede Hidrográfica -- EU-Hydro River Network Database 2006-2012 (NUTS: PT1)**: [link geral](https://land.copernicus.eu/en/products/eu-hydro/eu-hydro-river-network-database) \| [link dados](https://land.copernicus.eu/en/products/eu-hydro/eu-hydro-river-network-database#download)
 
-- **Dados Censos 2021 - BGRI**: [Link geral](https://mapas.ine.pt/download/index2021.phtml) | [link dados](https://mapas.ine.pt/download/filesGPG/2021/BGRI21_CONT.zip)
+-   **Dados Censos 2021 - BGRI**: [Link geral](https://mapas.ine.pt/download/index2021.phtml) \| [link dados](https://mapas.ine.pt/download/filesGPG/2021/BGRI21_CONT.zip)
 
-[^1]: Este conjunto de dados foi atualizado (27/09/2024) com a área correspondente à 
-Paisagem Protegida Regional da Serra da Aboboreira (PPRSA).
+[^1]: Este conjunto de dados foi atualizado (27/09/2024) com a área correspondente à Paisagem Protegida Regional da Serra da Aboboreira (PPRSA).
 
-       
-### 1.2. Métodos      
-       
+### 1.2. Métodos
 
-Para a quantificação da área ardida, foram realizadas análises espaciais recorrendo 
-a ferramentas de **Sistemas de Informação Geográfica (SIG)**. Estas análises foram 
-desenvolvidas na plataforma de computação **RStudio** utilizando a linguagem **R**, 
-permitindo assim integrar, manipular, visualizar e processar grandes volumes de dados 
-geoespaciais. As ferramentas empregadas para este fim incluíram uma combinação de bibliotecas 
-especializadas no tratamento de dados vetoriais e raster, assim como para a geração de gráficos 
-e tabelas.
+Para a quantificação da área ardida, foram realizadas análises espaciais recorrendo a ferramentas de **Sistemas de Informação Geográfica (SIG)**. Estas análises foram desenvolvidas na plataforma de computação **RStudio** utilizando a linguagem **R**, permitindo assim integrar, manipular, visualizar e processar grandes volumes de dados geoespaciais. As ferramentas empregadas para este fim incluíram uma combinação de bibliotecas especializadas no tratamento de dados vetoriais e raster, assim como para a geração de gráficos e tabelas.
 
-Para o **geoprocessamento e análise de dados vetoriais**, foi utilizado o pacote 
-**sf**, que facilitou o manuseio e a análise de dados espaciais em formato vetorial. 
-Em complemento, os pacotes **terra**, **tidyterra**, **raster** e **fasterize** foram 
-usados para o **geoprocessamento e análise de dados raster**, oferecendo 
-funcionalidades robustas para a manipulação de dados em grande escala.
+Para o **geoprocessamento e análise de dados vetoriais**, foi utilizado o pacote **sf**, que facilitou o manuseio e a análise de dados espaciais em formato vetorial. Em complemento, os pacotes **terra**, **tidyterra**, **raster** e **fasterize** foram usados para o **geoprocessamento e análise de dados raster**, oferecendo funcionalidades robustas para a manipulação de dados em grande escala.
 
-A visualização de dados geoespaciais foi aprimorada com o pacote **ggmap**, que 
-permitiu a inclusão de basemaps em formato raster. Além disso, o pacote **tidyverse** 
-foi utilizado para a **manipulação, análise e agregação de dados**, permitindo uma 
-estrutura de trabalho eficiente para transformar e analisar os dados espaciais.
+A visualização de dados geoespaciais foi aprimorada com o pacote **ggmap**, que permitiu a inclusão de basemaps em formato raster. Além disso, o pacote **tidyverse** foi utilizado para a **manipulação, análise e agregação de dados**, permitindo uma estrutura de trabalho eficiente para transformar e analisar os dados espaciais.
 
-Para a **renderização de gráficos e mapas**, os pacotes **ggplot2** e **patchwork** 
-foram aplicados, proporcionando a criação de visualizações detalhadas e a composição de 
-gráficos e mapas. Finalmente, a **formatação e renderização de tabelas** foi 
-feita através dos pacotes **knitr**, **kableExtra** e **flextable**, garantindo a 
-apresentação dos resultados tabulares.
+Para a **renderização de gráficos e mapas**, os pacotes **ggplot2** e **patchwork** foram aplicados, proporcionando a criação de visualizações detalhadas e a composição de gráficos e mapas. Finalmente, a **formatação e renderização de tabelas** foi feita através dos pacotes **knitr**, **kableExtra** e **flextable**, garantindo a apresentação dos resultados tabulares.
 
-Todo o fluxo de trabalho visou garantir a precisão e repetibilidade da análise espacial 
-e estatística dos dados, permitindo uma compreensão abrangente das áreas ardidas e a 
-geração de outputs rigorosos e acessíveis para a interpretação dos incêndios no ano de 
-2024. 
+Todo o fluxo de trabalho visou garantir a precisão e repetibilidade da análise espacial e estatística dos dados, permitindo uma compreensão abrangente das áreas ardidas e a geração de outputs rigorosos e acessíveis.
 
-
-```{r load-packages-set-params}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: load-packages-set-params
 
 
 library(tidyverse)
@@ -288,11 +231,9 @@ shorten_string <- function(input_string, n = 40) {
 
 ```
 
-```{r load-data-intersect-bas}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: load-data-intersect-bas 
+
 
 ## SPATIAL DATA
 effis_sp <- read_sf("../data/vector/EFFIS_data/effis_pt.shp") %>% 
@@ -592,16 +533,13 @@ if(!USE_BA_INTERSECT_CACHE){
 
 ```
 
-
 \newpage
 
 ## 2. Área ardida em Portugal continental (2024)
 
-```{r make-ba-subtotals-stats}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: make-ba-subtotals-stats
+
 
 annual_totals <-
 effis_data %>% 
@@ -644,12 +582,8 @@ perc_15sept <- as.numeric(after_15sept_total[1,1]) / as.numeric(yr_2024_total[1,
 
 ```
 
-```{r ba-rivers-impact}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
-#| cache: true
+```{r}
+#| label: ba-rivers-impact
 
 ba_hydro_summary <- 
 ba_hydro_net %>% 
@@ -664,12 +598,8 @@ ba_hydro_net %>%
 
 ```
 
-
-```{r ba-by-size-class}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label:  ba-by-size-class
 
 
 # Define the breaks for the wildfire size classes
@@ -724,53 +654,27 @@ wf_area_cats <- data.frame(cats=categories, area_ht = effis_data_2024$area_ht) %
 
 ```
 
-
-
 ### Síntese geral
 
+À data de `{r} format(Sys.Date(), "%d/%m/%Y")` a área ardida no ano de 2024, de acordo com os dados do Sistema Copernicus/EFFIS (*European Forest Fire Information System*) é igual a **`{r} scales::comma(round(as.numeric(yr_2024_total[1,1]),1))` hectares**. De acordo com esta informação, no mês de setembro arderam **`{r} scales::comma(round(as.numeric(yr_2024_month_totals[9,2]),1))` hectares** dos quais **`{r} scales::comma(round(as.numeric(after_15sept_total[1,1]),1))` hectares** ocorreram após o dia 15 de setembro de 2024 (inclusive; ou seja, correspondente `{r} round(perc_15sept*100,1)`% do total anual).
 
-À data de `{r} format(Sys.Date(), "%d/%m/%Y")` a área ardida no ano de 2024, de acordo com os dados do Sistema Copernicus/EFFIS (*European Forest Fire Information System*) é igual a **`{r} scales::comma(round(as.numeric(yr_2024_total[1,1]),1))` hectares**. De acordo com esta informação, no mês de setembro arderam **`{r} scales::comma(round(as.numeric(yr_2024_month_totals[9,2]),1))` hectares** dos quais **`{r} scales::comma(round(as.numeric(after_15sept_total[1,1]),1))` hectares** ocorreram após o dia 15 de setembro de 2024  (inclusive; ou seja, correspondente `{r} round(perc_15sept*100,1)`% do total anual).
+Segundo os dados do EFFIS, foram contabilizados **`{r} sum(wf_counts$Nr_incendios_2024)`** ocorrências de incêndio das quais **`{r} nrow(Nr_inc_15set)`** ocorreram após o dia *15 de setembro* (inclusive), correspondente a **`{r} round((nrow(Nr_inc_15set) / sum(wf_counts$Nr_incendios_2024)) * 100, 1)`%** do total anual.
 
-Segundo os dados do EFFIS, foram contabilizados **`{r} sum(wf_counts$Nr_incendios_2024)`** ocorrências 
-de incêndio das quais **`{r} nrow(Nr_inc_15set)`** ocorreram após o dia *15 de setembro* (inclusive),
-correspondente a **`{r} round((nrow(Nr_inc_15set) / sum(wf_counts$Nr_incendios_2024)) * 100, 1)`%** do 
-total anual.
+Em termos de afetação potencial de áreas com estatuto de conservação/proteção, um total de **`{r} scales::comma(round(sum(ba_rnap$ba_total_ha),0))` hectares** ocorreram em *Rede Nacional de Áreas Protegidas (RNAP)*, **`{r} scales::comma(round(sum(ba_rn2k_sic$ba_total_ha),0))` hectares** em *Sítios de Interesse Comunitário da Rede Natura 2000*, e **`{r} scales::comma(round(sum(ba_rn2k_zpe$ba_total_ha),0))` hectares** em *Zonas de Proteção Especial* também em contexto da *Rede Natura 2000*.
 
-Em termos de afetação potencial de áreas com estatuto de conservação/proteção, um total de 
-**`{r} scales::comma(round(sum(ba_rnap$ba_total_ha),0))` hectares** ocorreram em 
-*Rede Nacional de Áreas Protegidas (RNAP)*, **`{r} scales::comma(round(sum(ba_rn2k_sic$ba_total_ha),0))` hectares** 
-em *Sítios de Interesse Comunitário da Rede Natura 2000*, e **`{r} scales::comma(round(sum(ba_rn2k_zpe$ba_total_ha),0))` hectares** em *Zonas de Proteção Especial* 
-também em contexto da *Rede Natura 2000*.
-
-Em termos de afetação potencial dos cursos de água e, considerando uma estratificação pela hierarquia 
-de Strahler [^2], foram quantificados os seguintes impactos em termos de comprimento total por tipo de rio (Strahler 1 a 6):       
+Em termos de afetação potencial dos cursos de água e, considerando uma estratificação pela hierarquia de Strahler [^2], foram quantificados os seguintes impactos em termos de comprimento total por tipo de rio (classes de Strahler de 1 a 6):\
 `{r} ba_hydro_summary %>% pull(markdown_entry) %>% paste(collapse = "\n")`.
 
-De acordo com dados do INE, e considerando as subsecções estatísticas constantes da Base Geográfica 
-de Referenciação de Informação (BGRI) para os Censos de 2021, um total de **`{r} scales::comma(sum(ba_bgri$N_INDIVIDUOS))` habitantes** 
-foram potencialmente afetados pelos incêndios de 2024, como residentes dentro 
-ou nas imediações dos perímetros ardidos, com níveis muito diferenciados de impacto direto ou indireto 
-e que os dados a que tivemos acesso não permitem estimar. Segundo este conjunto de dados também, um total de 
-**`{r} scales::comma(sum(ba_bgri$N_ALOJAMENTOS_TOTAL))` alojamentos** poderão ter sido impactados (com graus 
-de afetação muito diferenciados e que os dados não permitem caracterizar) estando localizados dentro 
-ou nas imediações dos perímetros ardidos.
+[^2]: A ordem de Strahler classifica rios com base na hierarquia dos seus afluentes: rios de nível 1 não possuem afluentes, dois rios de nível 1 formam um de nível 2, dois de nível 2 formam um de nível 3, e assim sucessivamente até ao nível 6. Neste sistema os diferentes níveis refletem a complexidade da rede fluvial; rios de nível 1 são pequenos cursos de água sem afluentes, e à medida que os afluentes se unem, formam rios de níveis superiores, com cada nível a representar um aumento na quantidade de água transportada e na área de drenagem.
 
-De acordo com o conjunto de dados aberto de edíficos *MS Buildings Footprint*, que mistura todas as 
-tipologias de edificado (e.g., habitacional, industrial, serviços), um total de 
-**`{r} scales::comma(nrow(ba_msb_buildings))` edifícios** foram potencialmente afetados pelos incêndios 
-de 2024 com níveis muito diferenciados de impacto (que os dados a que tivemos acesso não permitem estimar), 
-estando incluídos dentro dos perímetros de área ardida mapeados pelo sistema EFFIS.
+De acordo com dados do Instituto Nacional de Estatística (INE), e considerando as subsecções estatísticas constantes da *Base Geográfica de Referenciação de Informação* (BGRI) para os Censos de 2021, um total de **`{r} scales::comma(sum(ba_bgri$N_INDIVIDUOS))` habitantes** foram potencialmente afetados pelos incêndios de 2024, como residentes dentro ou nas imediações dos perímetros ardidos, com níveis muito diferenciados de impacto direto ou indireto e que os dados a que tivemos acesso não permitem estimar. Segundo este conjunto de dados também, um total de **`{r} scales::comma(sum(ba_bgri$N_ALOJAMENTOS_TOTAL))` alojamentos** poderão ter sido impactados, com graus de afetação direta ou indireta muito diferenciados e que os dados não permitem caracterizar, estando localizados dentro ou nas imediações dos perímetros ardidos.
 
-Segundo o conjunto de dados aberto OSM -- OpenStreetMap -- sobre vias de trânsito/acesso/circulação e, 
-agregando todas as tipologias existentes nesta base de dados (e.g., auto-estradas, estradas nacionais, 
-municipais, caminhos, trilhos), foram potencialmente afetados **`{r} scales::comma(round(sum(ba_osm_roads$road_len_km),2))` Km de vias**.     
+De acordo com o conjunto de dados aberto de edíficos *MS Buildings Footprint*, que mistura todas as tipologias de edificado (e.g., habitacional, industrial, serviços), um total de **`{r} scales::comma(nrow(ba_msb_buildings))` edifícios** foram potencialmente afetados pelos incêndios de 2024 com níveis muito diferenciados de impacto (que os dados a que tivemos acesso não permitem estimar), estando incluídos dentro dos perímetros de área ardida mapeados pelo sistema EFFIS.
 
+Segundo o conjunto de dados aberto OSM -- OpenStreetMap -- sobre vias de trânsito/acesso/circulação e, agregando todas as tipologias existentes nesta base de dados (e.g., auto-estradas, estradas nacionais, municipais, caminhos, trilhos), foram potencialmente afetados **`{r} scales::comma(round(sum(ba_osm_roads$road_len_km),2))` Km de vias**.
 
-```{r ba-effis-map-wf-location}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label:  ba-effis-map-wf-location
 #| fig-height: 10
 #| fig-width: 8
 
@@ -845,26 +749,11 @@ scale_fill_gradientn(
   theme(legend.position = "right", text = element_text(size = 13))  
 ```
 
+A distribuição das ocorrências de incêndio por dimensão da área ardida é mostrada na tabela abaixo. Nesta são apresentadas a frequência absoluta e relativa (%) para o ano de 2024. Para efeito de análise mais detalhada, foram separadas as ocorrências na base de dados do EFFIS a partir de 15 de setembro. Neste caso é mostrada a frequência aboluta e relativa (tendo como denominador as ocorrências em cada categoria de dimensão da área ardida).
 
-A distribuição das ocorrências de incêndio por dimensão da área ardida é mostrada na tabela 
-abaixo. Nesta são apresentadas a frequência absoluta e relativa (%) para o ano de 2024. 
-Para efeito de análise mais detalhada, foram separadas as ocorrências na base de dados 
-do EFFIS a partir de 15 de setembro. Neste caso é mostrada a frequência aboluta e 
-relativa (tendo como denominador as ocorrências em cada categoria de dimensão da área ardida).
+```{r}
+#| label:  ba-wildfires-size-freq-table
 
-[^2]: A ordem de Strahler classifica rios com base na hierarquia dos seus afluentes: rios 
-de nível 1 não possuem afluentes, dois rios de nível 1 formam um de nível 2, dois de nível 2 formam 
-um de nível 3, e assim sucessivamente até ao nível 6. Neste sistema os diferentes níveis refletem a 
-complexidade da rede fluvial; rios de nível 1 são pequenos cursos de água sem afluentes, e à medida 
-que os afluentes se unem, formam rios de níveis superiores, com cada nível a representar um aumento 
-na quantidade de água transportada e na área de drenagem.
-
-
-```{r ba-wildfires-size-freq-table}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
 
 kable(wf_counts,
       digits = 1,
@@ -880,14 +769,10 @@ kable(wf_counts,
 
 ```
 
-```{r ba-wildfires-size-freq-histogram}
-#| echo: false
-#| warning: false
-#| error: false
+```{r}
+#| label:  ba-wildfires-size-freq-histogram
 #| fig-height: 6
 #| fig-width: 8
-#| message: false
-
 
 hist_plot <- ggplot(data.frame(cats=categories), aes(x = cats)) +
   geom_bar(fill = "darkred") +
@@ -911,14 +796,10 @@ plot(hist_plot + line_plot)
 
 ```
 
-
-```{r ba-annual-plot}
-#| echo: false
-#| warning: false
-#| error: false
+```{r}
+#| label: ba-annual-plot
 #| fig-height: 6
 #| fig-width: 8
-#| message: false
 
 g_annual_totals <- ggplot(annual_totals, aes(x = year, y = ba_total_yr)) +
   geom_bar(stat = "identity", fill = "dark red") +
@@ -937,13 +818,10 @@ plot(g_annual_totals)
 
 ```
 
-```{r ba-monthly-totals-2024}
-#| echo: false
-#| warning: false
-#| error: false
+```{r}
+#| label:  ba-monthly-totals-2024
 #| fig-height: 6
 #| fig-width: 8
-#| message: false
 
 g_2024_monthly_totals <- ggplot(yr_2024_month_totals,aes(x = month_name, y = ba_total_month)) +
   geom_bar(stat = "identity", fill = "dark red") +
@@ -965,29 +843,18 @@ plot(g_2024_monthly_totals)
 
 ### 2.1. Área ardida por classe de uso/coberto do solo
 
-Tendo por base os dados de área ardida foi elaborada uma análise relativamente à distribuição 
-dessa em função das categorias de uso/coberto do solo. Para esse efeito recorreu-se a duas bases 
-de dados de referência para Portugal continental:
+Tendo por base os dados de área ardida foi elaborada uma análise relativamente à distribuição dessa em função das categorias de uso/coberto do solo. Para esse efeito recorreu-se a duas bases de dados de referência para Portugal continental:
 
--   **Carta de Ocupação do Solo Conjuntural** para o ano de 2024 (**COSc 2024**, período pré-verão; 
-Fonte: DGT) e a,
+-   **Carta de Ocupação do Solo Conjuntural** para o ano de 2024 (**COSc 2024**, período pré-verão; Fonte: DGT) e a,
 
--   **Carta de Uso e Ocupação do Solo** (**COS 2018**; Fonte: DGT).
+-   **Carta de Uso e Ocupação do Solo** (**COS 2018, versão 2**; Fonte: DGT).
 
-No primeiro conjunto de dados -- COSc 2024 -- procurou-se a elevada atualidade desta base de dados 
-para efeito da compreensão das categorias mais afetadas pelos incêndios. Enquanto que para a COS 2018 
-buscou-se uma complementaridade das fontes de informação, assim como maior resolução temática deste 
-conjunto de dados (i.e., maior número de categorias e, portanto, maior grau de discriminação dos tipos 
-de uso/coberto do solo).
+No primeiro conjunto de dados -- COSc 2024 -- procurou-se a elevada atualidade desta base de dados para efeito da compreensão das categorias mais afetadas pelos incêndios. Enquanto que para a COS 2018 buscou-se uma complementaridade das fontes de informação, assim como maior resolução temática deste conjunto de dados (i.e., maior número de categorias e, portanto, maior grau de discriminação dos tipos de uso/coberto do solo).
 
-Os resultados desta análise são apresentados nas subsecções seguintes tendo por base cada um destes 
-datasets de uso/ocupação do solo.
+Os resultados desta análise são apresentados nas subsecções seguintes tendo por base cada um destes datasets de uso/ocupação do solo.
 
-```{r ba-cosc2024-land-use-cover}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label:  ba-cosc2024-land-use-cover
 #| cache: true
 
 
@@ -1027,7 +894,7 @@ if(DO_FASTERIZE_ON_EFFIS){
 
   raster::writeRaster(effis_rst_2024, 
                     "../data/raster/effis_rst_2024.tif", 
-                    overwrite=TRUE)
+                    overwrite = TRUE)
 }
 
 
@@ -1130,11 +997,8 @@ ba_cos24_pt$label <- factor(ba_cos24_pt$label, levels = ba_cos24_pt$label)
 
 ```
 
-```{r ba-cos2018-land-use-cover}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label:  ba-cos2018-land-use-cover
 #| cache: true
 
 
@@ -1151,13 +1015,11 @@ ba_summ_cos18$COS18n4_L <- factor(ba_summ_cos18$COS18n4_L,
 
 ```
 
-#### 2.1.1. Carta de Uso e Ocupação do Solo conjuntural - COSc 2024 (pré-verão)
+#### 2.1.1. Carta de Uso e Ocupação do Solo conjuntural - COSc 2024
 
-```{r ba-cosc24-pt-table}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: ba-cosc24-pt-table
+
 
 kable(ba_cos24_pt %>% filter(label != "NA"),
       digits = 1,
@@ -1170,11 +1032,8 @@ kable(ba_cos24_pt %>% filter(label != "NA"),
 
 ```
 
-```{r ba-cosc24-pt-barplot}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label:  ba-cosc24-pt-barplot
 #| fig-height: 8
 #| fig-width: 8
 
@@ -1198,13 +1057,11 @@ plot(g_annual_totals_cosc24)
 
 \newpage
 
-#### 2.1.2. Carta de Ocupação do Solo - COS 2018 (v2)
+#### 2.1.2. Carta de Ocupação do Solo - COS 2018
 
-```{r ba-cos18-pt-table}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label:  ba-cos18-pt-table
+
 
 kable(ba_summ_cos18 %>% filter(ba_perc >= 1),
       digits = 1,
@@ -1219,11 +1076,8 @@ kable(ba_summ_cos18 %>% filter(ba_perc >= 1),
 
 ```
 
-```{r ba-cos18-pt-barplot}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: ba-cos18-pt-barplot 
 #| fig-height: 8
 #| fig-width: 8
 
@@ -1250,15 +1104,10 @@ plot(g_annual_totals_cos18)
 
 ## 3. Área ardida por município
 
-Nesta secção do relatório, será realizada uma análise detalhada das áreas ardidas no ano de 2024, com enfoque nos municípios de Portugal continental. O objetivo desta análise é avaliar a distribuição das áreas afetadas pelos incêndios, proporcionando uma visão objetiva sobre a extensão dos danos em cada município.
+Nesta secção do relatório, apresentamos uma análise detalhada das áreas ardidas no ano de 2024, com enfoque nos municípios de Portugal continental. O objetivo desta análise é avaliar a distribuição das áreas afetadas pelos incêndios em cada município.
 
-
-```{r ba-2024-municipalities-table}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
-
+```{r}
+#| label:  ba-2024-municipalities-table
 
 kable(ba_mun_2024 %>% select(-conc_area_ha) %>% filter(ba_total_ha > 50),
       digits = 1,
@@ -1271,12 +1120,8 @@ kable(ba_mun_2024 %>% select(-conc_area_ha) %>% filter(ba_total_ha > 50),
 
 ```
 
-
-```{r ba-2024-municipalities-map}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: ba-2024-municipalities-map
 #| fig-height: 10
 #| fig-width: 8
 
@@ -1323,11 +1168,8 @@ ggplot(data = ba_conc) +
 
 \newpage
 
-```{r ba-2024-municipalities-map-perc}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: ba-2024-municipalities-map-perc 
 #| fig-height: 10
 #| fig-width: 8
 
@@ -1375,7 +1217,7 @@ ggplot(data = ba_conc) +
 
 ## 4. Área ardida em espaços de proteção/conservação
 
-Nesta secção será apresentada uma análise da área ardida em espaços de proteção e conservação em Portugal continental, abordando as diferentes redes e áreas de interesse. Esta análise está subdividida em três partes principais:
+Nesta secção apresenta-se uma análise da área ardida em espaços de proteção e conservação em Portugal continental, abordando as diferentes redes e áreas de interesse. Esta análise está subdividida em três partes principais:
 
 -   A primeira subsecção (4.1) incidirá sobre a *Rede Nacional de Áreas Protegidas* (RNAP), explorando a extensão dos incêndios em territórios que possuem um elevado valor ecológico, património natural e biodiversidade;
 
@@ -1383,15 +1225,12 @@ Nesta secção será apresentada uma análise da área ardida em espaços de pro
 
 -   Por fim, a subsecção (4.3) examinará as *Zonas de Proteção Especial* (ZPE), também parte da Rede Natura 2000, discutindo as áreas afetadas em locais designados para a conservação de aves e outras espécies prioritárias.
 
-Esta análise visa avaliar os impactos dos incêndios nas áreas de maior relevância patrimonial e a necessidade de medidas de recuperação e prevenção nesses espaços.
+Esta análise visa avaliar os impactos dos incêndios nas áreas de maior relevância em termos de património natural com vista a suportar potenciais medidas de recuperação e prevenção nesses espaços.
 
 ### 4.1. Rede Nacional de Áreas Protegidas (RNAP)
 
-```{r ba-2024-rnap}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: ba-2024-rnap 
 #| cache: true
 
 
@@ -1413,11 +1252,8 @@ kable(ba_rnap %>% select(sigla, nome_ap, ba_total_ha, ba_perc),
 
 ### 4.2. Rede Natura 2000 - Sítios de Interesse Comunitário (SIC)
 
-```{r ba-2024-rn2k-sic}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: ba-2024-rn2k-sic 
 #| cache: true
 
 
@@ -1439,11 +1275,8 @@ kable(ba_rn2k_sic %>% select(site_code, site_name, ba_total_ha, ba_perc),
 
 ### 4.3. Rede Natura 2000 - Zonas de Proteção Especial (ZPE)
 
-```{r ba-2024-rn2k-zpe}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label:  ba-2024-rn2k-zpe
 #| cache: true
 
 
@@ -1461,15 +1294,11 @@ kable(ba_rn2k_zpe %>% select(site_code, site_name, ba_total_ha, ba_perc),
 
 ```
 
-
 \newpage
 
-
-```{r ba-cosc24-big-wildfires-analysis}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: ba-cosc24-big-wildfires-analysis
+#| cache: true
 
 ba_effis_bigfires <-
   effis_data_2024 %>%
@@ -1487,9 +1316,11 @@ ba_cosc24_freqs_wide %>%
 colnames_df <- data.frame(
   cn = colnames(ba_cosc24_bigfires)) %>%
   left_join(lucc_df, by=c("cn"="value"))
-colnames_df$label[1] <- "fid"
-colnames_df$label[13] <- "NA"
-colnames_df$label[18] <- "ba_tots_ha"
+
+colnames_df$label[colnames_df$cn=="fid"] <- "fid"
+colnames_df$label[colnames_df$cn=="NA"] <- "NA"
+colnames_df$label[colnames_df$cn=="ba_tots_ha"] <- "ba_tots_ha"
+
 colnames(ba_cosc24_bigfires) <- colnames_df$label
 
 
@@ -1500,8 +1331,8 @@ ba_cosc24_bigfires_percs <- ba_cosc_2024_percs %>%
 colnames_df <- data.frame(
   cn = colnames(ba_cosc24_bigfires_percs)) %>%
   left_join(lucc_df, by=c("cn"="value"))
-colnames_df$label[1] <- "fid"
-colnames_df$label[13] <- "NA"
+colnames_df$label[colnames_df$cn=="fid"] <- "fid"
+colnames_df$label[colnames_df$cn=="NA"] <- "NA"
 colnames(ba_cosc24_bigfires_percs) <- colnames_df$label
 
 
@@ -1516,30 +1347,24 @@ ba_cosc24_bigfires <- ba_cosc24_bigfires %>%
 ba_cosc24_bigfires_percs <- ba_effis_bigfires %>%
   left_join(ba_cosc24_bigfires_percs, by=c("id"="fid"))
 
+ba_cosc24_bigfires_percs <- ba_cosc24_bigfires_percs %>% 
+  arrange(fire_dt, COMMUNE)
 
 ```
 
-
 ## 5. Análise de grandes áreas ardidas
-
 
 ### Síntese geral
 
+Neste secção apresenta-se uma caracterização detalhada das grandes áreas ardidas com **dimensão superior a `{r} scales::comma(BIG_FIRE_THRESH)` hectares**, analisando a distribuição dos usos / coberto do solo em cada uma dessas áreas, a severidade, a afetação de áreas com estatuto de proteção/conservação entre outros aspetos.
 
-Neste secção procedeu-se à caracterização das grandes áreas ardidas com **dimensão superior a `{r} scales::comma(BIG_FIRE_THRESH)` hectares**, analisando a distribuição dos usos / coberto do solo em cada uma dessas áreas. Esta análise visa identificar a tipologia dos espaços afetados, distinguindo entre diferentes categorias de uso, como florestas, matos, áreas agrícolas, áreas agroflorestais e espaços urbanos.
+No total, à data de `{r} format(Sys.Date(), "%d/%m/%Y")`, foram encontradas **`{r} nrow(ba_effis_bigfires)`** ocorrências com dimensão superior a `{r} scales::comma(BIG_FIRE_THRESH)` hectares, totalizando **`{r} scales::comma(sum(ba_effis_bigfires$area_ht))` hectares** da área ardida em 2024 o que representa **`{r} round((sum(ba_effis_bigfires$area_ht) / sum(effis_data_2024$area_ht))*100,1)`%** do total anual.
 
-No total à data de `{r} format(Sys.Date(), "%d/%m/%Y")` foram encontrados **`{r} nrow(ba_effis_bigfires)`** ocorrências com dimensão superior a `{r} scales::comma(BIG_FIRE_THRESH)` hectares, totalizando **`{r} scales::comma(sum(ba_effis_bigfires$area_ht))` hectares** da área ardida em 2024 o que representa **`{r} round((sum(ba_effis_bigfires$area_ht) / sum(effis_data_2024$area_ht))*100,1)`%** do total anual.    
+A lista de grande incêndios é evidenciada na tabela a seguir por localidade e município(s) envolvido(s):
 
-A lista de grande incêndios é evidenciada na tabela a seguir por localidade e município(s) envolvido(s):    
-    
-    
-
-```{r bigfires-list-municipalities-table}
-#| warning: false
-#| message: false
-#| error: false
-#| echo: false
-
+```{r}
+#| label: bigfires-list-municipalities-table
+#| cache: true
 
 bf_municips <-
 ba_mun_2024_ %>% 
@@ -1575,15 +1400,11 @@ kable(bf_list_locs %>%
 
 ```
 
-A distribuição destes incêndios por classe de uso/ocupação do solo é mostrada nas tabelas seguintes 
-considerando os dois conjuntos de dados de referência COS conjuntural 2024 e a COS 2018:
+A distribuição destes incêndios por classe de uso/ocupação do solo é mostrada nas tabelas seguintes considerando os dois conjuntos de dados de referência COS conjuntural 2024 e a COS 2018:
 
-```{r bigfires-cosc2024-table}
-#| warning: false
-#| message: false
-#| error: false
-#| echo: false
-
+```{r}
+#| label: bigfires-cosc2024-table 
+#| cache: true
 
 bf_cos24_summ <- 
 ba_cosc24_bigfires %>% 
@@ -1609,13 +1430,12 @@ kable(bf_cos24_summ,
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
                 latex_options = "repeat_header")
 ```
-```{r bigfires-cosc24-pt-barplot}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+
+```{r}
+#| label: bigfires-cosc24-pt-barplot 
 #| fig-height: 8
 #| fig-width: 8
+
 
 bf_cosc24 <- ggplot(bf_cos24_summ,
                     aes(x = Classe_COSc2024, y = Area_ha)) +
@@ -1635,13 +1455,9 @@ plot(bf_cosc24)
 
 ```
 
-
-
-```{r bigfires-cosc2018-table}
-#| warning: false
-#| message: false
-#| error: false
-#| echo: false
+```{r}
+#| label: bigfires-cosc2018-table
+#| cache: true
 
 bf_cos2018_summ <- ba_effis_cos18 %>%
     filter(id %in% ba_effis_bigfires$id) %>% 
@@ -1666,11 +1482,8 @@ kable(bf_cos2018_summ,
 
 ```
 
-```{r bigfires-cos2018-pt-barplot}
-#| echo: false
-#| warning: false
-#| error: false
-#| message: false
+```{r}
+#| label: bigfires-cos2018-pt-barplot 
 #| fig-height: 10
 #| fig-width: 8
 
@@ -1693,72 +1506,57 @@ plot(bf_cos18)
 
 ```
 
+### Severidade dos grandes incêndios de 2024
 
-## Severidade dos grandes incêndios de 2024
-
-::: {.callout-warning}
-
+::: callout-warning
 ## Aviso
 
-Estes são resultados preliminares e ainda incompletos para algumas áreas devido à 
-falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
-
+Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
 :::
 
-::: {.callout-note}
+::: callout-note
+## Acesso/descarregamento dos dados de severidade
 
-## Acesso/descarregamento aos dados de severidade 
-
-Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte 
-link (com metadados): 
-[SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.zip)
-
+Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte link (com metadados): [SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.zip)
 :::
 
-
-A severidade da área ardida foi calculada a partir de imagens do satélite ótico **Sentinel-2**
-utilizando o índice espectral *Normalized Burn Ratio (NBR)*, que mede a diferença da 
-reflectância da superfície terrestre entre as bandas do infravermelho próximo (NIR) 
-e do infravermelho médio (SWIR). 
+A severidade da área ardida foi calculada a partir de imagens do satélite ótico **Sentinel-2** utilizando o índice espectral *Normalized Burn Ratio (NBR)*, que mede a diferença da reflectância da superfície terrestre entre as bandas do infravermelho próximo (NIR) e do infravermelho médio (SWIR).
 
 $NBR = \frac{NIR - SWIR}{NIR + SWIR}$
 
-O NBR é sensível a alterações na vegetação e no solo devidas ao fogo. Para avaliar a 
-severidade do fogo, comparou-se o NBR pré-fogo (NBR pré) com o NBR pós-fogo (NBR pós),
-utilizando o indicador Relativized Burn Ratio (RBR). Este indicador permite uma 
-quantificação mais robusta das mudanças no terreno, eliminando as variações relativas 
-entre os diferentes tipos de ecossistemas. A fórmula do RBR é dada por:
+O NBR é sensível a alterações na vegetação e no solo devidas ao fogo. Para avaliar a severidade do fogo, comparou-se o NBR pré-fogo (NBR pré) com o NBR pós-fogo (NBR pós), utilizando o indicador *Relativized Burn Ratio (RBR)*. Este indicador permite uma quantificação mais robusta das mudanças no terreno, eliminando as variações relativas entre os diferentes tipos de vegetação. A fórmula do **RBR** é dada por:
 
 $dNBR = NBR_{pré} - NBR_{pós}$
 
 $RBR = \frac{dNBR}{NBR_{pré} + 1.001}$
 
-Este cálculo foi aplicado em imagens de satélite antes e depois do fogo para produzir 
-mapas de severidade da área ardida.
+Este cálculo foi aplicado em imagens de satélite antes e depois do fogo para produzir mapas de severidade da área ardida.
 
-As classes de severidade para o indicador *NBR/RBR* foram obtidas através da análise 
-das distribuições para os anos 2018 - 2023 com base nos produtos gerados pelo projeto SeverusPT. A partição das classes foi obtida pelos percentis da distribuição de 20%, 40%... 
-a 80% para os valores de *NBR/RBR* superiores a zero:
+As classes de severidade para o indicador *NBR/RBR* foram obtidas através da análise das distribuições para os anos 2018 - 2023 com base nos produtos gerados pelo projeto [SeverusPT](https://data.severuspt.ipvc.pt/products) (para o mesmo satélite e indicador de severidade). A partição das classes foi obtida pelos percentis da distribuição de 20%, 40%... a 80% para os valores de *NBR/RBR* superiores a zero:
 
+| De      | Para    | Nível de severidade |
+|---------|---------|---------------------|
+| \[min\] | 0       | Não ardido          |
+| 0       | 1455    | Muito baixa         |
+| 1455    | 2750    | Baixa               |
+| 2750    | 3801    | Média               |
+| 3801    | 4900    | Elevada             |
+| 4900    | \[max\] | Muito elevada       |
 
-|    De      |    Para  |   Nível de severidade   |
-|------------|----------|-------------------------|
-|   [min]    |    0     | Não ardido              |
-|    0       |   1455   | Muito baixa             |
-|   1455     |   2750   | Baixa                   |
-|   2750     |   3801   | Média                   |
-|   3801     |   4900   | Elevada                 |
-|   4900     |   [max]  | Muito elevada           |
+Apresentam-se abaixo os resultados da distribuição da área ardida (em hectares) pelas classes de severidade para o indicador *NBR / RBR*:
 
-
-```{r severity-table-areas-per-sev-class}
-#| warning: false
-#| message: false
-#| error: false
-#| echo: false
-
+```{r}
+#| label: read-raster-severity-data
 
 sev_s2_rbr <- rast("../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.tif")
+
+```
+
+
+
+```{r}
+#| label: calc-severity-table-areas-per-sev-class
+#| cache: true
 
 
 sev_vals <- terra::extract(sev_s2_rbr, ba_effis_bigfires_utm) #%>% 
@@ -1767,7 +1565,7 @@ sev_vals <- terra::extract(sev_s2_rbr, ba_effis_bigfires_utm) #%>%
 
 # Define breaks and labels for the RBR classes
 breaks <- c(-Inf, 0, 1455, 2750, 3801, 4900, Inf)
-labels <- c("Não ardido/Sem dano", "Muito baixa", "Baixa", 
+labels <- c("Não ardido", "Muito baixa", "Baixa", 
             "Média", "Elevada", "Muito elevada")
 
 # Categorize RBR into the classes using cut()
@@ -1798,12 +1596,17 @@ sev_abs_freq <- sev_abs_freq %>%
 
 
 
+```
+
+```{r}
+#| label: severity-table-area
+
 kable(sev_abs_freq %>% 
   select(fid, COMMUNE,bf_municip_in, `Muito baixa`:`Muito elevada`,area_to_estim),
       digits = 0,
       format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
       longtable = TRUE,
-      caption = "Severidade da área ardida nos grandes incêndios de 2024 (em hectares por classe de severidade usando o indicador NBR/RBR). A tabela foi ordenada de forma descendente com base na soma das classes de elevada e muito elevada severidade. A área por estimar deve-se a ausência de imagens de satélite, ou à presença de nuvens nas mesmas, à data desta análise.",
+      caption = "Severidade da área ardida nos grandes incêndios de 2024 (em hectares por classe de severidade usando o indicador NBR/RBR). A tabela foi ordenada de forma descendente com base na soma das classes de elevada e muito elevada severidade. A área por estimar deve-se à ausência de imagens de satélite, ou à presença de nuvens nas mesmas, à data desta análise.",
       col.names = c("ID_EFFIS",
                     "Localidade",
                     "Municípios", 
@@ -1815,19 +1618,15 @@ kable(sev_abs_freq %>%
                     "Área por estimar (ha)")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
                 latex_options = "repeat_header")
-
 ```
 
-     
-Apresentam-se abaixo os resultados da distribuição da área ardida pelas classes 
-de severidade para o indicador *NBR / RBR*.     
 
-     
-```{r severity-table-percs-per-sev-class}}
-#| warning: false
-#| message: false
-#| error: false
-#| echo: false
+
+Apresentam-se abaixo os resultados da distribuição da área ardida (em %) pelas classes de severidade para o indicador *NBR / RBR*:
+
+```{r}
+#| label: severity-table-percs-per-sev-class 
+#| cache: true
 
 sev_rel_freq <- prop.table(sev_abs_freq %>%
                              select(`Muito baixa`:`Muito elevada`,area_to_estim)  %>% 
@@ -1839,6 +1638,13 @@ sev_rel_freq <- sev_rel_freq %>%
 
 
 sev_rel_freq <- sev_rel_freq %>% arrange(desc(`Elevada`+`Muito elevada`))
+
+
+
+```
+
+```{r}
+#| label: severity-table-percs
 
 
 kable(sev_rel_freq %>% 
@@ -1859,15 +1665,11 @@ kable(sev_rel_freq %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
                 latex_options = "repeat_header")
 
-
 ```
 
 
-```{r big-fire-analysis-maps}
-#| warning: false
-#| message: false
-#| error: false
-#| echo: false
+```{r}
+#| label: big-fire-analysis-by-occurrence
 #| results: asis
 #| output: asis
 #| fig-height: 8
@@ -1902,25 +1704,11 @@ from_to_recl <- as.matrix(data.frame(
   becomes = 0:5
 ))
 
-# Reclassify the raster based on the breaks
-# rbr_classified <- classify(sev_s2_rbr, 
-#                            rcl = from_to_recl)
-# 
-# # Convert the reclassified raster to a factor (to represent categorical data)
-# rbr_classified <- as.factor(rbr_classified)
-
-# Assign labels to the classified raster
-#levels(rbr_classified) <- sev_labels
 
 cols <- c("#52BAE3","#FFA07A", "#FF6347", 
           "#BF3D3D", "#8B0000", "#000000")
 
-# cols <- c("#52BAE3",#"#FFFFFF",
-#                "#EDB4B4",
-#                "#D46A6A",
-#                "#BF3D3D",
-#                "#911717",
-#                "#000000")
+
 # Define custom colors for each class
 sev_cols <- c("Não ardido"  = cols[1], 
             "Muito baixa"   = cols[2], 
@@ -1984,33 +1772,32 @@ for(i in 1:(ifelse(USE_TEST_DATA,3,
 
   ## Crop COSc 2024 ----
   
-  bf_cosc24_crop <- mask(crop(cosc_2024, big_fire_spatvec),
+  bf_cosc24_crop <- terra::mask(
+                      terra::crop(cosc_2024, big_fire_spatvec),
                          big_fire_spatvec) %>%
-    project("EPSG:4326", method = "near") %>%
+    terra::project("EPSG:4326", method = "near") %>%
     as.factor
-  #names(bf_cosc24_crop) <- "cosc24"
+
   levels(bf_cosc24_crop) <- data.frame(ID = as.integer(lucc_df$value),
                                        category = lucc_df$label)
 
-  ## Crop severity raster ----
+  ## Crop severity raster and classify it ----
   
-  rbr_classified_crop <- mask(crop(sev_s2_rbr, big_fire_spatvec),
+  rbr_classified_crop <- terra::mask(
+                          terra::crop(sev_s2_rbr, big_fire_spatvec),
                          big_fire_spatvec) %>%
-    project("EPSG:4326", method = "near")
+    terra::project("EPSG:4326", method = "near")
   
   
   rbr_classified_crop <- classify(rbr_classified_crop, 
                            rcl = from_to_recl)
 
   # Convert the reclassified raster to a factor (to represent categorical data)
-  #rbr_classified_crop <- as.factor(rbr_classified_crop)
   suppressMessages(suppressWarnings(
   levels(rbr_classified_crop) <- data.frame(ID = 0:5,
                                             RBR = sev_labels)
   ))
-# 
-#   levels(rbr_classified_crop) <- data.frame(ID = as.integer(lucc_df$value),
-#                                        category = lucc_df$label)
+
   
   # ------------------------------------------------------------ #
   # Analysis for roads ----
