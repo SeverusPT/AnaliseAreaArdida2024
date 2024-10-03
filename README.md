@@ -24,12 +24,12 @@ a severidade dos danos nas comunidades e ecossistemas afetados de forma mais apu
 
 ### Autores
 
-#### Análise, produção e edição
-João Gonçalves (BIOPOLIS/CIBIO/InBIO - U. Porto)
+#### Análise, produção e edição      
+João Gonçalves (BIOPOLIS/CIBIO/InBIO - U. Porto)     
 Bruno Marcos (BIOPOLIS/CIBIO/InBIO - U. Porto)
 
-#### Redes sociais/gestão da comunicação
+#### Redes sociais/gestão da comunicação      
 Cristiana Alves (BIOPOLIS/CIBIO/InBIO - U. Porto)
-
-#### Revisão e coordenação geral
-João Honrado (BIOPOLIS/CIBIO/InBIO - U. Porto)
+       
+#### Revisão e coordenação geral        
+João Honrado (BIOPOLIS/CIBIO/InBIO - U. Porto)      
