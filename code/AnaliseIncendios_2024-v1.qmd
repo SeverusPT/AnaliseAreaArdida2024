@@ -71,6 +71,10 @@ BIG_FIRE_THRESH <- 1000
 
 VERBOSE <- FALSE
 
+theme_set(theme_bw(base_family = "Arial"))
+theme_set(theme_minimal(base_family = "Arial"))
+
+knitr::opts_chunk$set(ft.shadow = FALSE)
 ```
 
 \newpage
@@ -175,11 +179,6 @@ library(tidyterra)
 library(patchwork)
 library(rnaturalearth)
 library(rnaturalearthdata)
-
-theme_set(theme_bw(base_family = "Arial"))
-theme_set(theme_minimal(base_family = "Arial"))
-
-knitr::opts_chunk$set(ft.shadow = FALSE)
 
 set_flextable_defaults(
   font.family = "Arial",
