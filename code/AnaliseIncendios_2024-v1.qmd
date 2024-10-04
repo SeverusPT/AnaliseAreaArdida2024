@@ -1,10 +1,10 @@
 ---
 title: "Análise da área ardida em Portugal continental no ano de 2024"
 execute:
-   echo: false
-   warning: false
-   error: false
-   message: false
+  echo: false
+  warning: false
+  error: false
+  message: false
 author: 
   - name: "João Gonçalves"
     orcid: 0000-0002-6615-0218
@@ -46,7 +46,29 @@ date-format: "DD/MM/YYYY"
 lang: pt-PT
 editor_options: 
   chunk_output_type: inline
+title-block-banner: true
 ---
+
+```{r}
+#| label: load-packages
+#| code-summary: "Packages"
+
+library(tidyverse)
+library(ggplot2)
+library(sf)
+library(terra)
+library(knitr)
+library(kableExtra)
+library(fasterize)
+library(tidyr)
+library(ggmap)
+library(flextable)
+library(ggspatial)
+library(tidyterra)
+library(patchwork)
+library(rnaturalearth)
+library(rnaturalearthdata)
+```
 
 ```{r}
 #| label: params
@@ -114,6 +136,8 @@ Este relatório foi financiado pela Fundação para a Ciência e a Tecnologia (F
 -   Website: <https://severus.pt/>
 -   DOI: <https://doi.org/10.54499/PCIF/RPG/0170/2019>
 -   Referência FCT: **PCIF/RPG/0170/2019**
+
+![](https://severus.pt/wp-content/uploads/2022/02/severus-financiamento-transparents.png){width=100% fig-align="center"}
 :::
 
 \newpage
@@ -161,24 +185,8 @@ Para a **renderização de gráficos e mapas**, os pacotes **ggplot2** e **patch
 Todo o fluxo de trabalho visou garantir a precisão e repetibilidade da análise espacial e estatística dos dados, permitindo uma compreensão abrangente das áreas ardidas e a geração de outputs rigorosos e acessíveis.
 
 ```{r}
-#| label: load-packages-set-params
+#| label: set-params
 
-
-library(tidyverse)
-library(ggplot2)
-library(sf)
-library(terra)
-library(knitr)
-library(kableExtra)
-library(fasterize)
-library(tidyr)
-library(ggmap)
-library(flextable)
-library(ggspatial)
-library(tidyterra)
-library(patchwork)
-library(rnaturalearth)
-library(rnaturalearthdata)
 
 set_flextable_defaults(
   font.family = "Arial",
@@ -466,7 +474,7 @@ if(!USE_BA_INTERSECT_CACHE){
   ## -------------------------------------------------------------------------- ##
   ## MS Buildings footprint ----
   ## -------------------------------------------------------------------------- ##
- 
+
   
   msb <- vect("../data/vector/msbuildings/MSBuildingsPT_v1.shp")
   
@@ -566,7 +574,7 @@ yr_2024_month_totals <-
 effis_data_2024 %>% 
   group_by(month) %>% 
   summarise(ba_total_month = sum(area_ht)) %>% 
- left_join(months_df, by=c("month"="number"))
+  left_join(months_df, by=c("month"="number"))
 
 
 after_15sept_total <- 
