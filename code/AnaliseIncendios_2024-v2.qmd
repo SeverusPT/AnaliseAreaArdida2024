@@ -71,7 +71,7 @@ library(rnaturalearthdata)
 ```
 
 ```{r}
-#| label: params
+#| label: set-main-params
 
 
 DO_FASTERIZE_ON_EFFIS <- FALSE
@@ -93,32 +93,172 @@ BIG_FIRE_THRESH <- 1000
 
 VERBOSE <- FALSE
 
+## -------------------------------------------------- ##
+
 theme_set(theme_bw(base_family = "Arial"))
 theme_set(theme_minimal(base_family = "Arial"))
 
+## -------------------------------------------------- ##
+
 knitr::opts_chunk$set(ft.shadow = FALSE)
 
-cosc24_sort <- 
-  c("Matos",
+## -------------------------------------------------- ##
 
+land_cover_colors <- c(
+  "Artificializado"          = "#e31a1c",
+  "Culturas anuais out/inv"  = "#eba000",
+  "Culturas anuais pri/ver"  = "#9effe4",
+  "Outras áreas agrícolas"   = "#f9f100",
+  "Sobreiro e azinheira"     = "#9f218a",
+  "Eucalipto"                = "#2bf100",
+  "Outras folhosas"          = "#12c309",
+  "Pinheiro bravo"           = "#0c8006",
+  "Pinheiro manso"           = "#174e11",
+  "Outras resinosas"         = "#1e636f",
+  "Matos"                    = "#6f5e1a",
+  "Veg. herbácea esp."       = "#d6cc90",
+  "Sup. s/ vegetação"        = "#787878",
+  "Zonas húmidas"            = "#1973a7",
+  "Água"                     = "#362ecc"
+)
+
+sev_breaks <- c(-Inf, 0, 1455, 2750, 3801, 4900, Inf)
+sev_labels <- c("Não ardido", "Muito baixa", "Baixa", 
+            "Média", "Elevada", "Muito elevada")
+
+from_to_recl <- as.matrix(data.frame(
+  from = c(-Inf, 0, 1455, 2750, 3801, 4900),
+  to = c(0, 1455, 2750, 3801, 4900, Inf),
+  becomes = 0:5
+))
+
+
+sev_rbr_classes <- data.frame(
+  rbr_sev_val = 0:5,
+  rbr_sev_cls = c("Não ardido", "Muito baixa", "Baixa", 
+            "Média", "Elevada", "Muito elevada")
+)
+
+cols <- c("#52BAE3","#FFA07A", "#FF6347", 
+          "#BF3D3D", "#8B0000", "#000000")
+
+
+# Define custom colors for each class
+sev_cols <- c("Não ardido"  = cols[1], 
+            "Muito baixa"   = cols[2], 
+            "Baixa"         = cols[3], 
+            "Média"         = cols[4], 
+            "Elevada"       = cols[5], 
+            "Muito elevada" = cols[6])
+
+
+## -------------------------------------------------- ##
+
+cosc24_sort <- c(
+    # Áreas de matos e vegetação esparsa
+    "Matos",
+    "Veg. herbácea esp.",
+    "Sup. s/ vegetação",
+    # Tipos de floresta
     "Eucalipto",
     "Outras folhosas",
     "Sobreiro e azinheira",
     "Pinheiro bravo",
     "Pinheiro manso",
     "Outras resinosas",
-    
-    "Veg. herbácea esp.",
-    "Sup. s/ vegetação",
-    
+    # Tipos de agricultura
     "Culturas anuais out/inv",
     "Culturas anuais pri/ver",
     "Outras áreas agrícolas",
-    
+    # Zonas urbanas/artificiais
     "Artificializado",
-
+    # Corpos de água
     "Zonas húmidas",
     "Água")
+
+## -------------------------------------------------- ##
+
+cos18_sort <- c(
+  # Áreas de matos e vegetação esparsa
+  "Matos",
+  "Vegetação esparsa",
+  
+  # Rochas e superfícies naturais
+  "Rocha nua",
+  
+  # Tipos de floresta
+  "Florestas de eucalipto",
+  "Florestas de pinheiro bravo",
+  "Florestas de sobreiro",
+  "Florestas de azinheira",
+  "Florestas de outros carvalhos",
+  "Florestas de outras folhosas",
+  "Florestas de espécies invasoras",
+  "Florestas de pinheiro manso",
+  "Florestas de outras resinosas",
+  "Florestas de castanheiro",
+  
+  # Tipos de cobertos agro-florestais (SAF)
+  "SAF de azinheira",
+  "SAF de sobreiro",
+  "SAF de outros carvalhos",
+  "SAF de outras misturas",
+  
+  # Tipos de agricultura
+  "Olivais",
+  "Pomares",
+  "Vinhas",
+  "Culturas temporárias de sequeiro e regadio",
+  "Culturas temporárias e/ou pastagens melhoradas associadas a olival",
+  "Culturas temporárias e/ou pastagens melhoradas associadas a pomar",
+  "Culturas temporárias e/ou pastagens melhoradas associadas a vinha",
+  "Agricultura com espaços naturais e seminaturais",
+  "Pastagens melhoradas",
+  "Pastagens espontâneas",
+  "Mosaicos culturais e parcelares complexos",
+  "Agricultura protegida e viveiros",
+  
+  # Zonas urbanas
+  "Tecido edificado contínuo predominantemente horizontal",
+  "Tecido edificado contínuo predominantemente vertical",
+  "Tecido edificado descontínuo",
+  "Tecido edificado descontínuo esparso",
+  "Áreas em construção",
+  "Espaços vazios sem construção",
+  
+  # Outros usos (infraestruturas, instalações, etc.)
+  "Outros equipamentos e instalações turísticas",
+  "Equipamentos de lazer",
+  "Instalações desportivas",
+  "Instalações agrícolas",
+  "Infraestruturas de tratamento de resíduos e águas residuais",
+  "Infraestruturas de produção de energia renovável",
+  "Infraestruturas de produção de energia não renovável",
+  "Infraestruturas para captação, tratamento e abastecimento de águas para consumo",
+  "Rede viária e espaços associados",
+  "Rede ferroviária e espaços associados",
+  "Indústria",
+  "Pedreiras",
+  "Minas a céu aberto",
+  "Aterros",
+  "Lixeiras e Sucatas",
+  "Cemitérios",
+  "Comércio",
+  
+  # Corpos de água
+  "Cursos de água naturais",
+  "Lagos e lagoas interiores artificiais",
+  "Albufeiras de barragens",
+  "Charcas",
+  "Pauis",
+  
+  # Outros
+  "Parques e jardins",
+  "Campos de golfe",
+  "Equipamentos culturais",
+  "Marinas e docas pesca"
+)
+
 
 ```
 
@@ -129,7 +269,7 @@ cosc24_sort <-
 
 Esta análise é preliminar e reflete os dados a que os autores tiveram acesso à data de criação deste documento. Esta análise não é definitiva e os valores poderão mudar assim que atualizações e modificações dos dados forem disponibilizadas (por razões diversas e fora do controlo dos autores).
 
-Atualizações deste relatório serão disponibilizadas assim que modificações relevantes dos perímetros de área ardida fornecidos pelo Sistema Europeu Copernicus/EFFIS forem disponibilizados.
+Atualizações deste relatório serão disponibilizadas assim que modificações relevantes dos perímetros de área ardida fornecidos pelo Sistema Europeu Copernicus/EFFIS forem facultados.
 
 As fontes de dados podem estar sujeitas a variações temporais e espaciais, imprecisões ou inexatidões de ordem diversa assim como a erros inerentes aos processos de recolha e processamento de informação completamente alheios aos autores.
 
@@ -141,7 +281,9 @@ O uso inadequado ou a interpretação incorreta dos resultados, especialmente se
 ::: callout-note
 ## Info
 
-Se está a ver este relatório em um smartphone ou tablet, experimente rodar o ecrã para o formato horizontal para aceder ao índice de conteúdos (do lado direito do ecrã).
+(i) Se está a ver este relatório em um smartphone ou tablet, experimente rodar o ecrã para o formato horizontal para aceder ao índice de conteúdos (do lado direito do ecrã)
+
+(ii) Este documento usa o ponto (.) como separador decimal e a vírgula como separador de milhares (,)
 :::
 
 ::: callout-note
@@ -154,11 +296,15 @@ O código R utilizado para produzir estas análises está disponível no link:\
 ::: callout-note
 ## Agradecimentos
 
-Este relatório foi financiado pela Fundação para a Ciência e a Tecnologia (FCT) no âmbito do projeto **SeverusPT** --- *"Um serviço e produto de dados baseados na web para a avaliação e previsão de severidade de incêndio em Portugal continental"*.
+Este relatório foi financiado pela Fundação para a Ciência e a Tecnologia (FCT) no âmbito do projeto **SeverusPT --- "Um serviço e produto de dados baseados na web para a avaliação e previsão de severidade de incêndio em Portugal continental"**.
 
 -   Website: <https://severus.pt/>
 -   DOI: <https://doi.org/10.54499/PCIF/RPG/0170/2019>
 -   Referência FCT: **PCIF/RPG/0170/2019**
+
+![](logo_severus_color_horizontal.png){width="auto" fig-align="center"}
+
+![](logo_entidades_color_horizontal.png){width="auto" fig-align="center"}
 
 ![](https://severus.pt/wp-content/uploads/2022/02/severus-financiamento-transparents.png){width="100%" fig-align="center"}
 :::
@@ -193,12 +339,13 @@ Para as análises realizadas neste relatório foram usados os seguintes conjunto
 
 -   **Dados Censos 2021 - BGRI**: [Link geral](https://mapas.ine.pt/download/index2021.phtml) \| [link dados](https://mapas.ine.pt/download/filesGPG/2021/BGRI21_CONT.zip)
 
-- **Modelo Digital do Terreno - SRTM 1'', EPSG:4326 (NASA; proc.: Gonçalves, J.A., Pinhal, A.)**: [link geral](https://www.fc.up.pt/pessoas/jagoncal/dems/) \| [link dados](http://gis.ciimar.up.pt/gisData/dems/dem_srtm_pt_1sec.tif)
-
+-   **Modelo Digital do Terreno - SRTM 1''** (NASA; Gonçalves, J.A., Pinhal, A.): [link geral](https://www.fc.up.pt/pessoas/jagoncal/dems/) \| [link dados](http://gis.ciimar.up.pt/gisData/dems/dem_srtm_pt_1sec.tif)
 
 [^1]: Este conjunto de dados foi atualizado (27/09/2024) com a área correspondente à Paisagem Protegida Regional da Serra da Aboboreira (PPRSA).
 
 ### 1.2. Métodos
+
+#### 1.2.1. Análise e visualização de dados
 
 Para a quantificação da área ardida, foram realizadas análises espaciais recorrendo a ferramentas de **Sistemas de Informação Geográfica (SIG)**. Estas análises foram desenvolvidas na plataforma de computação **RStudio** utilizando a linguagem **R**, permitindo assim integrar, manipular, visualizar e processar grandes volumes de dados geoespaciais. As ferramentas empregadas para este fim incluíram uma combinação de bibliotecas especializadas no tratamento de dados vetoriais e raster, assim como para a geração de gráficos e tabelas.
 
@@ -210,8 +357,59 @@ Para a **renderização de gráficos e mapas**, os pacotes **ggplot2** e **patch
 
 Todo o fluxo de trabalho visou garantir a precisão e repetibilidade da análise espacial e estatística dos dados, permitindo uma compreensão abrangente das áreas ardidas e a geração de outputs rigorosos e acessíveis.
 
+#### 1.2.2. Quantificação da área ardida por classe de uso/coberto do solo
+
+Tendo por base os dados de área ardida foi elaborada uma análise relativamente à distribuição dessa em função das categorias de uso/coberto do solo. Para esse efeito recorreu-se a duas bases de dados de referência para Portugal continental:
+
+-   **Carta de Ocupação do Solo Conjuntural** para o ano de 2024 (**COSc 2024**, período pré-verão; Fonte: DGT) e a,
+
+-   **Carta de Uso e Ocupação do Solo** (**COS 2018, versão 2**; Fonte: DGT).
+
+No primeiro conjunto de dados -- COSc 2024 -- procurou-se a elevada atualidade desta base de dados para efeito da compreensão das categorias mais afetadas pelos incêndios. Enquanto que para a COS 2018 buscou-se uma complementaridade das fontes de informação, assim como maior resolução temática deste conjunto de dados (i.e., maior número de categorias e, portanto, maior grau de discriminação dos tipos de uso/coberto do solo).
+
+#### 1.2.3. Análise da severidade da área ardida
+
+::: callout-warning
+## Aviso
+
+Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
+:::
+
+::: callout-note
+## Acesso/descarregamento dos dados de severidade
+
+Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte link (com metadados): [SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.zip)
+
+Estes dados são fornecidos em números inteiros (com parte negativa, mais precisamente, 32-bit signed integer) tendo sido multiplicados por um fator de escala de 10,000. Originalmente os cálculos de severidade são efetuados em números decimais mas, para poupar espaço em disco, é aplicado este fator de reescalaonamento e é feito o arredondamente/truncagem dos valores. Os valores de severidade do indicador NBR/RBR, usualmente estão entre \[-6,000; 17,000\] (ou seja, na escala decimal original, \[-0.6; 1.7\], de zonas não ardidas/em recuperação até áreas com extrema severidade).
+:::
+
+A severidade da área ardida foi calculada a partir de imagens do satélite ótico **Sentinel-2** utilizando o índice espectral *Normalized Burn Ratio (NBR)*, que mede a diferença da reflectância da superfície terrestre entre as bandas do infravermelho próximo (NIR) e do infravermelho médio (SWIR).
+
+$NBR = \frac{NIR - SWIR}{NIR + SWIR}$
+
+O NBR é sensível a alterações na vegetação e no solo devidas ao fogo. Para avaliar a severidade do fogo, comparou-se o NBR pré-fogo (NBR pré) com o NBR pós-fogo (NBR pós), utilizando o indicador *Relativized Burn Ratio (RBR)*. Este indicador permite uma quantificação mais robusta das mudanças no terreno, eliminando as variações relativas entre os diferentes tipos de vegetação. A fórmula do **RBR** é dada por:
+
+$dNBR = NBR_{pré} - NBR_{pós}$
+
+$RBR = \frac{dNBR}{NBR_{pré} + 1.001}$
+
+Este cálculo foi aplicado em imagens de satélite antes e depois do fogo para produzir mapas de severidade da área ardida.
+
+As classes de severidade para o indicador *NBR/RBR* foram obtidas através da análise das distribuições para os anos 2018 - 2023 com base nos produtos gerados pelo projeto [SeverusPT](https://data.severuspt.ipvc.pt/products) (para o mesmo satélite e indicador de severidade). A partição das classes foi obtida pelos percentis da distribuição de 20%, 40%... a 80% para os valores de *NBR/RBR* superiores a zero:
+
+| De      | Para    | Nível de severidade |
+|---------|---------|---------------------|
+| \[min\] | 0       | Não ardido          |
+| 0       | 1455    | Muito baixa         |
+| 1455    | 2750    | Baixa               |
+| 2750    | 3801    | Média               |
+| 3801    | 4900    | Elevada             |
+| 4900    | \[max\] | Muito elevada       |
+
+A escala apresentada na tabela, tal como os dados de severidade, foram multiplicados por um fator de escala de 10,000.
+
 ```{r}
-#| label: set-params
+#| label: set-aux-functions
 
 
 set_flextable_defaults(
@@ -269,6 +467,12 @@ shorten_string <- function(input_string, n = 40) {
 #| label: load-data-intersect-bas 
 
 
+# Burn severity data
+sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.tif"
+  
+sev_s2_rbr <- rast(sev_raster_file)
+
+  
 ## SPATIAL DATA
 effis_sp <- read_sf("../data/vector/EFFIS_data/effis_pt.shp") %>% 
   filter(PROVINCE != "Região Autónoma da Madeira") %>% 
@@ -621,7 +825,69 @@ if(!USE_BA_INTERSECT_CACHE){
 
   if(VERBOSE) cat("\n--> Finished processing INE/BGRI data\n\n")
 
+  
+  ## -------------------------------------------------------------------------- ##
+  ## Burn Severity data ----
+  ## -------------------------------------------------------------------------- ##
+
+
+  ba_rbr_class <- classify(sev_s2_rbr, rcl = from_to_recl)
+
+  
+  ba_rbr_class_sp <- as.polygons(ba_rbr_class)
+
+  rm(ba_rbr_class)
+  
+  #ba_effis_cos24_crop_vec$area_ha <- expanse(ba_effis_cos24_crop_vec,unit="ha")
+  
+  #names(ba_effis_cos24_crop_vec) <- c("cosc2024","area_ha")
+  
+  ba_rbr_class_sf <- ba_rbr_class_sp %>% 
+    st_as_sf() %>% 
+    st_cast("POLYGON")
+  
+  rm(ba_rbr_class_sp)
+  
+  colnames(ba_rbr_class_sf)[1] <- "sev_rbr"
+  
+  
+  ba_sev_rbr_rnap <- st_intersection(ba_rbr_class_sf, rnap) %>%
+    mutate(ba_ha = as.numeric(st_area(.) / 10000)) %>%
+    st_drop_geometry()
+  ba_sev_rbr_sic <- st_intersection(ba_rbr_class_sf, sic) %>%
+    mutate(ba_ha = as.numeric(st_area(.) / 10000)) %>%
+    st_drop_geometry()
+  ba_sev_rbr_zpe <- st_intersection(ba_rbr_class_sf, zpe) %>%
+    mutate(ba_ha = as.numeric(st_area(.) / 10000)) %>%
+    st_drop_geometry()
+
+  ba_sev_rbr_rnap <- ba_sev_rbr_rnap %>% 
+    left_join(sev_rbr_classes, by=c("sev_rbr"="rbr_sev_val"))
+  ba_sev_rbr_sic <- ba_sev_rbr_sic %>% 
+    left_join(sev_rbr_classes, by=c("sev_rbr"="rbr_sev_val"))
+  ba_sev_rbr_zpe <- ba_sev_rbr_zpe %>% 
+    left_join(sev_rbr_classes, by=c("sev_rbr"="rbr_sev_val"))
+  
+  readr::write_rds(ba_sev_rbr_rnap, "ba_sev_rbr_rnap.rds")
+  
+  readr::write_rds(ba_sev_rbr_sic, "ba_sev_rbr_sic.rds")
+  
+  readr::write_rds(ba_sev_rbr_zpe, "ba_sev_rbr_zpe.rds")
+  
+
+  ba_rbr_class_sf <- ba_rbr_class_sf  %>%
+    st_drop_geometry() %>% 
+  left_join(sev_rbr_classes, by=c("sev_rbr"="rbr_sev_val"))
+  
+  readr::write_rds(ba_rbr_class_sf, "ba_rbr_class_sf.rds")
+  
+  
+  if(VERBOSE) cat("\n--> Finished processing Burn Severity data\n\n")
+
+  
 }else{
+  
+  # Load cached data as rds files
   
   ba_rnap          <- read_rds("ba_rnap.rds")
   ba_rn2k_sic      <- read_rds("ba_rn2k_sic.rds")
@@ -639,9 +905,9 @@ if(!USE_BA_INTERSECT_CACHE){
   ba_cos18_zpe     <- read_rds("ba_cos18_zpe.rds")
   
   ba_effis_cos24   <- read_rds("ba_effis_cos24.rds")
-  ba_cosc24_rnap <- read_rds("ba_cosc24_rnap.rds")
-  ba_cosc24_sic <- read_rds("ba_cosc24_sic.rds")
-  ba_cosc24_zpe <- read_rds("ba_cosc24_zpe.rds")
+  ba_cosc24_rnap   <- read_rds("ba_cosc24_rnap.rds")
+  ba_cosc24_sic    <- read_rds("ba_cosc24_sic.rds")
+  ba_cosc24_zpe    <- read_rds("ba_cosc24_zpe.rds")
   
   ba_osm_roads     <- read_rds("ba_osm_roads.rds")
   
@@ -651,6 +917,10 @@ if(!USE_BA_INTERSECT_CACHE){
   
   ba_bgri          <- read_rds("ba_bgri.rds")
 
+  ba_rbr_class_sf  <- read_rds("ba_rbr_class_sf.rds")
+  ba_sev_rbr_rnap  <- read_rds("ba_sev_rbr_rnap.rds")
+  ba_sev_rbr_sic   <- read_rds("ba_sev_rbr_sic.rds")
+  ba_sev_rbr_zpe   <- read_rds("ba_sev_rbr_zpe.rds")
   
 }
 
@@ -811,7 +1081,7 @@ dem <- rast("../data/raster/DEM_SRTM/DEM_SRTM_JAG_1sec_WGS84GCS.tif")
 names(dem) <- "dem"
 
 
-breaks <- c(0, 1E-6, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 30000)
+breaks <- c(-Inf, 1E-6, 50, 100, 200, 500, 1000, 2000, 5000, 10000, Inf)
 
 reds <- colorRampPalette(c("#FFFFFF", "#A31212"))(length(breaks) - 1)
 
@@ -824,7 +1094,7 @@ effis_sp_2024$ba_class <- cut(
   labels = c("0","]0, 50[", "]50, 100]", "]100, 200]", 
              "]200, 500]", "]500, 1000]",
              "]1000, 2000]", "]2000, 5000]", 
-             "]5000, 10000]", "]10000, 30000]"))
+             "]5000, 10000]", ">10000"))
 
 
 ba_effis_map_pt <- ggplot() +
@@ -956,7 +1226,6 @@ plot(g_2024_monthly_totals)
 
 ```
 
-
 ```{r}
 #| label:  ba-elevation-density-plot
 #| cache: true
@@ -986,11 +1255,16 @@ ba_elev_dens <- ggplot(ba_elev_dem, aes(x = dem)) +
     geom_vline(xintercept = c(100, 400, 700, 1000, 1300), linetype = "dashed", 
                color = "grey", size = 1) + # Add vertical lines
   geom_histogram(aes(y = ..density..), binwidth = 20, alpha = 0.3) +
-  annotate("text", x = 5, y = 0.0017, label = elev_stages_labs[1], color = elev_stages_colors[1], size = 3) +
-  annotate("text", x = 250, y = 0.0017, label = elev_stages_labs[2], color = elev_stages_colors[2], size = 3) +
-  annotate("text", x = 550, y = 0.0017, label = elev_stages_labs[3], color = elev_stages_colors[3], size = 3) +
-  annotate("text", x = 850, y = 0.0017, label = elev_stages_labs[4], color = elev_stages_colors[4], size =3) +
-  annotate("text", x = 1150, y = 0.0017, label = elev_stages_labs[5], color = elev_stages_colors[5], size = 3) +
+  annotate("text", x = 5, y = 0.0017, label = elev_stages_labs[1], color = elev_stages_colors[1], 
+           size = 3) +
+  annotate("text", x = 250, y = 0.0017, label = elev_stages_labs[2], color = elev_stages_colors[2], 
+           size = 3) +
+  annotate("text", x = 550, y = 0.0017, label = elev_stages_labs[3], color = elev_stages_colors[3], 
+           size = 3) +
+  annotate("text", x = 850, y = 0.0017, label = elev_stages_labs[4], color = elev_stages_colors[4], 
+           size =3) +
+  annotate("text", x = 1150, y = 0.0017, label = elev_stages_labs[5], color = elev_stages_colors[5], 
+           size = 3) +
   annotate("text", x = 1400, y = 0.0017, label = elev_stages_labs[6], color = "black", size = 3) +
   labs(title = "Distribuição da área ardida por altitude", 
        subtitle = "(gráfico de densidade)",
@@ -1031,18 +1305,12 @@ suppressMessages(suppressWarnings(
 ))
 ```
 
-
 ### 2.1. Área ardida por classe de uso/coberto do solo
 
-Tendo por base os dados de área ardida foi elaborada uma análise relativamente à distribuição dessa em função das categorias de uso/coberto do solo. Para esse efeito recorreu-se a duas bases de dados de referência para Portugal continental:
+Os resultados desta análise são apresentados nas subsecções seguintes tendo por base os dois conjuntos de dados de uso/ocupação do solo:
 
--   **Carta de Ocupação do Solo Conjuntural** para o ano de 2024 (**COSc 2024**, período pré-verão; Fonte: DGT) e a,
-
--   **Carta de Uso e Ocupação do Solo** (**COS 2018, versão 2**; Fonte: DGT).
-
-No primeiro conjunto de dados -- COSc 2024 -- procurou-se a elevada atualidade desta base de dados para efeito da compreensão das categorias mais afetadas pelos incêndios. Enquanto que para a COS 2018 buscou-se uma complementaridade das fontes de informação, assim como maior resolução temática deste conjunto de dados (i.e., maior número de categorias e, portanto, maior grau de discriminação dos tipos de uso/coberto do solo).
-
-Os resultados desta análise são apresentados nas subsecções seguintes tendo por base cada um destes datasets de uso/ocupação do solo.
+-   **COS conjuntural 2024 (pré-verão)**, e,
+-   **COS 2018**.
 
 ```{r}
 #| label:  ba-cosc2024-land-use-cover
@@ -1269,7 +1537,7 @@ kable(ba_summ_cos18 %>% filter(ba_perc >= 1),
 
 ```{r}
 #| label: ba-cos18-pt-barplot 
-#| fig-height: 8
+#| fig-height: 9
 #| fig-width: 8
 
 g_annual_totals_cos18 <- ggplot(ba_summ_cos18 %>% filter(ba_perc >= 1),
@@ -1439,8 +1707,7 @@ kable(ba_rnap %>% select(sigla, nome_ap, ba_total_ha, ba_perc),
 
 ```
 
-
-
+#### 4.1.1. Área ardida na RNAP por classe de uso/ocupação do solo (COSc 2024)
 
 ```{r}
 #| label: ba-2024-rnap-cosc2024 
@@ -1474,13 +1741,104 @@ kable(ba_cosc24_rnap_summ_wid %>% select(any_of(c("Cod.","Nome",cosc24_sort))),
       digits = 1,
       format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
       longtable = TRUE,
-      caption = "Área ardida (em hectares) na RNAP por classe de uso do solo COSc 2024 (para aa >1 ha)") %>% 
+      caption = "Área ardida (em hectares) na RNAP por classe de uso do solo COSc 2024 (para área ardida >1 ha)") %>% 
       #col.names = c("Sigla","Nome AP", "Área ardida (ha)", "% AP ardida")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
                 latex_options = "repeat_header")
 
 ```
 
+#### 4.1.2. Área ardida na RNAP por classe de uso/ocupação do solo (COS 2018)
+
+```{r}
+#| label: ba-2024-rnap-cos2018
+#| cache: true
+
+ba_cos18_rnap_summ <- ba_cos18_rnap %>% 
+  mutate(nome_ap = replace_strings(nome_ap)) %>% 
+  group_by(sigla,nome_ap,COS18n4_L) %>% 
+  summarise(ba_ha_tot = sum(ba_ha)) %>% 
+  as.data.frame() %>% 
+  #left_join(lucc_df %>% mutate(cosc2024=as.integer(`value`)), by="cosc2024") %>% 
+  select(sigla, nome_ap, COS18n4_L, ba_ha_tot)
+
+
+ba_cos18_rnap_summ_wid <- ba_cos18_rnap_summ %>%   
+  pivot_wider(names_from = `COS18n4_L`,
+              values_from = ba_ha_tot, # The values to be placed in the new columns
+              values_fill = 0 )  %>% 
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>% 
+  ungroup() %>%
+  # Arrange in descending order by the total column
+  arrange(desc(Total)) %>% 
+  as.data.frame() %>% 
+  filter(Total > 1) %>% 
+  select(-Total)
+
+colnames(ba_cos18_rnap_summ_wid)[1:2] <- c("Cod.","Nome")
+
+kable(ba_cos18_rnap_summ_wid%>% select(any_of(c("Cod.","Nome",cos18_sort))),
+      digits = 1,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Área ardida (em hectares) na RNAP por classe de uso do solo COS 2018 (para área ardida >1 ha)") %>% 
+      #col.names = c("Sigla","Nome AP", "Área ardida (ha)", "% AP ardida")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+
+```
+
+#### 4.1.3. Área ardida na RNAP por classe de severidade
+
+::: callout-warning
+## Aviso
+
+Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
+:::
+
+```{r}
+#| label: ba-2024-rnap-sev-rbr
+#| cache: true
+
+#ba_rnap$ba_total_ha
+
+ba_sev_rbr_rnap_summ <- ba_sev_rbr_rnap %>% 
+  mutate(nome_ap = replace_strings(nome_ap)) %>% 
+  group_by(sigla,nome_ap, rbr_sev_cls) %>% 
+  summarise(ba_ha_tot = sum(ba_ha)) %>% 
+  as.data.frame() %>% 
+  #left_join(lucc_df %>% mutate(cosc2024=as.integer(`value`)), by="cosc2024") %>% 
+  select(sigla, nome_ap,rbr_sev_cls, ba_ha_tot)
+
+
+ba_sev_rbr_rnap_summ_wid <- ba_sev_rbr_rnap_summ %>%   
+  pivot_wider(names_from = `rbr_sev_cls`,
+              values_from = ba_ha_tot, # The values to be placed in the new columns
+              values_fill = 0 )  %>% 
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>% 
+  ungroup() %>%
+  # Arrange in descending order by the total column
+  arrange(desc(Total)) %>% 
+  as.data.frame() %>% 
+  #left_join(ba_rnap, by="sigla") %>% 
+  #mutate(Por_apurar = ba_total_ha - Total)
+  filter(Total > 1) %>%
+  select(-Total)
+
+colnames(ba_sev_rbr_rnap_summ_wid)[1:2] <- c("Cod.","Nome")
+
+kable(ba_sev_rbr_rnap_summ_wid %>% select(any_of(c("Cod.","Nome",sev_rbr_classes$rbr_sev_cls))),
+      digits = 1,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Área ardida (em hectares) na RNAP por classe de severidade (para área ardida >1 ha)") %>% 
+      #col.names = c("Sigla","Nome AP", "Área ardida (ha)", "% AP ardida")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+
+```
 
 \newpage
 
@@ -1505,7 +1863,7 @@ kable(ba_rn2k_sic %>% select(site_code, site_name, ba_total_ha, ba_perc),
 
 ```
 
-
+#### 4.2.1. Área ardida nos SICs por classe de uso/ocupação do solo (COSc 2024)
 
 ```{r}
 #| label: ba-2024-sic-cosc2024 
@@ -1541,13 +1899,103 @@ kable(ba_cosc24_sic_summ_wid %>% select(any_of(c("Cod.","Nome",cosc24_sort))),
       digits = 1,
       format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
       longtable = TRUE,
-      caption = "Área ardida (em hectares) nas ZPEs por classe de uso do solo COSc 2024  (para aa >1 ha)") %>% 
+      caption = "Área ardida (em hectares) nas ZPEs por classe de uso do solo COSc 2024  (para área ardida >1 ha)") %>% 
       #col.names = c("Sigla","Nome AP", "Área ardida (ha)", "% AP ardida")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
                 latex_options = "repeat_header")
 
 ```
 
+#### 4.2.2. Área ardida nos SICs por classe de uso/ocupação do solo (COS 2018)
+
+```{r}
+#| label: ba-2024-sic-cos2018 
+#| cache: true
+
+
+
+ba_cos18_sic_summ <- ba_cos18_sic %>% 
+  mutate(site_name = iconv(site_name, from = "ISO-8859-1", to="UTF-8")) %>% 
+  group_by(site_code, site_name, COS18n4_L) %>% 
+  summarise(ba_ha_tot = sum(ba_ha)) %>% 
+  as.data.frame() %>% 
+  select(site_code, site_name, COS18n4_L, ba_ha_tot)
+
+
+ba_cos18_sic_summ_wid <- ba_cos18_sic_summ %>%   
+  pivot_wider(names_from = `COS18n4_L`,
+              values_from = ba_ha_tot, # The values to be placed in the new columns
+              values_fill = 0 )  %>% 
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>% 
+  ungroup() %>%
+  # Arrange in descending order by the total column
+  arrange(desc(Total)) %>% 
+  as.data.frame() %>% 
+  filter(Total>1) %>% 
+  select(-Total)
+
+colnames(ba_cos18_sic_summ_wid)[1:2] <- c("Cod.","Nome")
+
+kable(ba_cos18_sic_summ_wid %>% select(any_of(c("Cod.","Nome",cos18_sort))),
+      digits = 1,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Área ardida (em hectares) nas ZPEs por classe de uso do solo COSc 2024  (para área ardida >1 ha)") %>% 
+      #col.names = c("Sigla","Nome AP", "Área ardida (ha)", "% AP ardida")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+
+```
+
+#### 4.2.3. Área ardida nos SICs por classe de severidade
+
+::: callout-warning
+## Aviso
+
+Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
+:::
+
+```{r}
+#| label: ba-2024-sic-sev-rbr
+#| cache: true
+
+ba_sev_rbr_sic_summ <- ba_sev_rbr_sic %>% 
+  mutate(site_name = replace_strings(site_name)) %>% 
+  group_by(site_code,site_name, rbr_sev_cls) %>% 
+  summarise(ba_ha_tot = sum(ba_ha)) %>% 
+  as.data.frame() %>% 
+  #left_join(lucc_df %>% mutate(cosc2024=as.integer(`value`)), by="cosc2024") %>% 
+  select(site_code, site_name,rbr_sev_cls, ba_ha_tot)
+
+
+ba_sev_rbr_sic_summ_wid <- ba_sev_rbr_sic_summ %>%   
+  pivot_wider(names_from = `rbr_sev_cls`,
+              values_from = ba_ha_tot, # The values to be placed in the new columns
+              values_fill = 0 )  %>% 
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>% 
+  ungroup() %>%
+  # Arrange in descending order by the total column
+  arrange(desc(Total)) %>% 
+  as.data.frame() %>% 
+  #left_join(ba_rnap, by="site_code") %>% 
+  #mutate(Por_apurar = ba_total_ha - Total)
+  filter(Total > 1) %>%
+  select(-Total)
+
+colnames(ba_sev_rbr_sic_summ_wid)[1:2] <- c("Cod.","Nome")
+
+kable(ba_sev_rbr_sic_summ_wid %>% select(any_of(c("Cod.","Nome",sev_rbr_classes$rbr_sev_cls))),
+      digits = 1,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Área ardida (em hectares) nas SICs por classe de severidade (para área ardida >1 ha)") %>% 
+      #col.names = c("site_code","Nome AP", "Área ardida (ha)", "% AP ardida")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+
+```
 
 \newpage
 
@@ -1572,6 +2020,7 @@ kable(ba_rn2k_zpe %>% select(site_code, site_name, ba_total_ha, ba_perc),
 
 ```
 
+#### 4.3.1. Área ardida nas ZPEs por classe de uso/ocupação do solo (COSc 2024)
 
 ```{r}
 #| label: ba-2024-zpe-cosc2024 
@@ -1607,14 +2056,108 @@ kable(ba_cosc24_zpe_summ_wid %>% select(any_of(c("Cod.","Nome",cosc24_sort))),
       digits = 1,
       format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
       longtable = TRUE,
-      caption = "Área ardida (em hectares) nas SICs por classe de uso do solo COSc 2024  (para aa >1 ha)") %>% 
+      caption = "Área ardida (em hectares) nas SICs por classe de uso do solo COSc 2024  (para área ardida >1 ha)") %>% 
       #col.names = c("Sigla","Nome AP", "Área ardida (ha)", "% AP ardida")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
                 latex_options = "repeat_header")
 
 ```
 
+#### 4.3.2. Área ardida nas ZPEs por classe de uso/ocupação do solo (COS 2018)
+
+```{r}
+#| label: ba-2024-zpe-cos2018 
+#| cache: true
+
+
+
+ba_cos18_zpe_summ <- ba_cos18_zpe %>% 
+  mutate(site_name = iconv(site_name, from = "ISO-8859-1", to="UTF-8")) %>% 
+  group_by(site_code, site_name, COS18n4_L) %>% 
+  summarise(ba_ha_tot = sum(ba_ha)) %>% 
+  as.data.frame() %>% 
+  select(site_code, site_name, COS18n4_L, ba_ha_tot)
+
+
+ba_cos18_zpe_summ_wid <- ba_cos18_zpe_summ %>%   
+  pivot_wider(names_from = `COS18n4_L`,
+              values_from = ba_ha_tot, # The values to be placed in the new columns
+              values_fill = 0 )  %>% 
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>% 
+  ungroup() %>%
+  # Arrange in descending order by the total column
+  arrange(desc(Total)) %>% 
+  as.data.frame() %>% 
+  filter(Total>1) %>% 
+  select(-Total)
+
+colnames(ba_cos18_zpe_summ_wid)[1:2] <- c("Cod.","Nome")
+
+kable(ba_cos18_zpe_summ_wid %>% select(any_of(c("Cod.","Nome",cos18_sort))),
+      digits = 1,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Área ardida (em hectares) nas ZPEs por classe de uso do solo COSc 2024  (para área ardida >1 ha)") %>% 
+      #col.names = c("Sigla","Nome AP", "Área ardida (ha)", "% AP ardida")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+
+
+```
+
+#### 4.3.3. Área ardida nas ZPEs por classe de severidade
+
+::: callout-warning
+## Aviso
+
+Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
+:::
+
+```{r}
+#| label: ba-2024-zpe-sev-rbr
+#| cache: true
+
+ba_sev_rbr_zpe_summ <- ba_sev_rbr_zpe %>% 
+  mutate(site_name = replace_strings(site_name)) %>% 
+  group_by(site_code,site_name, rbr_sev_cls) %>% 
+  summarise(ba_ha_tot = sum(ba_ha)) %>% 
+  as.data.frame() %>% 
+  #left_join(lucc_df %>% mutate(cosc2024=as.integer(`value`)), by="cosc2024") %>% 
+  select(site_code, site_name,rbr_sev_cls, ba_ha_tot)
+
+
+ba_sev_rbr_zpe_summ_wid <- ba_sev_rbr_zpe_summ %>%   
+  pivot_wider(names_from = `rbr_sev_cls`,
+              values_from = ba_ha_tot, # The values to be placed in the new columns
+              values_fill = 0 )  %>% 
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>% 
+  ungroup() %>%
+  # Arrange in descending order by the total column
+  arrange(desc(Total)) %>% 
+  as.data.frame() %>% 
+  #left_join(ba_rnap, by="site_code") %>% 
+  #mutate(Por_apurar = ba_total_ha - Total)
+  filter(Total > 1) %>%
+  select(-Total)
+
+colnames(ba_sev_rbr_zpe_summ_wid)[1:2] <- c("Cod.","Nome")
+
+kable(ba_sev_rbr_zpe_summ_wid %>% select(any_of(c("Cod.","Nome",sev_rbr_classes$rbr_sev_cls))),
+      digits = 1,
+      format = ifelse(OUTPUT_FORMAT=="html","html","latex"),
+      longtable = TRUE,
+      caption = "Área ardida (em hectares) nas ZPEs por classe de severidade (para área ardida >1 ha)") %>% 
+      #col.names = c("site_code","Nome AP", "Área ardida (ha)", "% AP ardida")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                latex_options = "repeat_header")
+
+```
+
 \newpage
+
+## 5. Análise de grandes áreas ardidas
 
 ```{r}
 #| label: ba-cosc24-big-wildfires-analysis
@@ -1672,8 +2215,6 @@ ba_cosc24_bigfires_percs <- ba_cosc24_bigfires_percs %>%
 
 ```
 
-## 5. Análise de grandes áreas ardidas
-
 ### Síntese geral
 
 Neste secção apresenta-se uma caracterização detalhada das grandes áreas ardidas com **dimensão superior a `{r} scales::comma(BIG_FIRE_THRESH)` hectares**, analisando a distribuição dos usos / coberto do solo em cada uma dessas áreas, a severidade, a afetação de áreas com estatuto de proteção/conservação entre outros aspetos.
@@ -1720,7 +2261,11 @@ kable(bf_list_locs %>%
 
 ```
 
-A distribuição destes incêndios por classe de uso/ocupação do solo é mostrada nas tabelas seguintes considerando os dois conjuntos de dados de referência COS conjuntural 2024 e a COS 2018:
+A distribuição destes incêndios por classe de uso/ocupação do solo é mostrada nas tabelas seguintes considerando os dois conjuntos de dados de referência:
+
+-   **COS conjuntural 2024**, e a
+
+-   **COS 2018**.
 
 ```{r}
 #| label: bigfires-cosc2024-table 
@@ -1828,64 +2373,7 @@ plot(bf_cos18)
 
 ### Severidade dos grandes incêndios de 2024
 
-::: callout-warning
-## Aviso
-
-Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
-:::
-
-::: callout-note
-## Acesso/descarregamento dos dados de severidade
-
-Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte link (com metadados): [SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.zip)
-
-Estes dados são fornecidos em números inteiros (com parte negativa, mais precisamente, 32-bit signed integer) 
-tendo sido multiplicados por um fator de escala de 10,000. Originalmente os cálculos de severidade são 
-efetuados em números decimais mas, para poupar espaço em disco, é aplicado este fator de reescalaonamento e 
-é feito o arredondamente/truncagem dos valores. Os valores de severidade do indicador NBR/RBR, usualmente 
-estão entre [-6,000; 17,000] (ou seja, na escala decimal original, [-0.6; 1.7], de zonas não ardidas/em recuperação até áreas com extrema severidade).
-
-:::
-
-A severidade da área ardida foi calculada a partir de imagens do satélite ótico **Sentinel-2** utilizando o índice espectral *Normalized Burn Ratio (NBR)*, que mede a diferença da reflectância da superfície terrestre entre as bandas do infravermelho próximo (NIR) e do infravermelho médio (SWIR).
-
-$NBR = \frac{NIR - SWIR}{NIR + SWIR}$
-
-O NBR é sensível a alterações na vegetação e no solo devidas ao fogo. Para avaliar a severidade do fogo, comparou-se o NBR pré-fogo (NBR pré) com o NBR pós-fogo (NBR pós), utilizando o indicador *Relativized Burn Ratio (RBR)*. Este indicador permite uma quantificação mais robusta das mudanças no terreno, eliminando as variações relativas entre os diferentes tipos de vegetação. A fórmula do **RBR** é dada por:
-
-$dNBR = NBR_{pré} - NBR_{pós}$
-
-$RBR = \frac{dNBR}{NBR_{pré} + 1.001}$
-
-Este cálculo foi aplicado em imagens de satélite antes e depois do fogo para produzir mapas de severidade da 
-área ardida.
-
-As classes de severidade para o indicador *NBR/RBR* foram obtidas através da análise das distribuições para os anos 2018 - 2023 com base nos produtos gerados pelo projeto [SeverusPT](https://data.severuspt.ipvc.pt/products) (para o mesmo satélite e indicador de severidade). A partição das classes foi obtida pelos percentis da distribuição de 20%, 40%... a 80% para os valores de *NBR/RBR* superiores a zero:
-
-
-| De      | Para    | Nível de severidade |
-|---------|---------|---------------------|
-| \[min\] | 0       | Não ardido          |
-| 0       | 1455    | Muito baixa         |
-| 1455    | 2750    | Baixa               |
-| 2750    | 3801    | Média               |
-| 3801    | 4900    | Elevada             |
-| 4900    | \[max\] | Muito elevada       |
-
-
-A escala apresentada na tabela, tal como os dados de severidade, foram multiplicados por um fator de 
-escala de 10,000.
-
-Apresentam-se abaixo os resultados da distribuição da área ardida (em hectares) pelas classes de severidade 
-para o indicador *NBR / RBR*:
-
-
-```{r}
-#| label: read-raster-severity-data
-
-sev_s2_rbr <- rast("../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.tif")
-
-```
+Apresentam-se abaixo os resultados da distribuição da área ardida (em hectares) pelas classes de severidade para o indicador *NBR / RBR*:
 
 ```{r}
 #| label: calc-severity-table-areas-per-sev-class
@@ -2006,46 +2494,6 @@ kable(sev_rel_freq %>%
 #| fig-width: 9
 
 
-land_cover_colors <- c(
-  "Artificializado"          = "#e31a1c",
-  "Culturas anuais out/inv"  = "#eba000",
-  "Culturas anuais pri/ver"  = "#9effe4",
-  "Outras áreas agrícolas"   = "#f9f100",
-  "Sobreiro e azinheira"     = "#9f218a",
-  "Eucalipto"                = "#2bf100",
-  "Outras folhosas"          = "#12c309",
-  "Pinheiro bravo"           = "#0c8006",
-  "Pinheiro manso"           = "#174e11",
-  "Outras resinosas"         = "#1e636f",
-  "Matos"                    = "#6f5e1a",
-  "Veg. herbácea esp."       = "#d6cc90",
-  "Sup. s/ vegetação"        = "#787878",
-  "Zonas húmidas"            = "#1973a7",
-  "Água"                     = "#362ecc"
-)
-
-sev_breaks <- c(-Inf, 0, 1455, 2750, 3801, 4900, Inf)
-sev_labels <- c("Não ardido", "Muito baixa", "Baixa", 
-            "Média", "Elevada", "Muito elevada")
-
-from_to_recl <- as.matrix(data.frame(
-  from = c(-Inf, 0, 1455, 2750, 3801, 4900),
-  to = c(0, 1455, 2750, 3801, 4900, Inf),
-  becomes = 0:5
-))
-
-
-cols <- c("#52BAE3","#FFA07A", "#FF6347", 
-          "#BF3D3D", "#8B0000", "#000000")
-
-
-# Define custom colors for each class
-sev_cols <- c("Não ardido"  = cols[1], 
-            "Muito baixa"   = cols[2], 
-            "Baixa"         = cols[3], 
-            "Média"         = cols[4], 
-            "Elevada"       = cols[5], 
-            "Muito elevada" = cols[6])
 
 
 for(i in 1:(ifelse(USE_TEST_DATA,1,
