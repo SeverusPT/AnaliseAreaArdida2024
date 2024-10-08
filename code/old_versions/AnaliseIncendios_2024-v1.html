@@ -1,0 +1,3287 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="João Gonçalves">
+<meta name="author" content="Bruno Marcos">
+<meta name="dcterms.date" content="2024-07-10">
+
+<title>Análise da área ardida em Portugal continental no ano de 2024</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="AnaliseIncendios_2024-v1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="AnaliseIncendios_2024-v1_files/libs/quarto-html/quarto.js"></script>
+<script src="AnaliseIncendios_2024-v1_files/libs/quarto-html/popper.min.js"></script>
+<script src="AnaliseIncendios_2024-v1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="AnaliseIncendios_2024-v1_files/libs/quarto-html/anchor.min.js"></script>
+<link href="AnaliseIncendios_2024-v1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="AnaliseIncendios_2024-v1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="AnaliseIncendios_2024-v1_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="AnaliseIncendios_2024-v1_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="AnaliseIncendios_2024-v1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="AnaliseIncendios_2024-v1_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="AnaliseIncendios_2024-v1_files/libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="AnaliseIncendios_2024-v1_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="AnaliseIncendios_2024-v1_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+<link href="AnaliseIncendios_2024-v1_files/libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+
+<script src="AnaliseIncendios_2024-v1_files/libs/tabwid-1.1.3/tabwid.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Análise da área ardida em Portugal continental no ano de 2024</h1>
+                      </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Autores</div>
+    <div class="quarto-title-meta-heading">Afiliação</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">João Gonçalves <a href="https://orcid.org/0000-0002-6615-0218" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              BIOPOLIS/CIBIO-InBIO - U. Porto
+            </p>
+        </div>
+      <div class="quarto-title-meta-contents">
+      <p class="author">Bruno Marcos <a href="https://orcid.org/0000-0001-5423-5890" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              BIOPOLIS/CIBIO-InBIO - U. Porto
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Data de Publicação</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">07/10/2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#material-e-métodos" id="toc-material-e-métodos" class="nav-link active" data-scroll-target="#material-e-métodos">1. Material e métodos</a>
+  <ul>
+  <li><a href="#fontes-de-dados-espaciaisgeográficos" id="toc-fontes-de-dados-espaciaisgeográficos" class="nav-link" data-scroll-target="#fontes-de-dados-espaciaisgeográficos">1.1. Fontes de dados espaciais/geográficos</a></li>
+  <li><a href="#métodos" id="toc-métodos" class="nav-link" data-scroll-target="#métodos">1.2. Métodos</a></li>
+  </ul></li>
+  <li><a href="#área-ardida-em-portugal-continental-2024" id="toc-área-ardida-em-portugal-continental-2024" class="nav-link" data-scroll-target="#área-ardida-em-portugal-continental-2024">2. Área ardida em Portugal continental (2024)</a>
+  <ul>
+  <li><a href="#síntese-geral" id="toc-síntese-geral" class="nav-link" data-scroll-target="#síntese-geral">Síntese geral</a></li>
+  <li><a href="#área-ardida-por-classe-de-usocoberto-do-solo" id="toc-área-ardida-por-classe-de-usocoberto-do-solo" class="nav-link" data-scroll-target="#área-ardida-por-classe-de-usocoberto-do-solo">2.1. Área ardida por classe de uso/coberto do solo</a>
+  <ul class="collapse">
+  <li><a href="#carta-de-uso-e-ocupação-do-solo-conjuntural---cosc-2024" id="toc-carta-de-uso-e-ocupação-do-solo-conjuntural---cosc-2024" class="nav-link" data-scroll-target="#carta-de-uso-e-ocupação-do-solo-conjuntural---cosc-2024">2.1.1. Carta de Uso e Ocupação do Solo conjuntural - COSc 2024</a></li>
+  <li><a href="#carta-de-ocupação-do-solo---cos-2018" id="toc-carta-de-ocupação-do-solo---cos-2018" class="nav-link" data-scroll-target="#carta-de-ocupação-do-solo---cos-2018">2.1.2. Carta de Ocupação do Solo - COS 2018</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#área-ardida-por-município" id="toc-área-ardida-por-município" class="nav-link" data-scroll-target="#área-ardida-por-município">3. Área ardida por município</a></li>
+  <li><a href="#área-ardida-em-espaços-de-proteçãoconservação" id="toc-área-ardida-em-espaços-de-proteçãoconservação" class="nav-link" data-scroll-target="#área-ardida-em-espaços-de-proteçãoconservação">4. Área ardida em espaços de proteção/conservação</a>
+  <ul>
+  <li><a href="#rede-nacional-de-áreas-protegidas-rnap" id="toc-rede-nacional-de-áreas-protegidas-rnap" class="nav-link" data-scroll-target="#rede-nacional-de-áreas-protegidas-rnap">4.1. Rede Nacional de Áreas Protegidas (RNAP)</a></li>
+  <li><a href="#rede-natura-2000---sítios-de-interesse-comunitário-sic" id="toc-rede-natura-2000---sítios-de-interesse-comunitário-sic" class="nav-link" data-scroll-target="#rede-natura-2000---sítios-de-interesse-comunitário-sic">4.2. Rede Natura 2000 - Sítios de Interesse Comunitário (SIC)</a></li>
+  <li><a href="#rede-natura-2000---zonas-de-proteção-especial-zpe" id="toc-rede-natura-2000---zonas-de-proteção-especial-zpe" class="nav-link" data-scroll-target="#rede-natura-2000---zonas-de-proteção-especial-zpe">4.3. Rede Natura 2000 - Zonas de Proteção Especial (ZPE)</a></li>
+  </ul></li>
+  <li><a href="#análise-de-grandes-áreas-ardidas" id="toc-análise-de-grandes-áreas-ardidas" class="nav-link" data-scroll-target="#análise-de-grandes-áreas-ardidas">5. Análise de grandes áreas ardidas</a>
+  <ul>
+  <li><a href="#síntese-geral-1" id="toc-síntese-geral-1" class="nav-link" data-scroll-target="#síntese-geral-1">Síntese geral</a></li>
+  <li><a href="#severidade-dos-grandes-incêndios-de-2024" id="toc-severidade-dos-grandes-incêndios-de-2024" class="nav-link" data-scroll-target="#severidade-dos-grandes-incêndios-de-2024">Severidade dos grandes incêndios de 2024</a></li>
+  <li><a href="#são-martinho-de-angueira-miranda-do-douro-vimioso" id="toc-são-martinho-de-angueira-miranda-do-douro-vimioso" class="nav-link" data-scroll-target="#são-martinho-de-angueira-miranda-do-douro-vimioso">5.1. São Martinho de Angueira (Miranda do Douro / Vimioso)</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-other-links"><h2>Outros Links</h2><ul><li><a href="https://severus.pt"><i class="bi bi-link-45deg"></i>SeverusPT</a></li></ul></div><div class="quarto-code-links"><h2>Ligações de código</h2><ul><li><a href="https://github.com/SeverusPT/AnaliseAreaArdida2024"><i class="bi bi-file-code"></i>Repositório de código</a></li></ul></div></nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div style="page-break-after: always;"></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso / Disclaimer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esta análise é preliminar e reflete os dados a que os autores tiveram acesso à data de criação deste documento. Esta análise não é definitiva e os valores poderão mudar assim que atualizações e modificações dos dados forem disponibilizadas (por razões diversas e fora do controlo dos autores).</p>
+<p>Atualizações deste relatório serão disponibilizadas assim que modificações relevantes dos perímetros de área ardida fornecidos pelo Sistema Europeu Copernicus/EFFIS forem disponibilizados.</p>
+<p>As fontes de dados podem estar sujeitas a variações temporais e espaciais, imprecisões ou inexatidões de ordem diversa assim como a erros inerentes aos processos de recolha e processamento de informação completamente alheios aos autores.</p>
+<p>Os autores deste relatório não assumem qualquer responsabilidade por decisões ou ações tomadas com base nos dados, análises ou conclusões aqui apresentadas sem a devida consideração das limitações mencionadas.</p>
+<p>O uso inadequado ou a interpretação incorreta dos resultados, especialmente sem um conhecimento profundo das incertezas associadas, é da inteira responsabilidade de quem os utiliza. Recomenda-se que os resultados apresentados sejam sempre analisados ou interpretados com cautela, e que, se necessário, sejam complementados por outras fontes de informação e validações adicionais.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Info
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se está a ver este relatório em um smartphone ou tablet, experimente rodar o ecrã para o formato horizontal para aceder ao índice de conteúdos (do lado direito do ecrã).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Código fonte das análises
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O código R utilizado para produzir estas análises está disponível no link:<br>
+<a href="https://github.com/SeverusPT/AnaliseAreaArdida2024" class="uri">https://github.com/SeverusPT/AnaliseAreaArdida2024</a></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Agradecimentos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este relatório foi financiado pela Fundação para a Ciência e a Tecnologia (FCT) no âmbito do projeto <strong>SeverusPT</strong> — <em>“Um serviço e produto de dados baseados na web para a avaliação e previsão de severidade de incêndio em Portugal continental”</em>.</p>
+<ul>
+<li>Website: <a href="https://severus.pt/" class="uri">https://severus.pt/</a></li>
+<li>DOI: <a href="https://doi.org/10.54499/PCIF/RPG/0170/2019" class="uri">https://doi.org/10.54499/PCIF/RPG/0170/2019</a></li>
+<li>Referência FCT: <strong>PCIF/RPG/0170/2019</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://severus.pt/wp-content/uploads/2022/02/severus-financiamento-transparents.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<section id="material-e-métodos" class="level2">
+<h2 class="anchored" data-anchor-id="material-e-métodos">1. Material e métodos</h2>
+<section id="fontes-de-dados-espaciaisgeográficos" class="level3">
+<h3 class="anchored" data-anchor-id="fontes-de-dados-espaciaisgeográficos">1.1. Fontes de dados espaciais/geográficos</h3>
+<p>Para as análises realizadas neste relatório foram usados os seguintes conjuntos de dados:</p>
+<ul>
+<li><p><strong>Áreas ardidas do Sistema Europeu Copernicus EFFIS (European Forest Fire Information System)</strong>: <a href="https://forest-fire.emergency.copernicus.eu/applications/data-%20-services">link geral</a> | <a href="https://maps.effis.emergency.copernicus.eu/effis?service=WFS&amp;request=getfeature&amp;typename=ms:modis.ba.poly&amp;version=1.1.0&amp;outputformat=SHAPEZIP">link dados</a></p></li>
+<li><p><strong>Carta de Uso e Ocupação do Solo - 2018</strong>: <a href="https://snig.dgterritorio.gov.pt/rndg/srv/por/catalog.search#/metadata/b498e89c-1093-4793-ad22-63516062891b">link geral</a> | <a href="https://geo2.dgterritorio.gov.pt/cos/COS2018/COS2018v2-shp.zip">link dados</a></p></li>
+<li><p><strong>Carta de Ocupação do Solo Conjuntural - 2024 Pré-Verão DGT</strong>: <a href="https://snig.dgterritorio.gov.pt/rndg/srv/por/catalog.search#/metadata/e0879e62-ab0c-4396-b71e-112764e226d7">link geral</a> | <a href="https://geo2.dgterritorio.gov.pt/cosc/COSc2024_preverao.zip">link dados</a></p></li>
+<li><p><strong>Carta Administrativa Oficial de Portugal - CAOP2023 (Continente)</strong>: <a href="https://snig.dgterritorio.gov.pt/rndg/srv/por/catalog.search#/metadata/198497815bf647ecaa990c34c42e932e">link geral</a> | <a href="https://geo2.dgterritorio.gov.pt/caop/CAOP_Continente_2023-shp.zip">link dados</a></p></li>
+<li><p><strong>Rede Nacional de Áreas Protegidas (RNAP)</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>: <a href="https://geocatalogo.icnf.pt/catalogo.html">link geral</a> | <a href="https://si.icnf.pt/shp/rnap">link dados</a></p></li>
+<li><p><strong>Zonas de Proteção Especial da Diretiva Aves (ZPE) - RN2000</strong>: <a href="https://geocatalogo.icnf.pt/catalogo.html">link geral</a> | <a href="https://si.icnf.pt/shp/zpe">link dados</a></p></li>
+<li><p><strong>Sítios da Diretiva Habitats (SIC) - RN2000</strong>: <a href="https://geocatalogo.icnf.pt/catalogo.html">link geral</a> | <a href="https://si.icnf.pt/shp/sic">link dados</a></p></li>
+<li><p><strong>Estradas e vias de trânsito - OpenStreetMaps PT</strong>: <a href="https://download.geofabrik.de/europe/portugal.html">link geral</a> | <a href="https://download.geofabrik.de/europe/portugal.html">link dados</a></p></li>
+<li><p><strong>Global ML Building Footprints</strong> (área/polígonos de edifícios): <a href="https://github.com/microsoft/GlobalMLBuildingFootprints">link geral-1</a> | <a href="https://gee-community-catalog.org/projects/msbuildings/">link geral-2</a> | <a href="https://code.earthengine.google.com/?scriptPath=users/sat-io/awesome-gee-catalog-examples:population-socioeconomics/GLOBAL-ML-BUILDINGS">link dados</a></p></li>
+<li><p><strong>Rede Hidrográfica – EU-Hydro River Network Database 2006-2012 (NUTS: PT1)</strong>: <a href="https://land.copernicus.eu/en/products/eu-hydro/eu-hydro-river-network-database">link geral</a> | <a href="https://land.copernicus.eu/en/products/eu-hydro/eu-hydro-river-network-database#download">link dados</a></p></li>
+<li><p><strong>Dados Censos 2021 - BGRI</strong>: <a href="https://mapas.ine.pt/download/index2021.phtml">Link geral</a> | <a href="https://mapas.ine.pt/download/filesGPG/2021/BGRI21_CONT.zip">link dados</a></p></li>
+</ul>
+</section>
+<section id="métodos" class="level3">
+<h3 class="anchored" data-anchor-id="métodos">1.2. Métodos</h3>
+<p>Para a quantificação da área ardida, foram realizadas análises espaciais recorrendo a ferramentas de <strong>Sistemas de Informação Geográfica (SIG)</strong>. Estas análises foram desenvolvidas na plataforma de computação <strong>RStudio</strong> utilizando a linguagem <strong>R</strong>, permitindo assim integrar, manipular, visualizar e processar grandes volumes de dados geoespaciais. As ferramentas empregadas para este fim incluíram uma combinação de bibliotecas especializadas no tratamento de dados vetoriais e raster, assim como para a geração de gráficos e tabelas.</p>
+<p>Para o <strong>geoprocessamento e análise de dados vetoriais</strong>, foi utilizado o pacote <strong>sf</strong>, que facilitou o manuseio e a análise de dados espaciais em formato vetorial. Em complemento, os pacotes <strong>terra</strong>, <strong>tidyterra</strong>, <strong>raster</strong> e <strong>fasterize</strong> foram usados para o <strong>geoprocessamento e análise de dados raster</strong>, oferecendo funcionalidades robustas para a manipulação de dados em grande escala.</p>
+<p>A visualização de dados geoespaciais foi aprimorada com o pacote <strong>ggmap</strong>, que permitiu a inclusão de basemaps em formato raster. Além disso, o pacote <strong>tidyverse</strong> foi utilizado para a <strong>manipulação, análise e agregação de dados</strong>, permitindo uma estrutura de trabalho eficiente para transformar e analisar os dados espaciais.</p>
+<p>Para a <strong>renderização de gráficos e mapas</strong>, os pacotes <strong>ggplot2</strong> e <strong>patchwork</strong> foram aplicados, proporcionando a criação de visualizações detalhadas e a composição de gráficos e mapas. Finalmente, a <strong>formatação e renderização de tabelas</strong> foi feita através dos pacotes <strong>knitr</strong>, <strong>kableExtra</strong> e <strong>flextable</strong>, garantindo a apresentação dos resultados tabulares.</p>
+<p>Todo o fluxo de trabalho visou garantir a precisão e repetibilidade da análise espacial e estatística dos dados, permitindo uma compreensão abrangente das áreas ardidas e a geração de outputs rigorosos e acessíveis.</p>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="área-ardida-em-portugal-continental-2024" class="level2">
+<h2 class="anchored" data-anchor-id="área-ardida-em-portugal-continental-2024">2. Área ardida em Portugal continental (2024)</h2>
+<section id="síntese-geral" class="level3">
+<h3 class="anchored" data-anchor-id="síntese-geral">Síntese geral</h3>
+<p>À data de 07/10/2024 a área ardida no ano de 2024, de acordo com os dados do Sistema Copernicus/EFFIS (<em>European Forest Fire Information System</em>) é igual a <strong>160,348 hectares</strong>. De acordo com esta informação, no mês de setembro arderam <strong>150,662 hectares</strong> dos quais <strong>137,372 hectares</strong> ocorreram após o dia 15 de setembro de 2024 (inclusive; ou seja, correspondente 85.7% do total anual).</p>
+<p>Segundo os dados do EFFIS, foram contabilizados <strong>677</strong> ocorrências de incêndio das quais <strong>174</strong> ocorreram após o dia <em>15 de setembro</em> (inclusive), correspondente a <strong>25.7%</strong> do total anual.</p>
+<p>Em termos de afetação potencial de áreas com estatuto de conservação/proteção, um total de <strong>13,342 hectares</strong> ocorreram em <em>Rede Nacional de Áreas Protegidas (RNAP)</em>, <strong>38,914 hectares</strong> em <em>Sítios de Interesse Comunitário da Rede Natura 2000</em>, e <strong>1,477 hectares</strong> em <em>Zonas de Proteção Especial</em> também em contexto da <em>Rede Natura 2000</em>.</p>
+<p>Em termos de afetação potencial dos cursos de água e, considerando uma estratificação pela hierarquia de Strahler <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, foram quantificados os seguintes impactos em termos de comprimento total por tipo de rio (classes de Strahler de 1 a 6):<br>
+- Classe 1: 437.8 km</p>
+<p>- Classe 2: 142.5 km</p>
+<p>- Classe 3: 74.1 km</p>
+<p>- Classe 4: 87.1 km</p>
+<p>- Classe 5: 23.8 km</p>
+<p>- Classe 6: 0.1 km .</p>
+<p>De acordo com dados do Instituto Nacional de Estatística (INE), e considerando as subsecções estatísticas constantes da <em>Base Geográfica de Referenciação de Informação</em> (BGRI) para os Censos de 2021, um total de <strong>138,260 habitantes</strong> foram potencialmente afetados pelos incêndios de 2024, como residentes dentro ou nas imediações dos perímetros ardidos, com níveis muito diferenciados de impacto direto ou indireto e que os dados a que tivemos acesso não permitem estimar. Segundo este conjunto de dados também, um total de <strong>85,986 alojamentos</strong> poderão ter sido impactados, com graus de afetação direta ou indireta muito diferenciados e que os dados não permitem caracterizar, estando localizados dentro ou nas imediações dos perímetros ardidos.</p>
+<p>De acordo com o conjunto de dados aberto de edíficos <em>MS Buildings Footprint</em>, que mistura todas as tipologias de edificado (e.g., habitacional, industrial, serviços), um total de <strong>73,015 edifícios</strong> foram potencialmente afetados pelos incêndios de 2024 com níveis muito diferenciados de impacto (que os dados a que tivemos acesso não permitem estimar), estando incluídos dentro dos perímetros de área ardida mapeados pelo sistema EFFIS.</p>
+<p>Segundo o conjunto de dados aberto OSM – OpenStreetMap – sobre vias de trânsito/acesso/circulação e, agregando todas as tipologias existentes nesta base de dados (e.g., auto-estradas, estradas nacionais, municipais, caminhos, trilhos), foram potencialmente afetados <strong>7,051 Km de vias</strong>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/ba-effis-map-wf-location-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A distribuição das ocorrências de incêndio por dimensão da área ardida é mostrada na tabela abaixo. Nesta são apresentadas a frequência absoluta e relativa (%) para o ano de 2024. Para efeito de análise mais detalhada, foram separadas as ocorrências na base de dados do EFFIS a partir de 15 de setembro. Neste caso é mostrada a frequência aboluta e relativa (tendo como denominador as ocorrências em cada categoria de dimensão da área ardida).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Número de incêndios por dimensão da área ardida</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Classe</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Nr. ocorrências</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentagem 2024</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Nr. ocorrências após 15 set</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentagem classe após 15 set</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0-10 ha</td>
+<td style="text-align: right;">388</td>
+<td style="text-align: right;">57.3</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">18.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10-100 ha</td>
+<td style="text-align: right;">212</td>
+<td style="text-align: right;">31.3</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">25.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">100-250 ha</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">50.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">250-500 ha</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">68.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">500-1000 ha</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">72.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1000-2500 ha</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">58.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2500-5000 ha</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">80.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5000-10000 ha</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">100.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">&gt;10000 ha</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">100.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/ba-wildfires-size-freq-histogram-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/ba-annual-plot-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/ba-monthly-totals-2024-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="área-ardida-por-classe-de-usocoberto-do-solo" class="level3">
+<h3 class="anchored" data-anchor-id="área-ardida-por-classe-de-usocoberto-do-solo">2.1. Área ardida por classe de uso/coberto do solo</h3>
+<p>Tendo por base os dados de área ardida foi elaborada uma análise relativamente à distribuição dessa em função das categorias de uso/coberto do solo. Para esse efeito recorreu-se a duas bases de dados de referência para Portugal continental:</p>
+<ul>
+<li><p><strong>Carta de Ocupação do Solo Conjuntural</strong> para o ano de 2024 (<strong>COSc 2024</strong>, período pré-verão; Fonte: DGT) e a,</p></li>
+<li><p><strong>Carta de Uso e Ocupação do Solo</strong> (<strong>COS 2018, versão 2</strong>; Fonte: DGT).</p></li>
+</ul>
+<p>No primeiro conjunto de dados – COSc 2024 – procurou-se a elevada atualidade desta base de dados para efeito da compreensão das categorias mais afetadas pelos incêndios. Enquanto que para a COS 2018 buscou-se uma complementaridade das fontes de informação, assim como maior resolução temática deste conjunto de dados (i.e., maior número de categorias e, portanto, maior grau de discriminação dos tipos de uso/coberto do solo).</p>
+<p>Os resultados desta análise são apresentados nas subsecções seguintes tendo por base cada um destes datasets de uso/ocupação do solo.</p>
+<section id="carta-de-uso-e-ocupação-do-solo-conjuntural---cosc-2024" class="level4">
+<h4 class="anchored" data-anchor-id="carta-de-uso-e-ocupação-do-solo-conjuntural---cosc-2024">2.1.1. Carta de Uso e Ocupação do Solo conjuntural - COSc 2024</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Área ardida em 2024 por classe de uso/coberto do solo (COSc 2024)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Código</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Classe uso/coberto</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Área ardida (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% ardida</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">410</td>
+<td style="text-align: left;">Matos</td>
+<td style="text-align: right;">59455.3</td>
+<td style="text-align: right;">37.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">312</td>
+<td style="text-align: left;">Eucalipto</td>
+<td style="text-align: right;">37664.7</td>
+<td style="text-align: right;">23.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">420</td>
+<td style="text-align: left;">Veg. herbácea esp.</td>
+<td style="text-align: right;">18654.9</td>
+<td style="text-align: right;">11.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">313</td>
+<td style="text-align: left;">Outras folhosas</td>
+<td style="text-align: right;">14088.0</td>
+<td style="text-align: right;">8.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">321</td>
+<td style="text-align: left;">Pinheiro bravo</td>
+<td style="text-align: right;">12203.3</td>
+<td style="text-align: right;">7.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">213</td>
+<td style="text-align: left;">Outras áreas agrícolas</td>
+<td style="text-align: right;">9535.6</td>
+<td style="text-align: right;">6.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">500</td>
+<td style="text-align: left;">Sup. s/ vegetação</td>
+<td style="text-align: right;">3939.0</td>
+<td style="text-align: right;">2.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">Artificializado</td>
+<td style="text-align: right;">1618.1</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">211</td>
+<td style="text-align: left;">Culturas anuais out/inv</td>
+<td style="text-align: right;">1249.1</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">212</td>
+<td style="text-align: left;">Culturas anuais pri/ver</td>
+<td style="text-align: right;">1042.3</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">323</td>
+<td style="text-align: left;">Outras resinosas</td>
+<td style="text-align: right;">297.8</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">311</td>
+<td style="text-align: left;">Sobreiro e azinheira</td>
+<td style="text-align: right;">203.4</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">620</td>
+<td style="text-align: left;">Água</td>
+<td style="text-align: right;">144.0</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">322</td>
+<td style="text-align: left;">Pinheiro manso</td>
+<td style="text-align: right;">103.2</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">610</td>
+<td style="text-align: left;">Zonas húmidas</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/ba-cosc24-pt-barplot-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="carta-de-ocupação-do-solo---cos-2018" class="level4">
+<h4 class="anchored" data-anchor-id="carta-de-ocupação-do-solo---cos-2018">2.1.2. Carta de Ocupação do Solo - COS 2018</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Área ardida em 2024 por classe de uso/coberto do solo (COS 2018; para classes de uso/coberto do solo com ≥1% de área ardida)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Classe uso/coberto</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Área ardida (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% ardida</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Matos</td>
+<td style="text-align: right;">45181.3</td>
+<td style="text-align: right;">28.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Florestas de eucalipto</td>
+<td style="text-align: right;">42594.8</td>
+<td style="text-align: right;">26.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Florestas de pinheiro bravo</td>
+<td style="text-align: right;">30513.4</td>
+<td style="text-align: right;">19.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Florestas de outras folhosas</td>
+<td style="text-align: right;">8511.5</td>
+<td style="text-align: right;">5.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Culturas temporárias de sequeiro e regadio</td>
+<td style="text-align: right;">8302.0</td>
+<td style="text-align: right;">5.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Florestas de outros carvalhos</td>
+<td style="text-align: right;">6237.1</td>
+<td style="text-align: right;">3.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mosaicos culturais e parcelares complexos</td>
+<td style="text-align: right;">3024.3</td>
+<td style="text-align: right;">1.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Agricultura com espaços naturais e seminaturais</td>
+<td style="text-align: right;">2436.5</td>
+<td style="text-align: right;">1.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vegetação esparsa</td>
+<td style="text-align: right;">2240.7</td>
+<td style="text-align: right;">1.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/ba-cos18-pt-barplot-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+</section>
+<section id="área-ardida-por-município" class="level2">
+<h2 class="anchored" data-anchor-id="área-ardida-por-município">3. Área ardida por município</h2>
+<p>Nesta secção do relatório, apresentamos uma análise detalhada das áreas ardidas no ano de 2024, com enfoque nos municípios de Portugal continental. O objetivo desta análise é avaliar a distribuição das áreas afetadas pelos incêndios em cada município.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Área ardida por município no ano de 2024 (com áreas ardidas &gt;50 hectares)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Município</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Área ardida 2024 (hectares)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% área do concelho</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Castro Daire</td>
+<td style="text-align: right;">19999.5</td>
+<td style="text-align: right;">52.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">São Pedro do Sul</td>
+<td style="text-align: right;">13984.8</td>
+<td style="text-align: right;">40.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Albergaria-a-Velha</td>
+<td style="text-align: right;">9793.4</td>
+<td style="text-align: right;">61.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Águeda</td>
+<td style="text-align: right;">9149.6</td>
+<td style="text-align: right;">27.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Baião</td>
+<td style="text-align: right;">6871.1</td>
+<td style="text-align: right;">39.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Arouca</td>
+<td style="text-align: right;">6729.0</td>
+<td style="text-align: right;">20.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Penalva do Castelo</td>
+<td style="text-align: right;">5843.4</td>
+<td style="text-align: right;">43.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sever do Vouga</td>
+<td style="text-align: right;">5702.6</td>
+<td style="text-align: right;">43.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vila Pouca de Aguiar</td>
+<td style="text-align: right;">5661.3</td>
+<td style="text-align: right;">13.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mangualde</td>
+<td style="text-align: right;">5281.7</td>
+<td style="text-align: right;">24.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carregal do Sal</td>
+<td style="text-align: right;">4521.8</td>
+<td style="text-align: right;">38.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cinfães</td>
+<td style="text-align: right;">4390.4</td>
+<td style="text-align: right;">18.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cabeceiras de Basto</td>
+<td style="text-align: right;">4346.8</td>
+<td style="text-align: right;">18.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Amarante</td>
+<td style="text-align: right;">4213.5</td>
+<td style="text-align: right;">14.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Marco de Canaveses</td>
+<td style="text-align: right;">3896.5</td>
+<td style="text-align: right;">19.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fafe</td>
+<td style="text-align: right;">3160.0</td>
+<td style="text-align: right;">14.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gondomar</td>
+<td style="text-align: right;">3027.4</td>
+<td style="text-align: right;">22.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nelas</td>
+<td style="text-align: right;">2934.3</td>
+<td style="text-align: right;">23.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Arcos de Valdevez</td>
+<td style="text-align: right;">2681.9</td>
+<td style="text-align: right;">6.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resende</td>
+<td style="text-align: right;">2538.5</td>
+<td style="text-align: right;">20.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oliveira de Azeméis</td>
+<td style="text-align: right;">2220.1</td>
+<td style="text-align: right;">13.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Póvoa de Lanhoso</td>
+<td style="text-align: right;">2200.9</td>
+<td style="text-align: right;">16.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Celorico de Basto</td>
+<td style="text-align: right;">2078.8</td>
+<td style="text-align: right;">11.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chaves</td>
+<td style="text-align: right;">2011.7</td>
+<td style="text-align: right;">3.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Penafiel</td>
+<td style="text-align: right;">1892.5</td>
+<td style="text-align: right;">8.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Paredes</td>
+<td style="text-align: right;">1707.5</td>
+<td style="text-align: right;">10.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Miranda do Douro</td>
+<td style="text-align: right;">1631.0</td>
+<td style="text-align: right;">3.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Vila Nova de Paiva</td>
+<td style="text-align: right;">1611.0</td>
+<td style="text-align: right;">9.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vila Real</td>
+<td style="text-align: right;">1235.4</td>
+<td style="text-align: right;">3.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fundão</td>
+<td style="text-align: right;">1052.3</td>
+<td style="text-align: right;">1.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ribeira de Pena</td>
+<td style="text-align: right;">1005.6</td>
+<td style="text-align: right;">4.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Guimarães</td>
+<td style="text-align: right;">995.2</td>
+<td style="text-align: right;">4.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vinhais</td>
+<td style="text-align: right;">944.4</td>
+<td style="text-align: right;">1.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tábua</td>
+<td style="text-align: right;">873.9</td>
+<td style="text-align: right;">4.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Valença</td>
+<td style="text-align: right;">691.2</td>
+<td style="text-align: right;">5.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lamego</td>
+<td style="text-align: right;">660.3</td>
+<td style="text-align: right;">4.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sesimbra</td>
+<td style="text-align: right;">620.4</td>
+<td style="text-align: right;">3.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Felgueiras</td>
+<td style="text-align: right;">605.7</td>
+<td style="text-align: right;">5.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Peso da Régua</td>
+<td style="text-align: right;">590.3</td>
+<td style="text-align: right;">6.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Melgaço</td>
+<td style="text-align: right;">574.2</td>
+<td style="text-align: right;">2.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vale de Cambra</td>
+<td style="text-align: right;">570.9</td>
+<td style="text-align: right;">3.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Vimioso</td>
+<td style="text-align: right;">537.8</td>
+<td style="text-align: right;">1.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vieira do Minho</td>
+<td style="text-align: right;">505.7</td>
+<td style="text-align: right;">2.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bragança</td>
+<td style="text-align: right;">479.6</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vila Verde</td>
+<td style="text-align: right;">473.1</td>
+<td style="text-align: right;">2.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Santo Tirso</td>
+<td style="text-align: right;">467.3</td>
+<td style="text-align: right;">3.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oliveira do Hospital</td>
+<td style="text-align: right;">447.6</td>
+<td style="text-align: right;">1.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Montalegre</td>
+<td style="text-align: right;">411.0</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ponte da Barca</td>
+<td style="text-align: right;">400.9</td>
+<td style="text-align: right;">2.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Castelo Branco</td>
+<td style="text-align: right;">391.6</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Arganil</td>
+<td style="text-align: right;">323.3</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alijó</td>
+<td style="text-align: right;">319.8</td>
+<td style="text-align: right;">1.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Paços de Ferreira</td>
+<td style="text-align: right;">311.1</td>
+<td style="text-align: right;">4.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Terras de Bouro</td>
+<td style="text-align: right;">310.2</td>
+<td style="text-align: right;">1.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Seixal</td>
+<td style="text-align: right;">246.4</td>
+<td style="text-align: right;">2.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ponte de Lima</td>
+<td style="text-align: right;">236.3</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sátão</td>
+<td style="text-align: right;">232.1</td>
+<td style="text-align: right;">1.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Freixo de Espada à Cinta</td>
+<td style="text-align: right;">227.9</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mirandela</td>
+<td style="text-align: right;">197.5</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aveiro</td>
+<td style="text-align: right;">175.5</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Celorico da Beira</td>
+<td style="text-align: right;">165.4</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fornos de Algodres</td>
+<td style="text-align: right;">162.0</td>
+<td style="text-align: right;">1.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">São João da Pesqueira</td>
+<td style="text-align: right;">161.7</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lousada</td>
+<td style="text-align: right;">156.9</td>
+<td style="text-align: right;">1.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Portalegre</td>
+<td style="text-align: right;">147.3</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Viana do Castelo</td>
+<td style="text-align: right;">145.5</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Seia</td>
+<td style="text-align: right;">141.4</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ourém</td>
+<td style="text-align: right;">133.0</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Viseu</td>
+<td style="text-align: right;">115.6</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Braga</td>
+<td style="text-align: right;">113.5</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coimbra</td>
+<td style="text-align: right;">108.1</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Vila Nova de Famalicão</td>
+<td style="text-align: right;">107.3</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Paredes de Coura</td>
+<td style="text-align: right;">99.1</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pombal</td>
+<td style="text-align: right;">98.9</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cascais</td>
+<td style="text-align: right;">94.8</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Barcelos</td>
+<td style="text-align: right;">93.5</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vila Flor</td>
+<td style="text-align: right;">85.7</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aguiar da Beira</td>
+<td style="text-align: right;">77.7</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gouveia</td>
+<td style="text-align: right;">65.8</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tabuaço</td>
+<td style="text-align: right;">61.9</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Boticas</td>
+<td style="text-align: right;">58.8</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alcácer do Sal</td>
+<td style="text-align: right;">55.0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/ba-2024-municipalities-map-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/ba-2024-municipalities-map-perc-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="área-ardida-em-espaços-de-proteçãoconservação" class="level2">
+<h2 class="anchored" data-anchor-id="área-ardida-em-espaços-de-proteçãoconservação">4. Área ardida em espaços de proteção/conservação</h2>
+<p>Nesta secção apresenta-se uma análise da área ardida em espaços de proteção e conservação em Portugal continental, abordando as diferentes redes e áreas de interesse. Esta análise está subdividida em três partes principais:</p>
+<ul>
+<li><p>A primeira subsecção (4.1) incidirá sobre a <em>Rede Nacional de Áreas Protegidas</em> (RNAP), explorando a extensão dos incêndios em territórios que possuem um elevado valor ecológico, património natural e biodiversidade;</p></li>
+<li><p>Na subsecção (4.2), será analisada a área ardida nos <em>Sítios de Interesse Comunitário</em> (SIC), integrados na Rede Natura 2000, com especial enfoque nos impactos sobre os habitats naturais protegidos;</p></li>
+<li><p>Por fim, a subsecção (4.3) examinará as <em>Zonas de Proteção Especial</em> (ZPE), também parte da Rede Natura 2000, discutindo as áreas afetadas em locais designados para a conservação de aves e outras espécies prioritárias.</p></li>
+</ul>
+<p>Esta análise visa avaliar os impactos dos incêndios nas áreas de maior relevância em termos de património natural com vista a suportar potenciais medidas de recuperação e prevenção nesses espaços.</p>
+<section id="rede-nacional-de-áreas-protegidas-rnap" class="level3">
+<h3 class="anchored" data-anchor-id="rede-nacional-de-áreas-protegidas-rnap">4.1. Rede Nacional de Áreas Protegidas (RNAP)</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Área ardida na RNAP 2024</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sigla</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Nome AP</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Área ardida (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% AP ardida</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PPRSA</td>
+<td style="text-align: left;">Serra da Aboboreira</td>
+<td style="text-align: right;">9434.4</td>
+<td style="text-align: right;">46.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PPRPSP</td>
+<td style="text-align: left;">Parque das Serras do Porto</td>
+<td style="text-align: right;">2315.5</td>
+<td style="text-align: right;">38.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PNPG</td>
+<td style="text-align: left;">Peneda-Gerês</td>
+<td style="text-align: right;">641.2</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PNM</td>
+<td style="text-align: left;">Montesinho</td>
+<td style="text-align: right;">474.7</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PNDI</td>
+<td style="text-align: left;">Douro Internacional</td>
+<td style="text-align: right;">227.9</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PNSE</td>
+<td style="text-align: left;">Serra da Estrela</td>
+<td style="text-align: right;">98.8</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PNSC</td>
+<td style="text-align: left;">Sintra-Cascais</td>
+<td style="text-align: right;">94.8</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PNRVT</td>
+<td style="text-align: left;">Vale do Tua</td>
+<td style="text-align: right;">31.5</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PNAL</td>
+<td style="text-align: left;">Alvão</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PPLSSA</td>
+<td style="text-align: left;">Serras do Socorro e Archeira</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PNSAC</td>
+<td style="text-align: left;">Serras de Aire e Candeeiros</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RNDSJ</td>
+<td style="text-align: left;">Dunas de São Jacinto</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="rede-natura-2000---sítios-de-interesse-comunitário-sic" class="level3">
+<h3 class="anchored" data-anchor-id="rede-natura-2000---sítios-de-interesse-comunitário-sic">4.2. Rede Natura 2000 - Sítios de Interesse Comunitário (SIC)</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Área ardida nos SIC Rede Natura em 2024</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Código SIC</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Nome SIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Área ardida (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% sítio ardido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PTCON0025</td>
+<td style="text-align: left;">Montemuro</td>
+<td style="text-align: right;">10600.3</td>
+<td style="text-align: right;">27.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0047</td>
+<td style="text-align: left;">Serras da Freita e Arada</td>
+<td style="text-align: right;">7930.1</td>
+<td style="text-align: right;">27.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0003</td>
+<td style="text-align: left;">Alvão/Marão</td>
+<td style="text-align: right;">6951.4</td>
+<td style="text-align: right;">11.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0059</td>
+<td style="text-align: left;">Rio Paiva</td>
+<td style="text-align: right;">6797.1</td>
+<td style="text-align: right;">46.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0026</td>
+<td style="text-align: left;">Rio Vouga</td>
+<td style="text-align: right;">2119.9</td>
+<td style="text-align: right;">75.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0027</td>
+<td style="text-align: left;">Carregal do Sal</td>
+<td style="text-align: right;">1523.6</td>
+<td style="text-align: right;">16.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0001</td>
+<td style="text-align: left;">Peneda-Gerês</td>
+<td style="text-align: right;">1188.0</td>
+<td style="text-align: right;">1.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0054</td>
+<td style="text-align: left;">Fernão Ferro/Lagoa de Albufeira</td>
+<td style="text-align: right;">846.6</td>
+<td style="text-align: right;">19.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0002</td>
+<td style="text-align: left;">Montesinho/Nogueira</td>
+<td style="text-align: right;">486.8</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0039</td>
+<td style="text-align: left;">Serra d'Arga</td>
+<td style="text-align: right;">105.0</td>
+<td style="text-align: right;">2.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0014</td>
+<td style="text-align: left;">Serra da Estrela</td>
+<td style="text-align: right;">98.8</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0008</td>
+<td style="text-align: left;">Sintra/Cascais</td>
+<td style="text-align: right;">94.8</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0053</td>
+<td style="text-align: left;">Moura/Barrancos</td>
+<td style="text-align: right;">45.9</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0061</td>
+<td style="text-align: left;">Ria de Aveiro</td>
+<td style="text-align: right;">29.5</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0060</td>
+<td style="text-align: left;">Serra da Lousã</td>
+<td style="text-align: right;">28.5</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0021</td>
+<td style="text-align: left;">Rios Sabor e Maçãs</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0024</td>
+<td style="text-align: left;">Valongo</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0015</td>
+<td style="text-align: left;">Serras de Aire e Candeeiros</td>
+<td style="text-align: right;">16.0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0040</td>
+<td style="text-align: left;">Corno do Bico</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0007</td>
+<td style="text-align: left;">São Mamede</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0022</td>
+<td style="text-align: left;">Douro Internacional</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTCON0020</td>
+<td style="text-align: left;">Rio Lima</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0037</td>
+<td style="text-align: left;">Monchique</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="rede-natura-2000---zonas-de-proteção-especial-zpe" class="level3">
+<h3 class="anchored" data-anchor-id="rede-natura-2000---zonas-de-proteção-especial-zpe">4.3. Rede Natura 2000 - Zonas de Proteção Especial (ZPE)</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Área ardida nas ZPEs Rede Natura em 2024</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Código ZPE</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Nome ZPE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Área ardida (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% sítio ardido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PTZPE0002</td>
+<td style="text-align: left;">Serra do Geres</td>
+<td style="text-align: right;">639.4</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTZPE0003</td>
+<td style="text-align: left;">Montesinho/Nogueira</td>
+<td style="text-align: right;">487.2</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTZPE0038</td>
+<td style="text-align: left;">Douro Internacional e Vale do Rio Águeda</td>
+<td style="text-align: right;">227.9</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTZPE0045</td>
+<td style="text-align: left;">Mourão/Moura/Barrancos</td>
+<td style="text-align: right;">45.9</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTZPE0004</td>
+<td style="text-align: left;">Ria de Aveiro</td>
+<td style="text-align: right;">28.0</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTZPE0037</td>
+<td style="text-align: left;">Rios Sabor e Maçãs</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTZPE0049</td>
+<td style="text-align: left;">Lagoa Pequena</td>
+<td style="text-align: right;">15.5</td>
+<td style="text-align: right;">22.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PTZPE0039</td>
+<td style="text-align: left;">Vale do Côa</td>
+<td style="text-align: right;">13.6</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTCON0037</td>
+<td style="text-align: left;">Monchique</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="análise-de-grandes-áreas-ardidas" class="level2">
+<h2 class="anchored" data-anchor-id="análise-de-grandes-áreas-ardidas">5. Análise de grandes áreas ardidas</h2>
+<section id="síntese-geral-1" class="level3">
+<h3 class="anchored" data-anchor-id="síntese-geral-1">Síntese geral</h3>
+<p>Neste secção apresenta-se uma caracterização detalhada das grandes áreas ardidas com <strong>dimensão superior a 1,000 hectares</strong>, analisando a distribuição dos usos / coberto do solo em cada uma dessas áreas, a severidade, a afetação de áreas com estatuto de proteção/conservação entre outros aspetos.</p>
+<p>No total, à data de 07/10/2024, foram encontradas <strong>22</strong> ocorrências com dimensão superior a 1,000 hectares, totalizando <strong>133,335 hectares</strong> da área ardida em 2024 o que representa <strong>83.2%</strong> do total anual.</p>
+<p>A lista de grande incêndios é evidenciada na tabela a seguir por localidade e município(s) envolvido(s):</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Lista de grandes áreas ardidas no ano de 2024</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Data</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Semana</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Localidade</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Municípios</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Área ardida (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% do total anual</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2024-08-11</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: left;">São Martinho de Angueira</td>
+<td style="text-align: left;">Miranda do Douro, Vimioso</td>
+<td style="text-align: right;">1625.1</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-04</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: left;">São Jorge e Ermelo</td>
+<td style="text-align: left;">Arcos de Valdevez</td>
+<td style="text-align: right;">1264.5</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-09-13</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: left;">Barroca</td>
+<td style="text-align: left;">Fundão, Pampilhosa da Serra</td>
+<td style="text-align: right;">1014.5</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-13</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: left;">Souto Santa Maria, Souto São Salvador e Gondomar</td>
+<td style="text-align: left;">Guimarães, Póvoa de Lanhoso, Fafe</td>
+<td style="text-align: right;">1113.7</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-09-14</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: left;">Cavez</td>
+<td style="text-align: left;">Cabeceiras de Basto, Ribeira de Pena</td>
+<td style="text-align: right;">3940.3</td>
+<td style="text-align: right;">2.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-14</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: left;">Sobradelo da Goma</td>
+<td style="text-align: left;">Fafe, Póvoa de Lanhoso, Vieira do Minho, Guimarães</td>
+<td style="text-align: right;">1467.0</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-09-15</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: left;">Albergaria-a-Velha e Valmaior</td>
+<td style="text-align: left;">Albergaria-a-Velha, Águeda, Sever do Vouga, Oliveira de Azeméis, Vale de Cambra</td>
+<td style="text-align: right;">27182.7</td>
+<td style="text-align: right;">17.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-16</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Ancede e Ribadouro</td>
+<td style="text-align: left;">Baião</td>
+<td style="text-align: right;">2421.2</td>
+<td style="text-align: right;">1.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-09-16</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Esmolfe</td>
+<td style="text-align: left;">Penalva do Castelo, Mangualde, Sátão</td>
+<td style="text-align: right;">10797.5</td>
+<td style="text-align: right;">6.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-16</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Oliveira do Conde</td>
+<td style="text-align: left;">Carregal do Sal, Nelas, Tábua, Oliveira do Hospital</td>
+<td style="text-align: right;">7774.0</td>
+<td style="text-align: right;">4.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-09-16</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Tendais</td>
+<td style="text-align: left;">Cinfães</td>
+<td style="text-align: right;">1037.5</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-16</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Águas Frias</td>
+<td style="text-align: left;">Chaves</td>
+<td style="text-align: right;">1644.9</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-09-17</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Alvadia</td>
+<td style="text-align: left;">Vila Pouca de Aguiar, Ribeira de Pena, Vila Real</td>
+<td style="text-align: right;">2283.9</td>
+<td style="text-align: right;">1.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-17</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Freigil e Miomães</td>
+<td style="text-align: left;">Cinfães, Resende</td>
+<td style="text-align: right;">2984.6</td>
+<td style="text-align: right;">1.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-09-17</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Paus</td>
+<td style="text-align: left;">Resende, Lamego</td>
+<td style="text-align: right;">1912.1</td>
+<td style="text-align: right;">1.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-17</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Rendufinho</td>
+<td style="text-align: left;">Póvoa de Lanhoso, Vieira do Minho</td>
+<td style="text-align: right;">1400.6</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-09-17</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Sabroso de Aguiar</td>
+<td style="text-align: left;">Vila Pouca de Aguiar</td>
+<td style="text-align: right;">1148.9</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-17</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Sobreira</td>
+<td style="text-align: left;">Gondomar, Paredes, Penafiel</td>
+<td style="text-align: right;">4806.0</td>
+<td style="text-align: right;">3.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-09-17</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Telões</td>
+<td style="text-align: left;">Vila Pouca de Aguiar, Vila Real</td>
+<td style="text-align: right;">3710.3</td>
+<td style="text-align: right;">2.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-17</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Vila Garcia, Aboim e Chapa</td>
+<td style="text-align: left;">Celorico de Basto, Amarante, Felgueiras</td>
+<td style="text-align: right;">3215.9</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2024-09-17</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Várzea, Aliviada e Folhada</td>
+<td style="text-align: left;">Baião, Amarante, Marco de Canaveses</td>
+<td style="text-align: right;">8133.1</td>
+<td style="text-align: right;">5.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024-09-18</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: left;">Reriz e Gafanhão</td>
+<td style="text-align: left;">Castro Daire, São Pedro do Sul, Arouca, Vila Nova de Paiva, Cinfães, Viseu</td>
+<td style="text-align: right;">42457.0</td>
+<td style="text-align: right;">26.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>A distribuição destes incêndios por classe de uso/ocupação do solo é mostrada nas tabelas seguintes considerando os dois conjuntos de dados de referência COS conjuntural 2024 e a COS 2018:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Tipos de uso/coberto do solo ardidos nos grandes incêndios de 2024 segundo a COS conjuntural 2024 (pré-verão)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Classe de uso/coberto do solo COSc 2024</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Área (hectares)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Área</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Matos</td>
+<td style="text-align: right;">47126.6</td>
+<td style="text-align: right;">35.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eucalipto</td>
+<td style="text-align: right;">32283.5</td>
+<td style="text-align: right;">24.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Veg. herbácea esp.</td>
+<td style="text-align: right;">14749.2</td>
+<td style="text-align: right;">11.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Outras folhosas</td>
+<td style="text-align: right;">12760.6</td>
+<td style="text-align: right;">9.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pinheiro bravo</td>
+<td style="text-align: right;">10621.0</td>
+<td style="text-align: right;">8.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Outras áreas agrícolas</td>
+<td style="text-align: right;">8625.4</td>
+<td style="text-align: right;">6.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sup. s/ vegetação</td>
+<td style="text-align: right;">3169.3</td>
+<td style="text-align: right;">2.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Artificializado</td>
+<td style="text-align: right;">1484.9</td>
+<td style="text-align: right;">1.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Culturas anuais out/inv</td>
+<td style="text-align: right;">1093.0</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Culturas anuais pri/ver</td>
+<td style="text-align: right;">988.3</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Outras resinosas</td>
+<td style="text-align: right;">262.1</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pinheiro manso</td>
+<td style="text-align: right;">75.2</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Zonas húmidas</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sobreiro e azinheira</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/bigfires-cosc24-pt-barplot-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Tipos de uso/coberto do solo ardidos nos grandes incêndios de 2024 segundo a COS 2018</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Classe de uso/coberto do solo COS 2018</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Área (hectares)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Área</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Florestas de eucalipto</td>
+<td style="text-align: right;">36618.2</td>
+<td style="text-align: right;">27.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Matos</td>
+<td style="text-align: right;">33714.2</td>
+<td style="text-align: right;">25.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Florestas de pinheiro bravo</td>
+<td style="text-align: right;">25956.6</td>
+<td style="text-align: right;">19.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Culturas temporárias de sequeiro e regadio</td>
+<td style="text-align: right;">7571.0</td>
+<td style="text-align: right;">5.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Florestas de outras folhosas</td>
+<td style="text-align: right;">7561.6</td>
+<td style="text-align: right;">5.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Florestas de outros carvalhos</td>
+<td style="text-align: right;">5673.2</td>
+<td style="text-align: right;">4.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mosaicos culturais e parcelares complexos</td>
+<td style="text-align: right;">2758.6</td>
+<td style="text-align: right;">2.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Agricultura com espaços naturais e seminaturais</td>
+<td style="text-align: right;">2223.1</td>
+<td style="text-align: right;">1.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vegetação esparsa</td>
+<td style="text-align: right;">1649.6</td>
+<td style="text-align: right;">1.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tecido edificado descontínuo</td>
+<td style="text-align: right;">1413.6</td>
+<td style="text-align: right;">1.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Florestas de espécies invasoras</td>
+<td style="text-align: right;">993.5</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Vinhas</td>
+<td style="text-align: right;">774.3</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tecido edificado descontínuo esparso</td>
+<td style="text-align: right;">726.4</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pomares</td>
+<td style="text-align: right;">652.6</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rede viária e espaços associados</td>
+<td style="text-align: right;">647.0</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Florestas de outras resinosas</td>
+<td style="text-align: right;">644.5</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pastagens melhoradas</td>
+<td style="text-align: right;">635.5</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Olivais</td>
+<td style="text-align: right;">435.5</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pedreiras</td>
+<td style="text-align: right;">408.1</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tecido edificado contínuo predominantemente horizontal</td>
+<td style="text-align: right;">380.3</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Indústria</td>
+<td style="text-align: right;">302.0</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cursos de água naturais</td>
+<td style="text-align: right;">290.0</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Florestas de pinheiro manso</td>
+<td style="text-align: right;">242.6</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pastagens espontâneas</td>
+<td style="text-align: right;">219.2</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Florestas de castanheiro</td>
+<td style="text-align: right;">187.6</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Culturas temporárias e/ou pastagens melhoradas associadas a olival</td>
+<td style="text-align: right;">157.1</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rocha nua</td>
+<td style="text-align: right;">83.8</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Culturas temporárias e/ou pastagens melhoradas associadas a vinha</td>
+<td style="text-align: right;">68.2</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Instalações desportivas</td>
+<td style="text-align: right;">56.4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Albufeiras de barragens</td>
+<td style="text-align: right;">54.5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Áreas em construção</td>
+<td style="text-align: right;">47.9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Outros equipamentos e instalações turísticas</td>
+<td style="text-align: right;">35.1</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Aterros</td>
+<td style="text-align: right;">33.4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Espaços vazios sem construção</td>
+<td style="text-align: right;">27.1</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Florestas de azinheira</td>
+<td style="text-align: right;">24.2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Florestas de sobreiro</td>
+<td style="text-align: right;">21.8</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Instalações agrícolas</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Culturas temporárias e/ou pastagens melhoradas associadas a pomar</td>
+<td style="text-align: right;">10.9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Equipamentos culturais</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Comércio</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Parques e jardins</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Agricultura protegida e viveiros</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Infraestruturas de tratamento de resíduos e águas residuais</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pauis</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tecido edificado contínuo predominantemente vertical</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Infraestruturas para captação, tratamento e abastecimento de águas para consumo</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Equipamentos de lazer</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lagos e lagoas interiores artificiais</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lixeiras e Sucatas</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SAF de outras misturas</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cemitérios</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rede ferroviária e espaços associados</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SAF de outros carvalhos</td>
+<td style="text-align: right;">2.7</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Infraestruturas de produção de energia renovável</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Marinas e docas pesca</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/bigfires-cos2018-pt-barplot-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="severidade-dos-grandes-incêndios-de-2024" class="level3">
+<h3 class="anchored" data-anchor-id="severidade-dos-grandes-incêndios-de-2024">Severidade dos grandes incêndios de 2024</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aviso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Acesso/descarregamento dos dados de severidade
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte link (com metadados): <a href="./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.zip">SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02</a></p>
+</div>
+</div>
+<p>A severidade da área ardida foi calculada a partir de imagens do satélite ótico <strong>Sentinel-2</strong> utilizando o índice espectral <em>Normalized Burn Ratio (NBR)</em>, que mede a diferença da reflectância da superfície terrestre entre as bandas do infravermelho próximo (NIR) e do infravermelho médio (SWIR).</p>
+<p><span class="math inline">\(NBR = \frac{NIR - SWIR}{NIR + SWIR}\)</span></p>
+<p>O NBR é sensível a alterações na vegetação e no solo devidas ao fogo. Para avaliar a severidade do fogo, comparou-se o NBR pré-fogo (NBR pré) com o NBR pós-fogo (NBR pós), utilizando o indicador <em>Relativized Burn Ratio (RBR)</em>. Este indicador permite uma quantificação mais robusta das mudanças no terreno, eliminando as variações relativas entre os diferentes tipos de vegetação. A fórmula do <strong>RBR</strong> é dada por:</p>
+<p><span class="math inline">\(dNBR = NBR_{pré} - NBR_{pós}\)</span></p>
+<p><span class="math inline">\(RBR = \frac{dNBR}{NBR_{pré} + 1.001}\)</span></p>
+<p>Este cálculo foi aplicado em imagens de satélite antes e depois do fogo para produzir mapas de severidade da área ardida.</p>
+<p>As classes de severidade para o indicador <em>NBR/RBR</em> foram obtidas através da análise das distribuições para os anos 2018 - 2023 com base nos produtos gerados pelo projeto <a href="https://data.severuspt.ipvc.pt/products">SeverusPT</a> (para o mesmo satélite e indicador de severidade). A partição das classes foi obtida pelos percentis da distribuição de 20%, 40%… a 80% para os valores de <em>NBR/RBR</em> superiores a zero:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>De</th>
+<th>Para</th>
+<th>Nível de severidade</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>[min]</td>
+<td>0</td>
+<td>Não ardido</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1455</td>
+<td>Muito baixa</td>
+</tr>
+<tr class="odd">
+<td>1455</td>
+<td>2750</td>
+<td>Baixa</td>
+</tr>
+<tr class="even">
+<td>2750</td>
+<td>3801</td>
+<td>Média</td>
+</tr>
+<tr class="odd">
+<td>3801</td>
+<td>4900</td>
+<td>Elevada</td>
+</tr>
+<tr class="even">
+<td>4900</td>
+<td>[max]</td>
+<td>Muito elevada</td>
+</tr>
+</tbody>
+</table>
+<p>Apresentam-se abaixo os resultados da distribuição da área ardida (em hectares) pelas classes de severidade para o indicador <em>NBR / RBR</em>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Severidade da área ardida nos grandes incêndios de 2024 (em hectares por classe de severidade usando o indicador NBR/RBR). A tabela foi ordenada de forma descendente com base na soma das classes de elevada e muito elevada severidade. A área por estimar deve-se à ausência de imagens de satélite, ou à presença de nuvens nas mesmas, à data desta análise.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">ID_EFFIS</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Localidade</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Municípios</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Muito baixa (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Baixa (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Média (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Elevada (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Muito elevada (ha)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Área por estimar (ha)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">244928</td>
+<td style="text-align: left;">Reriz e Gafanhão</td>
+<td style="text-align: left;">Castro Daire, São Pedro do Sul, Arouca, Vila Nova de Paiva, Cinfães, Viseu</td>
+<td style="text-align: right;">5032</td>
+<td style="text-align: right;">6116</td>
+<td style="text-align: right;">5175</td>
+<td style="text-align: right;">5410</td>
+<td style="text-align: right;">11821</td>
+<td style="text-align: right;">6346</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">244927</td>
+<td style="text-align: left;">Albergaria-a-Velha e Valmaior</td>
+<td style="text-align: left;">Albergaria-a-Velha, Águeda, Sever do Vouga, Oliveira de Azeméis, Vale de Cambra</td>
+<td style="text-align: right;">3316</td>
+<td style="text-align: right;">6565</td>
+<td style="text-align: right;">6265</td>
+<td style="text-align: right;">4679</td>
+<td style="text-align: right;">4180</td>
+<td style="text-align: right;">961</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243297</td>
+<td style="text-align: left;">Várzea, Aliviada e Folhada</td>
+<td style="text-align: left;">Baião, Amarante, Marco de Canaveses</td>
+<td style="text-align: right;">1020</td>
+<td style="text-align: right;">1020</td>
+<td style="text-align: right;">832</td>
+<td style="text-align: right;">1028</td>
+<td style="text-align: right;">3455</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243167</td>
+<td style="text-align: left;">Oliveira do Conde</td>
+<td style="text-align: left;">Carregal do Sal, Nelas, Tábua, Oliveira do Hospital</td>
+<td style="text-align: right;">924</td>
+<td style="text-align: right;">1422</td>
+<td style="text-align: right;">1330</td>
+<td style="text-align: right;">1203</td>
+<td style="text-align: right;">1971</td>
+<td style="text-align: right;">454</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">244169</td>
+<td style="text-align: left;">Sobreira</td>
+<td style="text-align: left;">Gondomar, Paredes, Penafiel</td>
+<td style="text-align: right;">704</td>
+<td style="text-align: right;">932</td>
+<td style="text-align: right;">825</td>
+<td style="text-align: right;">924</td>
+<td style="text-align: right;">1124</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243584</td>
+<td style="text-align: left;">Esmolfe</td>
+<td style="text-align: left;">Penalva do Castelo, Mangualde, Sátão</td>
+<td style="text-align: right;">648</td>
+<td style="text-align: right;">776</td>
+<td style="text-align: right;">551</td>
+<td style="text-align: right;">568</td>
+<td style="text-align: right;">1116</td>
+<td style="text-align: right;">6778</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243152</td>
+<td style="text-align: left;">Freigil e Miomães</td>
+<td style="text-align: left;">Cinfães, Resende</td>
+<td style="text-align: right;">609</td>
+<td style="text-align: right;">475</td>
+<td style="text-align: right;">329</td>
+<td style="text-align: right;">362</td>
+<td style="text-align: right;">861</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243669</td>
+<td style="text-align: left;">Paus</td>
+<td style="text-align: left;">Resende, Lamego</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">143</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: right;">933</td>
+<td style="text-align: right;">365</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">241892</td>
+<td style="text-align: left;">São Jorge e Ermelo</td>
+<td style="text-align: left;">Arcos de Valdevez</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">266</td>
+<td style="text-align: right;">764</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243920</td>
+<td style="text-align: left;">Vila Garcia, Aboim e Chapa</td>
+<td style="text-align: left;">Celorico de Basto, Amarante, Felgueiras</td>
+<td style="text-align: right;">626</td>
+<td style="text-align: right;">725</td>
+<td style="text-align: right;">586</td>
+<td style="text-align: right;">446</td>
+<td style="text-align: right;">564</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243706</td>
+<td style="text-align: left;">Alvadia</td>
+<td style="text-align: left;">Vila Pouca de Aguiar, Ribeira de Pena, Vila Real</td>
+<td style="text-align: right;">333</td>
+<td style="text-align: right;">413</td>
+<td style="text-align: right;">320</td>
+<td style="text-align: right;">458</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">168</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243150</td>
+<td style="text-align: left;">Ancede e Ribadouro</td>
+<td style="text-align: left;">Baião</td>
+<td style="text-align: right;">436</td>
+<td style="text-align: right;">499</td>
+<td style="text-align: right;">361</td>
+<td style="text-align: right;">330</td>
+<td style="text-align: right;">578</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243128</td>
+<td style="text-align: left;">Águas Frias</td>
+<td style="text-align: left;">Chaves</td>
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">238</td>
+<td style="text-align: right;">269</td>
+<td style="text-align: right;">261</td>
+<td style="text-align: right;">597</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243921</td>
+<td style="text-align: left;">Telões</td>
+<td style="text-align: left;">Vila Pouca de Aguiar, Vila Real</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">204</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">267</td>
+<td style="text-align: right;">531</td>
+<td style="text-align: right;">2328</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">238220</td>
+<td style="text-align: left;">São Martinho de Angueira</td>
+<td style="text-align: left;">Miranda do Douro, Vimioso</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">284</td>
+<td style="text-align: right;">261</td>
+<td style="text-align: right;">341</td>
+<td style="text-align: right;">442</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243833</td>
+<td style="text-align: left;">Sobradelo da Goma</td>
+<td style="text-align: left;">Fafe, Póvoa de Lanhoso, Vieira do Minho, Guimarães</td>
+<td style="text-align: right;">260</td>
+<td style="text-align: right;">242</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">281</td>
+<td style="text-align: right;">334</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243798</td>
+<td style="text-align: left;">Rendufinho</td>
+<td style="text-align: left;">Póvoa de Lanhoso, Vieira do Minho</td>
+<td style="text-align: right;">252</td>
+<td style="text-align: right;">252</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">418</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">244073</td>
+<td style="text-align: left;">Tendais</td>
+<td style="text-align: left;">Cinfães</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">179</td>
+<td style="text-align: right;">415</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243131</td>
+<td style="text-align: left;">Sabroso de Aguiar</td>
+<td style="text-align: left;">Vila Pouca de Aguiar</td>
+<td style="text-align: right;">122</td>
+<td style="text-align: right;">230</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: right;">208</td>
+<td style="text-align: right;">333</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">242853</td>
+<td style="text-align: left;">Barroca</td>
+<td style="text-align: left;">Fundão, Pampilhosa da Serra</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">231</td>
+<td style="text-align: right;">214</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">188</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243117</td>
+<td style="text-align: left;">Souto Santa Maria, Souto São Salvador e Gondomar</td>
+<td style="text-align: left;">Guimarães, Póvoa de Lanhoso, Fafe</td>
+<td style="text-align: right;">252</td>
+<td style="text-align: right;">303</td>
+<td style="text-align: right;">171</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">244052</td>
+<td style="text-align: left;">Cavez</td>
+<td style="text-align: left;">Cabeceiras de Basto, Ribeira de Pena</td>
+<td style="text-align: right;">878</td>
+<td style="text-align: right;">1349</td>
+<td style="text-align: right;">1045</td>
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>Apresentam-se abaixo os resultados da distribuição da área ardida (em %) pelas classes de severidade para o indicador <em>NBR / RBR</em>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Severidade da área ardida nos grandes incêndios de 2024 (em % por classe de severidade usando o indicador NBR/RBR). A tabela foi ordenada de forma descendente com base na soma das classes de elevada e muito elevada severidade. A área por estimar deve-se a ausência de imagens de satélite, ou à presença de nuvens nas mesmas, à data desta análise.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">ID_EFFIS</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Localidade</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Municípios</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Muito baixa</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Baixa</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Média</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Elevada</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Muito elevada</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Área por estimar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">241892</td>
+<td style="text-align: left;">São Jorge e Ermelo</td>
+<td style="text-align: left;">Arcos de Valdevez</td>
+<td style="text-align: right;">4.09</td>
+<td style="text-align: right;">4.92</td>
+<td style="text-align: right;">8.37</td>
+<td style="text-align: right;">21.33</td>
+<td style="text-align: right;">61.28</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">244073</td>
+<td style="text-align: left;">Tendais</td>
+<td style="text-align: left;">Cinfães</td>
+<td style="text-align: right;">13.16</td>
+<td style="text-align: right;">12.42</td>
+<td style="text-align: right;">11.88</td>
+<td style="text-align: right;">18.84</td>
+<td style="text-align: right;">43.70</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243669</td>
+<td style="text-align: left;">Paus</td>
+<td style="text-align: left;">Resende, Lamego</td>
+<td style="text-align: right;">4.35</td>
+<td style="text-align: right;">6.24</td>
+<td style="text-align: right;">7.65</td>
+<td style="text-align: right;">12.21</td>
+<td style="text-align: right;">49.99</td>
+<td style="text-align: right;">19.56</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243297</td>
+<td style="text-align: left;">Várzea, Aliviada e Folhada</td>
+<td style="text-align: left;">Baião, Amarante, Marco de Canaveses</td>
+<td style="text-align: right;">13.87</td>
+<td style="text-align: right;">13.87</td>
+<td style="text-align: right;">11.31</td>
+<td style="text-align: right;">13.97</td>
+<td style="text-align: right;">46.99</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243128</td>
+<td style="text-align: left;">Águas Frias</td>
+<td style="text-align: left;">Chaves</td>
+<td style="text-align: right;">10.98</td>
+<td style="text-align: right;">15.50</td>
+<td style="text-align: right;">17.56</td>
+<td style="text-align: right;">17.05</td>
+<td style="text-align: right;">38.91</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">238220</td>
+<td style="text-align: left;">São Martinho de Angueira</td>
+<td style="text-align: left;">Miranda do Douro, Vimioso</td>
+<td style="text-align: right;">15.86</td>
+<td style="text-align: right;">18.00</td>
+<td style="text-align: right;">16.54</td>
+<td style="text-align: right;">21.61</td>
+<td style="text-align: right;">27.99</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243131</td>
+<td style="text-align: left;">Sabroso de Aguiar</td>
+<td style="text-align: left;">Vila Pouca de Aguiar</td>
+<td style="text-align: right;">11.19</td>
+<td style="text-align: right;">21.03</td>
+<td style="text-align: right;">18.18</td>
+<td style="text-align: right;">19.07</td>
+<td style="text-align: right;">30.53</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243798</td>
+<td style="text-align: left;">Rendufinho</td>
+<td style="text-align: left;">Póvoa de Lanhoso, Vieira do Minho</td>
+<td style="text-align: right;">19.88</td>
+<td style="text-align: right;">19.84</td>
+<td style="text-align: right;">13.11</td>
+<td style="text-align: right;">14.20</td>
+<td style="text-align: right;">32.97</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243833</td>
+<td style="text-align: left;">Sobradelo da Goma</td>
+<td style="text-align: left;">Fafe, Póvoa de Lanhoso, Vieira do Minho, Guimarães</td>
+<td style="text-align: right;">19.90</td>
+<td style="text-align: right;">18.50</td>
+<td style="text-align: right;">14.53</td>
+<td style="text-align: right;">21.52</td>
+<td style="text-align: right;">25.55</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243152</td>
+<td style="text-align: left;">Freigil e Miomães</td>
+<td style="text-align: left;">Cinfães, Resende</td>
+<td style="text-align: right;">23.12</td>
+<td style="text-align: right;">18.02</td>
+<td style="text-align: right;">12.46</td>
+<td style="text-align: right;">13.73</td>
+<td style="text-align: right;">32.67</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">244169</td>
+<td style="text-align: left;">Sobreira</td>
+<td style="text-align: left;">Gondomar, Paredes, Penafiel</td>
+<td style="text-align: right;">15.62</td>
+<td style="text-align: right;">20.66</td>
+<td style="text-align: right;">18.30</td>
+<td style="text-align: right;">20.49</td>
+<td style="text-align: right;">24.93</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243706</td>
+<td style="text-align: left;">Alvadia</td>
+<td style="text-align: left;">Vila Pouca de Aguiar, Ribeira de Pena, Vila Real</td>
+<td style="text-align: right;">15.18</td>
+<td style="text-align: right;">18.84</td>
+<td style="text-align: right;">14.60</td>
+<td style="text-align: right;">20.92</td>
+<td style="text-align: right;">22.80</td>
+<td style="text-align: right;">7.66</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243167</td>
+<td style="text-align: left;">Oliveira do Conde</td>
+<td style="text-align: left;">Carregal do Sal, Nelas, Tábua, Oliveira do Hospital</td>
+<td style="text-align: right;">12.65</td>
+<td style="text-align: right;">19.48</td>
+<td style="text-align: right;">18.21</td>
+<td style="text-align: right;">16.47</td>
+<td style="text-align: right;">26.98</td>
+<td style="text-align: right;">6.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">244928</td>
+<td style="text-align: left;">Reriz e Gafanhão</td>
+<td style="text-align: left;">Castro Daire, São Pedro do Sul, Arouca, Vila Nova de Paiva, Cinfães, Viseu</td>
+<td style="text-align: right;">12.61</td>
+<td style="text-align: right;">15.33</td>
+<td style="text-align: right;">12.97</td>
+<td style="text-align: right;">13.56</td>
+<td style="text-align: right;">29.63</td>
+<td style="text-align: right;">15.91</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">242853</td>
+<td style="text-align: left;">Barroca</td>
+<td style="text-align: left;">Fundão, Pampilhosa da Serra</td>
+<td style="text-align: right;">13.01</td>
+<td style="text-align: right;">23.15</td>
+<td style="text-align: right;">21.42</td>
+<td style="text-align: right;">23.63</td>
+<td style="text-align: right;">18.79</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243150</td>
+<td style="text-align: left;">Ancede e Ribadouro</td>
+<td style="text-align: left;">Baião</td>
+<td style="text-align: right;">19.77</td>
+<td style="text-align: right;">22.65</td>
+<td style="text-align: right;">16.37</td>
+<td style="text-align: right;">14.97</td>
+<td style="text-align: right;">26.23</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243920</td>
+<td style="text-align: left;">Vila Garcia, Aboim e Chapa</td>
+<td style="text-align: left;">Celorico de Basto, Amarante, Felgueiras</td>
+<td style="text-align: right;">21.24</td>
+<td style="text-align: right;">24.60</td>
+<td style="text-align: right;">19.88</td>
+<td style="text-align: right;">15.14</td>
+<td style="text-align: right;">19.14</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">244927</td>
+<td style="text-align: left;">Albergaria-a-Velha e Valmaior</td>
+<td style="text-align: left;">Albergaria-a-Velha, Águeda, Sever do Vouga, Oliveira de Azeméis, Vale de Cambra</td>
+<td style="text-align: right;">12.77</td>
+<td style="text-align: right;">25.28</td>
+<td style="text-align: right;">24.13</td>
+<td style="text-align: right;">18.02</td>
+<td style="text-align: right;">16.10</td>
+<td style="text-align: right;">3.70</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243117</td>
+<td style="text-align: left;">Souto Santa Maria, Souto São Salvador e Gondomar</td>
+<td style="text-align: left;">Guimarães, Póvoa de Lanhoso, Fafe</td>
+<td style="text-align: right;">24.24</td>
+<td style="text-align: right;">29.17</td>
+<td style="text-align: right;">16.43</td>
+<td style="text-align: right;">14.34</td>
+<td style="text-align: right;">15.81</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">243921</td>
+<td style="text-align: left;">Telões</td>
+<td style="text-align: left;">Vila Pouca de Aguiar, Vila Real</td>
+<td style="text-align: right;">4.27</td>
+<td style="text-align: right;">5.56</td>
+<td style="text-align: right;">4.82</td>
+<td style="text-align: right;">7.28</td>
+<td style="text-align: right;">14.49</td>
+<td style="text-align: right;">63.57</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">243584</td>
+<td style="text-align: left;">Esmolfe</td>
+<td style="text-align: left;">Penalva do Castelo, Mangualde, Sátão</td>
+<td style="text-align: right;">6.21</td>
+<td style="text-align: right;">7.44</td>
+<td style="text-align: right;">5.28</td>
+<td style="text-align: right;">5.44</td>
+<td style="text-align: right;">10.69</td>
+<td style="text-align: right;">64.93</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">244052</td>
+<td style="text-align: left;">Cavez</td>
+<td style="text-align: left;">Cabeceiras de Basto, Ribeira de Pena</td>
+<td style="text-align: right;">25.40</td>
+<td style="text-align: right;">39.01</td>
+<td style="text-align: right;">30.22</td>
+<td style="text-align: right;">4.85</td>
+<td style="text-align: right;">0.53</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+</section>
+<section id="são-martinho-de-angueira-miranda-do-douro-vimioso" class="level3">
+<h3 class="anchored" data-anchor-id="são-martinho-de-angueira-miranda-do-douro-vimioso">5.1. São Martinho de Angueira (Miranda do Douro / Vimioso)</h3>
+<p><br><img src="AnaliseIncendios_2024-v1_files/figure-html/big-fire-analysis-by-occurrence-1.png" class="img-fluid" width="864"></p>
+<p><img src="AnaliseIncendios_2024-v1_files/figure-html/big-fire-analysis-by-occurrence-2.png" class="img-fluid" width="864"></p>
+<ul>
+<li><p><strong>Total área ardida</strong> (Fonte: EFFIS): 1,625 hectares</p></li>
+<li><p>Data/hora do fogo: 2024-08-11 01:09:00</p></li>
+<li><p>Área ardida em RNAP (Fonte: ICNF): 0 hectares</p></li>
+<li><p>Área ardida em SICs/ Rede Natura 2000: 0 hectares</p></li>
+<li><p>Área ardida em ZPEs/ Rede Natura 2000: 0 hectares</p></li>
+<li><p>Número de residentes/indivíduos potencialmente afetados (Fonte: INE): 60</p></li>
+<li><p>Número de alojamentos potencialmente afetados: 81</p></li>
+<li><p>Número de edifícios potencialmente afetados (Fonte: MS Buildings Footprint): 109</p></li>
+</ul>
+<hr>
+<p><strong>Área ardida por município</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-df014c42{table-layout:auto;width:90%;}.cl-def595fa{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-def9f42e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-def9f438{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-defa22fa{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-defa2304{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-defa2305{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-defa230e{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-defa230f{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-defa2318{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-df014c42"><thead><tr style="overflow-wrap:break-word;"><th class="cl-defa22fa"><p class="cl-def9f42e"><span class="cl-def595fa">Municipio</span></p></th><th class="cl-defa2304"><p class="cl-def9f438"><span class="cl-def595fa">Area_ha</span></p></th><th class="cl-defa2304"><p class="cl-def9f438"><span class="cl-def595fa">Percentagem</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-defa2305"><p class="cl-def9f42e"><span class="cl-def595fa">Miranda do Douro</span></p></td><td class="cl-defa230e"><p class="cl-def9f438"><span class="cl-def595fa">1,279.0</span></p></td><td class="cl-defa230e"><p class="cl-def9f438"><span class="cl-def595fa">78.6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-defa230f"><p class="cl-def9f42e"><span class="cl-def595fa">Vimioso</span></p></td><td class="cl-defa2318"><p class="cl-def9f438"><span class="cl-def595fa">349.1</span></p></td><td class="cl-defa2318"><p class="cl-def9f438"><span class="cl-def595fa">21.4</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p><strong>Área ardida por classe de uso/coberto do solo (COSc 2024, DGT)</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-df22f0d6{table-layout:auto;width:90%;}.cl-df187a5c{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-df1c6f72{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-df1c6f7c{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-df1ca4ec{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df1ca4f6{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df1ca500{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df1ca501{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df1ca50a{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df1ca50b{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-df22f0d6"><thead><tr style="overflow-wrap:break-word;"><th class="cl-df1ca4ec"><p class="cl-df1c6f72"><span class="cl-df187a5c">Classe COSc2024</span></p></th><th class="cl-df1ca4f6"><p class="cl-df1c6f7c"><span class="cl-df187a5c">Area_ha</span></p></th><th class="cl-df1ca4f6"><p class="cl-df1c6f7c"><span class="cl-df187a5c">Percentagem</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-df1ca500"><p class="cl-df1c6f72"><span class="cl-df187a5c">Matos</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">745.6</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">45.8</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df1ca500"><p class="cl-df1c6f72"><span class="cl-df187a5c">Outras folhosas</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">241.0</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">14.8</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df1ca500"><p class="cl-df1c6f72"><span class="cl-df187a5c">Outras áreas agrícolas</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">186.0</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">11.4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df1ca500"><p class="cl-df1c6f72"><span class="cl-df187a5c">Veg. herbácea esp.</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">185.6</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">11.4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df1ca500"><p class="cl-df1c6f72"><span class="cl-df187a5c">Pinheiro bravo</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">123.9</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">7.6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df1ca500"><p class="cl-df1c6f72"><span class="cl-df187a5c">Sup. s/ vegetação</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">63.1</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">3.9</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df1ca500"><p class="cl-df1c6f72"><span class="cl-df187a5c">Culturas anuais out/inv</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">57.1</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">3.5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df1ca500"><p class="cl-df1c6f72"><span class="cl-df187a5c">Outras resinosas</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">16.4</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">1.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df1ca500"><p class="cl-df1c6f72"><span class="cl-df187a5c">Culturas anuais pri/ver</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">8.2</span></p></td><td class="cl-df1ca501"><p class="cl-df1c6f7c"><span class="cl-df187a5c">0.5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df1ca50a"><p class="cl-df1c6f72"><span class="cl-df187a5c">Artificializado</span></p></td><td class="cl-df1ca50b"><p class="cl-df1c6f7c"><span class="cl-df187a5c">1.3</span></p></td><td class="cl-df1ca50b"><p class="cl-df1c6f7c"><span class="cl-df187a5c">0.1</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p><strong>Área ardida por classe de uso/coberto do solo (COS 2018, DGT)</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-df40325e{table-layout:auto;width:90%;}.cl-df3632e0{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-df3a038e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-df3a0398{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-df3a25ee{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df3a25f8{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df3a25f9{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df3a25fa{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df3a2602{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df3a2603{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-df40325e"><thead><tr style="overflow-wrap:break-word;"><th class="cl-df3a25ee"><p class="cl-df3a038e"><span class="cl-df3632e0">Classe_COS2018</span></p></th><th class="cl-df3a25f8"><p class="cl-df3a0398"><span class="cl-df3632e0">Area_ha</span></p></th><th class="cl-df3a25f8"><p class="cl-df3a0398"><span class="cl-df3632e0">Percentagem</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Matos</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">498.7</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">30.6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Florestas de pinheiro bravo</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">299.3</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">18.4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Florestas de outros carvalhos</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">253.3</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">15.6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Culturas temporárias de sequeiro e </span><br><span class="cl-df3632e0">regadio</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">162.5</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">10.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Pomares</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">135.0</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">8.3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Agricultura com espaços naturais e </span><br><span class="cl-df3632e0">seminaturais</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">82.2</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">5.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Florestas de outras folhosas</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">69.6</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">4.3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Florestas de castanheiro</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">52.1</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">3.2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Pastagens espontâneas</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">39.0</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">2.4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Pastagens melhoradas</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">18.0</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">1.1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Mosaicos culturais e parcelares </span><br><span class="cl-df3632e0">complexos</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">10.2</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">0.6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Florestas de outras resinosas</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">4.1</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">0.2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Olivais</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">1.9</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">0.1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Tecido edificado contínuo </span><br><span class="cl-df3632e0">predominantemente horizontal</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">1.8</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">0.1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a25f9"><p class="cl-df3a038e"><span class="cl-df3632e0">Vinhas</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">0.2</span></p></td><td class="cl-df3a25fa"><p class="cl-df3a0398"><span class="cl-df3632e0">0.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df3a2602"><p class="cl-df3a038e"><span class="cl-df3632e0">SAF de outros carvalhos</span></p></td><td class="cl-df3a2603"><p class="cl-df3a0398"><span class="cl-df3632e0">0.1</span></p></td><td class="cl-df3a2603"><p class="cl-df3a0398"><span class="cl-df3632e0">0.0</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p><strong>Área (hectares) e % ardida por classe de severidade (NBR/RBR, Sentinel-2)</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-df673eee{table-layout:auto;width:90%;}.cl-df5ca0ba{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-df6125ea{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-df614958{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df614962{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-df673eee"><thead><tr style="overflow-wrap:break-word;"><th class="cl-df614958"><p class="cl-df6125ea"><span class="cl-df5ca0ba">Muito baixa (ha)</span></p></th><th class="cl-df614958"><p class="cl-df6125ea"><span class="cl-df5ca0ba">Baixa (ha)</span></p></th><th class="cl-df614958"><p class="cl-df6125ea"><span class="cl-df5ca0ba">Média (ha)</span></p></th><th class="cl-df614958"><p class="cl-df6125ea"><span class="cl-df5ca0ba">Elevada (ha)</span></p></th><th class="cl-df614958"><p class="cl-df6125ea"><span class="cl-df5ca0ba">Muito elevada (ha)</span></p></th><th class="cl-df614958"><p class="cl-df6125ea"><span class="cl-df5ca0ba">Por apurar (ha)</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-df614962"><p class="cl-df6125ea"><span class="cl-df5ca0ba">250.2</span></p></td><td class="cl-df614962"><p class="cl-df6125ea"><span class="cl-df5ca0ba">284</span></p></td><td class="cl-df614962"><p class="cl-df6125ea"><span class="cl-df5ca0ba">261</span></p></td><td class="cl-df614962"><p class="cl-df6125ea"><span class="cl-df5ca0ba">341.1</span></p></td><td class="cl-df614962"><p class="cl-df6125ea"><span class="cl-df5ca0ba">441.7</span></p></td><td class="cl-df614962"><p class="cl-df6125ea"><span class="cl-df5ca0ba">0</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-df83e8a0{table-layout:auto;width:90%;}.cl-df7a036c{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-df7de248{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-df7e06ce{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df7e06d8{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-df83e8a0"><thead><tr style="overflow-wrap:break-word;"><th class="cl-df7e06ce"><p class="cl-df7de248"><span class="cl-df7a036c">% Muito baixa</span></p></th><th class="cl-df7e06ce"><p class="cl-df7de248"><span class="cl-df7a036c">% Baixa</span></p></th><th class="cl-df7e06ce"><p class="cl-df7de248"><span class="cl-df7a036c">% Média</span></p></th><th class="cl-df7e06ce"><p class="cl-df7de248"><span class="cl-df7a036c">% Elevada</span></p></th><th class="cl-df7e06ce"><p class="cl-df7de248"><span class="cl-df7a036c">% Muito elevada</span></p></th><th class="cl-df7e06ce"><p class="cl-df7de248"><span class="cl-df7a036c">% Por apurar</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-df7e06d8"><p class="cl-df7de248"><span class="cl-df7a036c">15.9</span></p></td><td class="cl-df7e06d8"><p class="cl-df7de248"><span class="cl-df7a036c">18</span></p></td><td class="cl-df7e06d8"><p class="cl-df7de248"><span class="cl-df7a036c">16.5</span></p></td><td class="cl-df7e06d8"><p class="cl-df7de248"><span class="cl-df7a036c">21.6</span></p></td><td class="cl-df7e06d8"><p class="cl-df7de248"><span class="cl-df7a036c">28</span></p></td><td class="cl-df7e06d8"><p class="cl-df7de248"><span class="cl-df7a036c">0</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p><strong>Afetação potencial de rios e ribeiros (fonte: EU-Hydro River Network Database)</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-df9fbc60{table-layout:auto;width:90%;}.cl-df933c10{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-df977b04{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-df97a264{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df97a26e{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df97a26f{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-df9fbc60"><thead><tr style="overflow-wrap:break-word;"><th class="cl-df97a264"><p class="cl-df977b04"><span class="cl-df933c10">Ordem_Strahler</span></p></th><th class="cl-df97a264"><p class="cl-df977b04"><span class="cl-df933c10">Comprimento_Km</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-df97a26e"><p class="cl-df977b04"><span class="cl-df933c10">1</span></p></td><td class="cl-df97a26e"><p class="cl-df977b04"><span class="cl-df933c10">5.2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df97a26e"><p class="cl-df977b04"><span class="cl-df933c10">2</span></p></td><td class="cl-df97a26e"><p class="cl-df977b04"><span class="cl-df933c10">0.2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df97a26f"><p class="cl-df977b04"><span class="cl-df933c10">3</span></p></td><td class="cl-df97a26f"><p class="cl-df977b04"><span class="cl-df933c10">2.3</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p><strong>Afetação potencial de estradas e caminhos (fonte: OpenStreetMap)</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-dfbb2dc4{table-layout:auto;width:90%;}.cl-dfb12838{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-dfb50336{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-dfb50340{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-dfb527c6{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dfb527d0{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dfb527d1{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dfb527d2{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dfb527da{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dfb527db{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-dfbb2dc4"><thead><tr style="overflow-wrap:break-word;"><th class="cl-dfb527c6"><p class="cl-dfb50336"><span class="cl-dfb12838">TipoOSM</span></p></th><th class="cl-dfb527c6"><p class="cl-dfb50336"><span class="cl-dfb12838">Tipo</span></p></th><th class="cl-dfb527d0"><p class="cl-dfb50340"><span class="cl-dfb12838">Comprimento_Km</span></p></th><th class="cl-dfb527d0"><p class="cl-dfb50340"><span class="cl-dfb12838">Percentagem</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">track</span></p></td><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">caminho agrícola/florestal</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">60.0</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">72.7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">track_grade4</span></p></td><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">caminho_nível4</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">6.7</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">8.2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">path</span></p></td><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">trilho</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">5.3</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">6.5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">tertiary</span></p></td><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">estrada terciária</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">4.7</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">5.7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">track_grade3</span></p></td><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">caminho_nível3</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">3.0</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">3.7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">track_grade5</span></p></td><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">caminho_nível5</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">1.3</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">1.6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">track_grade2</span></p></td><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">caminho_nível2</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">0.7</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">0.8</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">residential</span></p></td><td class="cl-dfb527d1"><p class="cl-dfb50336"><span class="cl-dfb12838">estrada residencial</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">0.6</span></p></td><td class="cl-dfb527d2"><p class="cl-dfb50340"><span class="cl-dfb12838">0.7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dfb527da"><p class="cl-dfb50336"><span class="cl-dfb12838">unclassified</span></p></td><td class="cl-dfb527da"><p class="cl-dfb50336"><span class="cl-dfb12838">estrada não classificada</span></p></td><td class="cl-dfb527db"><p class="cl-dfb50340"><span class="cl-dfb12838">0.2</span></p></td><td class="cl-dfb527db"><p class="cl-dfb50340"><span class="cl-dfb12838">0.2</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Notas de rodapé</h2>
+
+<ol>
+<li id="fn1"><p>Este conjunto de dados foi atualizado (27/09/2024) com a área correspondente à Paisagem Protegida Regional da Serra da Aboboreira (PPRSA).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>A ordem de Strahler classifica rios com base na hierarquia dos seus afluentes: rios de nível 1 não possuem afluentes, dois rios de nível 1 formam um de nível 2, dois de nível 2 formam um de nível 3, e assim sucessivamente até ao nível 6. Neste sistema os diferentes níveis refletem a complexidade da rede fluvial; rios de nível 1 são pequenos cursos de água sem afluentes, e à medida que os afluentes se unem, formam rios de níveis superiores, com cada nível a representar um aumento na quantidade de água transportada e na área de drenagem.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

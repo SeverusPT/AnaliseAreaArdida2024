@@ -1,0 +1,75 @@
+/* Set Arial font for the whole HTML document */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Set Arial font for ggplot2 outputs (if using images) */
+  g text {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Set Arial font for flextable */
+  .ftitle, .ftext, .ftable, .fthead, .ftbody {
+    font-family: Arial, sans-serif;
+  }
+  
+
+/* ----------------------------------------------------------- */
+
+
+/* Make the title banner fixed at the top */
+.quarto-title-banner {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;  /* Keep it on top */
+    background-color: white;  /* Ensure background stays solid */
+    padding: 10px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #ddd;  /* Add a subtle border */
+    box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.1);  /* Optional shadow for clarity */
+}
+
+.quarto-title-banner h1.title {
+    font-size: 1.4em !important;  /* Adjust the font size */
+    color: black !important;      /* Change the text color to black */
+}
+
+/* Ensure the content is moved below the fixed banner */
+body {
+    padding-top: 80px;  /* Adjust this value based on the height of the banner */
+}
+
+
+/* Make the sidebar sticky (fixed) so it remains visible when scrolling */
+#quarto-margin-sidebar {
+    position: -webkit-sticky;  /* For Safari */
+    position: sticky;
+    top: 50px;  /* Starts just below the header */
+    z-index: 500;  /* Keep it below the banner */
+    height: calc(100vh - 100px);  /* Full height, minus space for the header */
+    overflow-y: auto;  /* Allow scrolling inside the sidebar if the content is long */
+    padding-top: 20px;  /* Space between the top banner and sidebar */
+    margin-top: 20px;
+}
+
+/* Ensure the TOC links do not overlap when scrolling */
+#TOC {
+    margin-top: 20px;  /* Space below the header */
+}
+
+/* Styling for the banner logo, resize it to 15% */
+.quarto-title-banner::before {
+    content: url('logo_severus_color_horizontal.png');  /* Path to your logo */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    bottom: 10px;
+}
+
+/* Hide the logo on smaller screens using media queries */
+@media (max-width: 900px) {
+    .quarto-title-banner::before {
+        display: none;  /* Hide the logo when the screen width is 768px or less */
+    }
+}
