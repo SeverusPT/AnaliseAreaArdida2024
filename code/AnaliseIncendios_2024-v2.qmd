@@ -74,23 +74,19 @@ library(rnaturalearthdata)
 #| label: set-main-params
 
 
-DO_FASTERIZE_ON_EFFIS <- FALSE
-
-BIGFIRE_BUFFER_DISTANCE <- 500
-
 OUTPUT_FORMAT <- 'html'
 #OUTPUT_FORMAT <- 'pdf' 
 
 USE_TEST_DATA <- FALSE
 
+DO_FASTERIZE_ON_EFFIS <- FALSE
 USE_COSC2024_CACHE <- TRUE
-
-VERBOSE_ON_COSC24 <- FALSE
-
 USE_BA_INTERSECT_CACHE <- TRUE
 
+BIGFIRE_BUFFER_DISTANCE <- 500
 BIG_FIRE_THRESH <- 1000
 
+VERBOSE_ON_COSC24 <- FALSE
 VERBOSE <- FALSE
 
 ## -------------------------------------------------- ##
@@ -378,9 +374,12 @@ Estes são resultados preliminares e ainda incompletos para algumas áreas devid
 ::: callout-note
 ## Acesso/descarregamento dos dados de severidade
 
-Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte link (com metadados): [SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.zip)
+Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte [link (com metadados)](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241008_v02.zip)
 
 Estes dados são fornecidos em números inteiros (com parte negativa, mais precisamente, 32-bit signed integer) tendo sido multiplicados por um fator de escala de 10,000. Originalmente os cálculos de severidade são efetuados em números decimais mas, para poupar espaço em disco, é aplicado este fator de reescalaonamento e é feito o arredondamente/truncagem dos valores. Os valores de severidade do indicador NBR/RBR, usualmente estão entre \[-6,000; 17,000\] (ou seja, na escala decimal original, \[-0.6; 1.7\], de zonas não ardidas/em recuperação até áreas com extrema severidade).
+
+O formato é GeoTIFF, com sistema de coordenadas WGS 1984/UTM 29N.
+
 :::
 
 A severidade da área ardida foi calculada a partir de imagens do satélite ótico **Sentinel-2** utilizando o índice espectral *Normalized Burn Ratio (NBR)*, que mede a diferença da reflectância da superfície terrestre entre as bandas do infravermelho próximo (NIR) e do infravermelho médio (SWIR).
@@ -468,8 +467,10 @@ shorten_string <- function(input_string, n = 40) {
 
 
 # Burn severity data
-sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.tif"
-  
+# sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.tif"
+#   
+sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241008_v02.tif"
+
 sev_s2_rbr <- rast(sev_raster_file)
 
   
@@ -552,7 +553,7 @@ if(!USE_BA_INTERSECT_CACHE){
   
   readr::write_rds(ba_rnap_,"ba_rnap_.rds")
   readr::write_rds(ba_rnap,"ba_rnap.rds")
-  rm(rnap)
+  #rm(rnap)
   
   if(VERBOSE) cat("\n--> Finished processing RNAP data\n\n")
   
@@ -584,7 +585,7 @@ if(!USE_BA_INTERSECT_CACHE){
   readr::write_rds(ba_rn2k_sic_,"ba_rn2k_sic_.rds")
   readr::write_rds(ba_rn2k_sic,"ba_rn2k_sic.rds")
   
-  rm(sic)
+  #rm(sic)
   
   if(VERBOSE) cat("\n--> Finished processing SIC/RN2K data\n\n")
 
@@ -618,7 +619,7 @@ if(!USE_BA_INTERSECT_CACHE){
 
   readr::write_rds(ba_rn2k_zpe,"ba_rn2k_zpe.rds")
   
-  rm(zpe)
+  #rm(zpe)
   
   if(VERBOSE) cat("\n--> Finished processing ZPE/RN2K data\n\n")
 
