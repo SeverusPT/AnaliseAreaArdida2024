@@ -337,7 +337,12 @@ Para as análises realizadas neste relatório foram usados os seguintes conjunto
 
 -   **Modelo Digital do Terreno - SRTM 1''** (NASA; Gonçalves, J.A., Pinhal, A.): [link geral](https://www.fc.up.pt/pessoas/jagoncal/dems/) \| [link dados](http://gis.ciimar.up.pt/gisData/dems/dem_srtm_pt_1sec.tif)
 
+- **Percursos Pedestres** (dados gentilmente cedidos por Gabriel Soares; compilação ca. 2020; fonte:  [https://www.percursospedestresportugal.com/](https://www.percursospedestresportugal.com/))     
+
+
 [^1]: Este conjunto de dados foi atualizado (27/09/2024) com a área correspondente à Paisagem Protegida Regional da Serra da Aboboreira (PPRSA).
+
+
 
 ### 1.2. Métodos
 
@@ -374,7 +379,7 @@ Estes são resultados preliminares e ainda incompletos para algumas áreas devid
 ::: callout-note
 ## Acesso/descarregamento dos dados de severidade
 
-Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte [link (com metadados)](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241008_v02.zip)
+Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte [link (com metadados)](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241015_v02.zip)
 
 Estes dados são fornecidos em números inteiros (com parte negativa, mais precisamente, 32-bit signed integer) tendo sido multiplicados por um fator de escala de 10,000. Originalmente os cálculos de severidade são efetuados em números decimais mas, para poupar espaço em disco, é aplicado este fator de reescalaonamento e é feito o arredondamente/truncagem dos valores. Os valores de severidade do indicador NBR/RBR, usualmente estão entre \[-6,000; 17,000\] (ou seja, na escala decimal original, \[-0.6; 1.7\], de zonas não ardidas/em recuperação até áreas com extrema severidade).
 
@@ -469,7 +474,9 @@ shorten_string <- function(input_string, n = 40) {
 # Burn severity data
 # sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20240930_v02.tif"
 #   
-sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241008_v02.tif"
+#sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241008_v02.tif"
+#
+sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241015_v02.tif"
 
 sev_s2_rbr <- rast(sev_raster_file)
 
@@ -826,7 +833,30 @@ if(!USE_BA_INTERSECT_CACHE){
 
   if(VERBOSE) cat("\n--> Finished processing INE/BGRI data\n\n")
 
+
+  ## -------------------------------------------------------------------------- ##
+  ## Tracks and trails data for mainland PT ----
+  ## -------------------------------------------------------------------------- ##
   
+  
+  pp <- vect("../data/vector/percursos_pedestres/percursos_pedestres-24092019.shp")
+  
+  #pp$length_km <- perim(pp)/1000
+  
+  ba_pp <- intersect(effis_spatvec_2024, pp) %>% 
+    st_as_sf(.) %>% 
+    st_transform(crs = "EPSG:32629") %>% 
+    mutate(ba_len_km = as.numeric(st_length(.)) / 1000) %>% 
+    st_drop_geometry()
+
+  readr::write_rds(ba_pp,"ba_pp.rds")
+  
+  rm(pp)  
+
+  if(VERBOSE) cat("\n--> Finished processing tracks & trails data\n\n")
+
+  
+    
   ## -------------------------------------------------------------------------- ##
   ## Burn Severity data ----
   ## -------------------------------------------------------------------------- ##
@@ -923,6 +953,7 @@ if(!USE_BA_INTERSECT_CACHE){
   ba_sev_rbr_sic   <- read_rds("ba_sev_rbr_sic.rds")
   ba_sev_rbr_zpe   <- read_rds("ba_sev_rbr_zpe.rds")
   
+  ba_pp            <- read_rds("ba_pp.rds")
 }
 
 ##gc()
@@ -1068,6 +1099,13 @@ De acordo com dados do Instituto Nacional de Estatística (INE), e considerando 
 De acordo com o conjunto de dados aberto de edíficos *MS Buildings Footprint*, que mistura todas as tipologias de edificado (e.g., habitacional, industrial, serviços), um total de **`{r} scales::comma(nrow(ba_msb_buildings))` edifícios** foram potencialmente afetados pelos incêndios de 2024 com níveis muito diferenciados de impacto (que os dados a que tivemos acesso não permitem estimar), estando incluídos dentro dos perímetros de área ardida mapeados pelo sistema EFFIS.
 
 Segundo o conjunto de dados aberto OSM -- OpenStreetMap -- sobre vias de trânsito/acesso/circulação e, agregando todas as tipologias existentes nesta base de dados (e.g., auto-estradas, estradas nacionais, municipais, caminhos, trilhos), foram potencialmente afetados **`{r} scales::comma(round(sum(ba_osm_roads$road_len_km),2))` Km de vias**.
+
+Um total de **`{r} round(sum(ba_pp$ba_len_km), 2)` Km de percursos pedestres** (incluindo trilhos 
+PR e GR homologados pela FCMP - Federação de Campismo e Montanhismo de Portugal, 
+Caminhos de Santiago, Fátima entre outras vias) foram impactadas pelos incêndios de 2024 de forma 
+direta ou indireta e com graus de impacto muito diferenciados (que os dados a que tivemos acesso 
+não permitem estimar), estando incluídos dentro dos perímetros de área ardida mapeados pelo 
+sistema EFFIS.
 
 ```{r}
 #| label:  ba-effis-map-wf-location
@@ -2590,6 +2628,21 @@ for(i in 1:(ifelse(USE_TEST_DATA,1,
     mutate(Percentagem = (Comprimento_Km / sum(Comprimento_Km)) *100) %>%
     arrange(desc(Percentagem))
 
+  
+    
+  # ------------------------------------------------------------ #
+  # Analysis for tracks and trails ----
+  # ------------------------------------------------------------ #
+
+  bf_pp_int <- ba_pp %>% filter(id == bf_id)
+  
+  bf_pp_summ <- bf_pp_int %>%
+    group_by(trck_nm ) %>%
+    summarise(Comprimento_Km = sum(ba_len_km)) %>%
+    mutate(Percentagem = (Comprimento_Km / sum(Comprimento_Km)) *100) %>%
+    arrange(desc(Percentagem))
+
+  
 
   # ------------------------------------------------------------ #
   # Analysis by municipality ----
@@ -2984,6 +3037,19 @@ for(i in 1:(ifelse(USE_TEST_DATA,1,
     `colnames<-`(c("TipoOSM","Comprimento_Km", "Percentagem")) %>%
       left_join(osm_types %>% select(-3), by=c("TipoOSM" = "Type")) %>%
       select(1,4,2,3) %>%
+    flextable() %>%
+    set_table_properties(width = 0.9, layout = "autofit") %>%
+    flextable_to_rmd()
+  ))
+  
+    cat("\n\n")
+
+  cat("\n\n**Afetação potencial de percursos pedestres\n(fonte: percursospedestresportugal.com)**\n\n")
+
+  suppressMessages(suppressWarnings(
+    bf_pp_summ %>%
+      mutate(across(2:3, round, digits = 1)) %>%
+    `colnames<-`(c("Nome PP","Comprimento_Km", "Percentagem")) %>%
     flextable() %>%
     set_table_properties(width = 0.9, layout = "autofit") %>%
     flextable_to_rmd()
