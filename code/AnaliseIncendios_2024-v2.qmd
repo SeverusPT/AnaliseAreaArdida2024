@@ -68,6 +68,7 @@ library(tidyterra)
 library(patchwork)
 library(rnaturalearth)
 library(rnaturalearthdata)
+
 ```
 
 ```{r}
@@ -83,11 +84,11 @@ DO_FASTERIZE_ON_EFFIS <- FALSE
 USE_COSC2024_CACHE <- TRUE
 USE_BA_INTERSECT_CACHE <- TRUE
 
-BIGFIRE_BUFFER_DISTANCE <- 500
-BIG_FIRE_THRESH <- 1000
-
 VERBOSE_ON_COSC24 <- FALSE
 VERBOSE <- FALSE
+
+BIGFIRE_BUFFER_DISTANCE <- 500
+BIG_FIRE_THRESH <- 1000
 
 ## -------------------------------------------------- ##
 
@@ -261,7 +262,7 @@ cos18_sort <- c(
 \newpage
 
 ::: callout-warning
-## Aviso / Disclaimer
+## Aviso
 
 Esta análise é preliminar e reflete os dados a que os autores tiveram acesso à data de criação deste documento. Esta análise não é definitiva e os valores poderão mudar assim que atualizações e modificações dos dados forem disponibilizadas (por razões diversas e fora do controlo dos autores).
 
@@ -272,6 +273,19 @@ As fontes de dados podem estar sujeitas a variações temporais e espaciais, imp
 Os autores deste relatório não assumem qualquer responsabilidade por decisões ou ações tomadas com base nos dados, análises ou conclusões aqui apresentadas sem a devida consideração das limitações mencionadas.
 
 O uso inadequado ou a interpretação incorreta dos resultados, especialmente sem um conhecimento profundo das incertezas associadas, é da inteira responsabilidade de quem os utiliza. Recomenda-se que os resultados apresentados sejam sempre analisados ou interpretados com cautela, e que, se necessário, sejam complementados por outras fontes de informação e validações adicionais.
+:::
+
+::: callout-warning
+## Aviso
+
+Devido a um erro no pipeline de processamento de dados, **as versões deste relatório anteriores a 17/10/2024 continham um erro sistemático no cálculo das áreas ardidas**. 
+Este erro resultou em uma sobre-estimação generalizada da área ardida, com especial impacto em grandes
+ocorrências.      
+     
+Pedimos sinceras desculpas por qualquer inconveniente que este problema possa ter causado e que entretanto foi resolvido.      
+
+Aproveitamos também para agradecer ao utilizador F.A. pela crucial ajuda na deteção e análise deste problema.
+
 :::
 
 ::: callout-note
@@ -370,16 +384,11 @@ No primeiro conjunto de dados -- COSc 2024 -- procurou-se a elevada atualidade d
 
 #### 1.2.3. Análise da severidade da área ardida
 
-::: callout-warning
-## Aviso
-
-Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
-:::
 
 ::: callout-note
 ## Acesso/descarregamento dos dados de severidade
 
-Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte [link (com metadados)](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241015_v02.zip)
+Os dados preliminares em formato raster GeoTIFF podem ser descarregados no seguinte [link (com metadados)](./tmp_data/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241016_v02.zip)
 
 Estes dados são fornecidos em números inteiros (com parte negativa, mais precisamente, 32-bit signed integer) tendo sido multiplicados por um fator de escala de 10,000. Originalmente os cálculos de severidade são efetuados em números decimais mas, para poupar espaço em disco, é aplicado este fator de reescalaonamento e é feito o arredondamente/truncagem dos valores. Os valores de severidade do indicador NBR/RBR, usualmente estão entre \[-6,000; 17,000\] (ou seja, na escala decimal original, \[-0.6; 1.7\], de zonas não ardidas/em recuperação até áreas com extrema severidade).
 
@@ -476,7 +485,10 @@ shorten_string <- function(input_string, n = 40) {
 #   
 #sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241008_v02.tif"
 #
-sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241015_v02.tif"
+#sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241015_v02.tif"
+#
+sev_raster_file <- "../data/raster/SPT_RBR_NBR_S2MSI_E2024_R003P003_32629_20241016_v02.tif"
+
 
 sev_s2_rbr <- rast(sev_raster_file)
 
@@ -1100,7 +1112,7 @@ De acordo com o conjunto de dados aberto de edíficos *MS Buildings Footprint*, 
 
 Segundo o conjunto de dados aberto OSM -- OpenStreetMap -- sobre vias de trânsito/acesso/circulação e, agregando todas as tipologias existentes nesta base de dados (e.g., auto-estradas, estradas nacionais, municipais, caminhos, trilhos), foram potencialmente afetados **`{r} scales::comma(round(sum(ba_osm_roads$road_len_km),2))` Km de vias**.
 
-Um total de **`{r} round(sum(ba_pp$ba_len_km), 2)` Km de percursos pedestres** (incluindo trilhos 
+Um total de **`{r} round(sum(ba_pp$ba_len_km), 1)` Km de percursos pedestres** (incluindo trilhos 
 PR e GR homologados pela FCMP - Federação de Campismo e Montanhismo de Portugal, 
 Caminhos de Santiago, Fátima entre outras vias) foram impactadas pelos incêndios de 2024 de forma 
 direta ou indireta e com graus de impacto muito diferenciados (que os dados a que tivemos acesso 
@@ -1212,6 +1224,7 @@ line_plot <- ggplot(wf_area_cats, aes(x = cats, y = cum_area, group = 1)) +
   labs(title = "Área ardida acumulada",
        x = "Classe dimensão (hectares)", 
        y = "Área acumulada (ha)") +
+  scale_y_continuous(breaks = seq(0, 150000, by = 20000), labels = scales::comma) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
@@ -1830,11 +1843,6 @@ kable(ba_cos18_rnap_summ_wid%>% select(any_of(c("Cod.","Nome",cos18_sort))),
 
 #### 4.1.3. Área ardida na RNAP por classe de severidade
 
-::: callout-warning
-## Aviso
-
-Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
-:::
 
 ```{r}
 #| label: ba-2024-rnap-sev-rbr
@@ -1989,11 +1997,6 @@ kable(ba_cos18_sic_summ_wid %>% select(any_of(c("Cod.","Nome",cos18_sort))),
 
 #### 4.2.3. Área ardida nos SICs por classe de severidade
 
-::: callout-warning
-## Aviso
-
-Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
-:::
 
 ```{r}
 #| label: ba-2024-sic-sev-rbr
@@ -2147,11 +2150,6 @@ kable(ba_cos18_zpe_summ_wid %>% select(any_of(c("Cod.","Nome",cos18_sort))),
 
 #### 4.3.3. Área ardida nas ZPEs por classe de severidade
 
-::: callout-warning
-## Aviso
-
-Estes são resultados preliminares e ainda incompletos para algumas áreas devido à falta de imagens de satélite ou cobertura parcial de nuvens em algumas regiões.
-:::
 
 ```{r}
 #| label: ba-2024-zpe-sev-rbr
