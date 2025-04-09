@@ -284,7 +284,7 @@ ocorrências.
      
 Pedimos sinceras desculpas por qualquer inconveniente que este problema possa ter causado e que entretanto foi resolvido.      
 
-Aproveitamos também para agradecer ao utilizador F.A. pela crucial ajuda na deteção e análise deste problema.
+Aproveitamos também para agradecer ao utilizador Fernando Amaro (Analista de dados na [CO2offset.ai](https://co2offset.ai)) pela crucial ajuda na deteção e análise deste problema.
 
 :::
 
@@ -327,7 +327,7 @@ Este relatório foi financiado pela Fundação para a Ciência e a Tecnologia (F
 
 Para as análises realizadas neste relatório foram usados os seguintes conjuntos de dados:
 
--   **Áreas ardidas do Sistema Europeu Copernicus EFFIS (European Forest Fire Information System)**: [link geral](https://forest-fire.emergency.copernicus.eu/applications/data-%20-services) \| [link dados](https://maps.effis.emergency.copernicus.eu/effis?service=WFS&request=getfeature&typename=ms:modis.ba.poly&version=1.1.0&outputformat=SHAPEZIP)
+-   **Áreas ardidas do Sistema Europeu Copernicus EFFIS (European Forest Fire Information System)**: [link geral](https://forest-fire.emergency.copernicus.eu/applications/data-and-services) \| [link dados](https://maps.effis.emergency.copernicus.eu/effis?service=WFS&request=getfeature&typename=ms:modis.ba.poly&version=1.1.0&outputformat=SHAPEZIP)
 
 -   **Carta de Uso e Ocupação do Solo - 2018**: [link geral](https://snig.dgterritorio.gov.pt/rndg/srv/por/catalog.search#/metadata/b498e89c-1093-4793-ad22-63516062891b) \| [link dados](https://geo2.dgterritorio.gov.pt/cos/COS2018/COS2018v2-shp.zip)
 
@@ -1395,6 +1395,8 @@ lucc_df <- data.frame(
   value = as.character(values),
   stringsAsFactors = FALSE
 )
+
+#write.csv(lucc_df,"../data/cos2024_legenda.csv", row.names = FALSE)
 
 
 if(DO_FASTERIZE_ON_EFFIS){
